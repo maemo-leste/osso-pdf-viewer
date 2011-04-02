@@ -1,0 +1,20 @@
+Source: osso-pdf-viewer
+Section: non-free/misc
+Priority: optional
+Maintainer: Amish Maske <amish.maske@nokia.com>
+Build-Depends: conbtdialogs-dev, debhelper (>= 4.0.0), libhildon1-dev,  libhildonfm2-dev (>= 2.16.2), libgtk2.0-dev, libosso-gnomevfs2-dev, libglib2.0-dev, libdbus-1-dev, libdbus-glib-1-dev, libosso-dev, libhildonmime-dev, libcomapp-dev, maemo-launcher-dev
+Standards-Version: 3.6.0
+
+Package: osso-pdf-viewer
+Architecture: any
+Depends: osso-pdf-viewer-l10n-mr0 | osso-pdf-viewer-l10n-mr, ${shlibs:Depends}, ${misc:Depends}, ${launcher:Depends}
+Description: OSSO PDF Viewer
+ PDF Viewer application.
+
+
+Package: osso-pdf-viewer-dbg
+Architecture: any
+Section: devel
+Depends: osso-pdf-viewer (= ${Source-Version})
+Description: OSSO PDF Viewer debug package
+ PDF Viewer application debug package.

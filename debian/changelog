@@ -1,0 +1,1236 @@
+osso-pdf-viewer (1.8.24-1+0m5) unstable; urgency=low
+
+  * This entry has been added by BIFH queue processor
+    version has been changed to 1.8.24-1+0m5
+
+ -- Prashanth Shakthi <ext-shakthi.prashanth@nokia.com>  Thu, 17 Jun 2010 14:57:32 +0300
+
+osso-pdf-viewer (1.8.24-1) unstable; urgency=low
+
+  * Fixes: NB#170884 Unable to read attached PDF file using PR1.2 (19-1) build
+
+ -- Maske Amish <amish.maske@nokia.com>  Wed, 16 Jun 2010 14:54:00 +0530
+
+osso-pdf-viewer (1.8.06-1) unstable; urgency=low
+
+  * Fixes: NB#145129 PDF reader crashes always when opening attached PDF file
+
+ -- Maske Amish <amish.maske@nokia.com>  Tue, 09 Feb 2010 2:54:00 +0530
+
+osso-pdf-viewer (1.7.53-1) unstable; urgency=low
+
+  * Fixes:
+
+ -- Maske Amish <amish.maske@nokia.com>  Mon, 28 Dec 2009 2:39:00 +0530
+
+osso-pdf-viewer (1.7.52-1) unstable; urgency=low
+
+  * Fixes: NB#142095 PDF Reader.Context-sensitive menu options are too small
+
+ -- Maske Amish <amish.maske@nokia.com>  Tue, 22 Dec 2009 11:35:00 +0530
+
+osso-pdf-viewer (1.7.48-1) unstable; urgency=low
+
+  * Fixes: NB#122966 PDF Viewer, Unnecessary colons within Details dialog
+  * Fixes: NB#131156 "unable to save" information banner is missing
+
+ -- Maske Amish <amish.maske@nokia.com>  Wed, 25 Nov 2009 15:10:00 +0530
+
+osso-pdf-viewer (1.6.40-1) unstable; urgency=low
+    
+  * Fixes: NB#139936 hildon_gtk_window_take_screenshot doesn't take a
+    screenshot
+
+ -- Maske Amish <amish.maske@nokia.com>  Wed, 30 Sep 2009 13:00:00 +0530
+
+osso-pdf-viewer (1.6.33-1) unstable; urgency=low
+    
+  * Fixes: NB#130623 pdf viewer needs to support global safe folders
+
+ -- Maske Amish <amish.maske@nokia.com>  Thu, 13 Aug 2009 13:00:00 +0530
+
+osso-pdf-viewer (1.6.31-1) unstable; urgency=low
+    
+  * Coverity fix for week 31
+
+ -- Maske Amish <amish.maske@nokia.com>  Tue, 28 July 2009 13:00:00 +0530
+
+osso-pdf-viewer (1.6.30-2) unstable; urgency=low
+    
+  * Changelog error updated.
+
+ -- Maske Amish <amish.maske@nokia.com>  Wed, 22 July 2009 13:00:00 +0530
+
+osso-pdf-viewer (1.6.30-1) unstable; urgency=low
+    
+  * Fixes: NB#125680 application tool bar have seperator in PDF application
+
+ -- Maske Amish <amish.maske@nokia.com>  Wed, 22 July 2009 13:00:00 +0530
+
+osso-pdf-viewer (1.6.29-1) unstable; urgency=low
+    
+  * Fixes: NB#120468 Space in file name is replaced by %20 while saving a pdf
+                     opened from e-mail
+
+ -- Maske Amish <amish.maske@nokia.com>  Tue, 14 July 2009 13:00:00 +0530
+
+osso-pdf-viewer (1.6.27-2) unstable; urgency=low
+    
+  * Fixes: NB#124200 pdf reader csm menu is having icons or symbols on it
+
+ -- Maske Amish <amish.maske@nokia.com>  Mon, 29 Jun 2009 13:00:00 +0530
+
+osso-pdf-viewer (1.6.27-1) unstable; urgency=low
+    
+  * Fixes: NB#124225 "Not available" info banner is displayed when the user taps in between last page and first page
+                      icons using stylus
+  * Fixes: NB#124590 {NEW UI MENU CHANGE}"Opening" information banner is
+                     displayed during page navigation
+  * Fixes: NB#124573 Black image displayed along with navigation icon in the
+                     full screen
+  * Fixes: NB#124556 "Maximum zoom level reached" and "Minimum zoom level
+                     reached" info banners are not displayed in the pdf reader application 
+  * Fixes: NB#125140 PDF application hangs with device  , reboot
+                     is required to use device even can not bringup switch off dialog
+  * Fixes: NB#125147 PDF application crashing after pressing enter key	 
+
+ -- Maske Amish <amish.maske@nokia.com>  Mon, 29 Jun 2009 13:00:00 +0530
+
+osso-pdf-viewer (1.6.26-2) unstable; urgency=low
+    
+  * Fixes: NB#124358 {NEW UI CHANGES}"Zooming" info banner needs to remove
+    from the pdf reader application
+
+  * Fixes: NB#124234 Need to remove "Not available" info banner from the pdf
+                     reader ui spec
+
+ -- Maske Amish <amish.maske@nokia.com>  Wed, 24 Jun 2009 13:00:00 +0530
+
+osso-pdf-viewer (1.6.26-1) unstable; urgency=low
+    
+  * Fixes: NB#119090 Update PDF Viewer menu to Hildon 2.2
+
+ -- Maske Amish <amish.maske@nokia.com>  Mon, 22 Jun 2009 13:00:00 +0530
+
+osso-pdf-viewer (1.6.25-2) unstable; urgency=low
+ 
+    * Taken care of compiling errors in callbacks.c   
+
+ -- Maske Amish <amish.maske@nokia.com>  Mon, 15 Jun 2009 13:00:00 +0530
+
+osso-pdf-viewer (1.6.25-1) unstable; urgency=low
+    
+  * Fixes: NB#115667 In PDF, two overlay buttons are displayed while scrolling
+                     in full screen mode.
+  * Fixes: NB#107287 Recent list is not updated when the pdf document is
+                     opened from the email attachment
+
+ -- Maske Amish <amish.maske@nokia.com>  Sat, 13 Jun 2009 13:00:00 +0530
+
+osso-pdf-viewer (1.6.24-1) unstable; urgency=low
+    
+  * Fixes: changed control file for libhildonfm2 version check
+
+ -- Maske Amish <amish.maske@nokia.com>  Tue, 09 Jun 2009 13:00:00 +0530
+
+osso-pdf-viewer (1.6.22-1) unstable; urgency=low
+    
+  * Fixes: NB#113791 All the four edges of the pdf document is not displayed
+                     properly inside the pdf application area
+  * Fixes: NB#119029 Space shortcut is not working in pdf application
+
+ -- Maske Amish <amish.maske@nokia.com>  Fri, 29 May 2009 13:00:00 +0530
+
+osso-pdf-viewer (1.6.21-1) unstable; urgency=low
+    
+  * Fixes: NB#118061 could not save pdf documents after opening from email
+                     attachment
+  * Fixes: NB#118033 Device default folders (Documents ,audio , coredump) are missing
+                     in the "open pdf document" dialog
+
+ -- Maske Amish <amish.maske@nokia.com>  Web, 21 May 2009 13:00:00 +0530
+
+osso-pdf-viewer (1.6.19-1) unstable; urgency=low
+    
+  * Fixes: NB#96960 Multi tap on the full screen icon in full screen pdf
+                    reader disappears
+
+ -- Maske Amish <amish.maske@nokia.com>  Web, 06 May 2009 13:00:00 +0530
+
+osso-pdf-viewer (1.6.18-1) unstable; urgency=low
+    
+  * Fixes: NB#113188 up button is not be of finger size in open pdf dialog
+
+ -- Maske Amish <amish.maske@nokia.com>  Tue, 28 Apr 2009 13:00:00 +0530
+
+osso-pdf-viewer (1.6.17-1) unstable; urgency=low
+    
+  * Fixes: NB#105452 icon is missing for zoom in and full screen in
+                     application tool bar
+
+ -- Maske Amish <amish.maske@nokia.com>  Fri, 24 Apr 2009 13:00:00 +0530
+
+osso-pdf-viewer (1.6.16-2) unstable; urgency=low
+    
+  * Fixes: NB#111154 Not able to move to normal mode after opening a corrupted
+                     pdf file in full screen mode.
+
+ -- Maske Amish <amish.maske@nokia.com>  Fri, 17 Apr 2009 13:00:00 +0530
+
+osso-pdf-viewer (1.6.16-1) unstable; urgency=low
+    
+  * Fixes: NB#106327 tmp folder is displayed after opening saved pdf document
+                     from email application and browser
+
+ -- Maske Amish <amish.maske@nokia.com>  Tue, 14 Apr 2009 13:00:00 +0530
+
+osso-pdf-viewer (1.6.15-2) unstable; urgency=low
+    
+  * Fixes: NB#109537 pdf documents are not properly fitting in the application
+                     area when the user selects Fit page and Fit width options from the pdf
+                     menu
+  * Fixes: NB#110354 In PDF Viewer, the overlay button moves up along with the
+                     Scroll bar inFull screen Page Width mode
+
+ -- Maske Amish <amish.maske@nokia.com>  Thu, 09 Apr 2009 13:00:00 +0530
+
+osso-pdf-viewer (1.6.15-1) unstable; urgency=low
+    
+  * Fixes: NB#107055 Two overlay buttons  visible in full screen in fit width
+                     mode
+
+ -- Maske Amish <amish.maske@nokia.com>  Wed, 08 Apr 2009 13:00:00 +0530
+
+osso-pdf-viewer (1.6.14-1) unstable; urgency=low
+    
+  * Fixes: NB#107083 Handling +/- hardware buttons in Applications
+
+ -- Maske Amish <amish.maske@nokia.com>  Tue, 31 Mar 2009 13:00:00 +0530
+
+osso-pdf-viewer (1.6.13-1) unstable; urgency=low
+    
+  * Handling +/- hardware buttons in Applications
+
+ -- Maske Amish <amish.maske@nokia.com>  Mon, 23 Mar 2009 13:00:00 +0530
+
+osso-pdf-viewer (1.6.12-2) unstable; urgency=low
+    
+  * Fixes: NB#103506 wrong information message is displayed
+  * Fixes: NB#101076 osso-pdfviewer shall be maemo-launched and
+                     export-restricted
+
+ -- Maske Amish <amish.maske@nokia.com>  Thu, 19 Mar 2009 13:00:00 +0530
+
+osso-pdf-viewer (1.6.12-1) unstable; urgency=low
+    
+  * Fixes: NB#105757 In PDF Viewer,position of the full screen overlay button
+                     is in wrong position
+  * Fixes: NB#105922 "open pdf document dialog " is displayed multiple times
+
+ -- Maske Amish <amish.maske@nokia.com>  Wed, 18 Mar 2009 13:00:00 +0530
+
+osso-pdf-viewer (1.6.11-4) unstable; urgency=low
+
+  * Removed deprecated logical string pdfv_error_notallowed from the code
+
+ -- sandeep sundaram <sandeep.sundaram@nokia.com>  Thu, 12 Mar 2009 10:10:00 +0530
+
+osso-pdf-viewer (1.6.11-3) unstable; urgency=low
+
+  * Fixes: NB#105150 osso-pdf-viewer shouldn't depend on libhildonhelp0.
+  * updated application Maintainer name in control file
+  * Removed hildon-help from configure.ac
+
+ -- sandeep sundaram <sandeep.sundaram@nokia.com>  Wed, 11 Mar 2009 10:10:00 +0530
+
+osso-pdf-viewer (1.6.11-2) unstable; urgency=low
+
+  * Fixes: NB#105150 osso-pdf-viewer shouldn't depend on libhildonhelp0.
+  * updated application Maintainer name in control file
+
+ -- sandeep sundaram <sandeep.sundaram@nokia.com>  Wed, 11 Mar 2009 10:10:00 +0530
+
+osso-pdf-viewer (1.6.11-1) unstable; urgency=low
+
+  * Fixes: NB#101076 PDF reader should be maemo launced.
+  * Fixes: NB#101573 Image frame is displayed two times during navigation of
+                     images in pdf application
+
+ -- sandeep sundaram <sandeep.sundaram@nokia.com>  Fri, 6 Mar 2009 12:00:00 +0530
+
+osso-pdf-viewer (1.6.10-1) unstable; urgency=low
+
+  * Fixes: NB#96594 Black sceen is displayed when the pdf application is
+                    opened in full screen on 2nd  time
+  * Fixes: NB#98162 Save operation showing /tmp as default dir
+  * Fixes: NB#102647 Wrong info banner displayed for unsupported file opened
+                     with pdf and sketch
+  * Fixes: NB#100546 Information note is displayed multiple times in memory
+                     full condition
+  * Fixes: NB#98876 PDF Viewer .desktop file should be updated
+
+ -- sandeep sundaram <sandeep.sundaram@nokia.com>  Tue, 24 Feb 2009 12:00:00 +0530
+
+osso-pdf-viewer (1.6.09-1) unstable; urgency=low
+
+  * Fixes: NB#89755 "Fit page" does not Fit in to screen 
+  * Fixes: NB#93002 Horizontal scroll bar is displayed in fitwidth mode 
+  * Fixes: NB#96978 Name of the document is not displayed in "replace existing
+                    file of same name" dialog
+  * Fixes: NB#99203 no space on application name ( 'PDFreader" )in task
+                    launcher 
+  * Fixes: NB#100045 uninitalized data in Splash::strokeNarrow 
+  * Fixes: NB#100047 small memory leak in OssoOutputDev::redraw 
+
+ -- sandeep sundaram <sandeep.sundaram@nokia.com>  Fri, 13 Feb 2009 12:00:00 +0530
+
+osso-pdf-viewer (1.6.08-1) unstable; urgency=low
+
+  * Fixes: NB#100795 Removed help option from Main menu and CSM.
+    Removed HELP options in the code.
+
+ -- sandeep sundaram <sandeep.sundaram@nokia.com>  Thu, 12 Feb 2009 12:00:00 +0530
+
+osso-pdf-viewer (1.6.07-1) unstable; urgency=low
+
+  *  Fix the default application name, which raised for notes 93860
+
+ -- sandeep sundaram <sandeep.sundaram@nokia.com>  Fri, 06 Feb 2009 15:00:00 +0530
+
+osso-pdf-viewer (1.6.05-3) unstable; urgency=low
+
+  * Fixes: NB#94079 Remove icons from osso-pdf-viewer
+  * Fixes: NB#98050 Two overlay buttons  visible in full screen mode
+
+ -- sandeep sundaram <sandeep.sundaram@nokia.com>  Tue, 20 Jan 2009 15:00:00 +0530
+
+osso-pdf-viewer (1.6.04-1) unstable; urgency=low
+
+  * Fixes: NB#97378 Default zoom level is not selected  after opening of
+                    password protected pdf is not successfull
+  * Fixes: NB#97361 reverse icon is displayed for full screen option in pdf
+                    application
+
+ -- sandeep sundaram <sandeep.sundaram@nokia.com>  Tue, 13 Jan 2009 15:00:00 +0530
+
+osso-pdf-viewer (1.6.03-1) unstable; urgency=low
+
+  * Fixes: NB#93153 The PDF reader application tool bar is not properly
+                    display the last page numbers
+
+ -- sandeep sundaram <sandeep.sundaram@nokia.com>  Tue, 6 Jan 2009 15:00:00 +0530
+
+osso-pdf-viewer (1.6.02-2) unstable; urgency=low
+
+  * Fixes: NB#96801 Open , show image/ hide image and seperator near those
+                    icons is still available in application tool bar in pdf
+                    application.
+
+ -- sandeep sundaram <sandeep.sundaram@nokia.com>  Tue, 30 Dec 2008 15:00:00 +0530
+
+osso-pdf-viewer (1.6.1-3) unstable; urgency=low
+
+  * Fixes: NB#96119 single tap is not working in hovering icon in pdf
+                    application.
+  * Fixes: NB#96121 open pdf dialog launches two time after multitap on it.
+
+  * Taking care of Fullscreen overlay button refreshing issues, when a new
+    document is opened in Fullscreen mode immediately after  viewing an old
+    document in Fullscreen mode. 
+
+ -- sandeep sundaram <sandeep.sundaram@nokia.com>  Tue, 23 Dec 2008 15:00:00 +0530
+
+osso-pdf-viewer (1.5.52-1) unstable; urgency=low
+
+  * Fixes: NB#87686 PDF Reader not updated as per spec when the document
+    		    contains too big page.
+  * Fixes: NB#94501 Wrong information banner displayed in pdf application.
+
+ -- sandeep sundaram <sandeep.sundaram@nokia.com>  Tue, 16 Dec 2008 15:00:00 +0530
+
+osso-pdf-viewer (1.5.51-2) unstable; urgency=low
+
+  * Removing CANCEL button from replace file confirmation note
+
+ -- sandeep sundaram <sandeep.sundaram@nokia.com>  Thu, 11 Dec 2008 15:00:00 +0530
+
+osso-pdf-viewer (1.5.51-1) unstable; urgency=low
+
+  * Replacing old logical names of icons with new logical names
+  * Removing Invalid Logical id (pdfv_bd_switch_page_cancel)
+  * Fixes: NB#90645 Bluetooth window is not opening when the user wants to
+                    sent pdf files  more than one time.
+                    (Removing the send options from the application)
+
+ -- sandeep sundaram <sandeep.sundaram@nokia.com>  Wed, 10 Dec 2008 15:00:00 +0530
+
+osso-pdf-viewer (1.5.50-1) unstable; urgency=low
+
+  * Fixes: NB#89888 Implementation of Fullscreen Overlay button in
+                    the lower-middle part of the screen
+
+ -- sandeep sundaram <sandeep.sundaram@nokia.com>  Wed, 10 Dec 2008 15:00:00 +0530
+
+osso-pdf-viewer (1.5.47-1) unstable; urgency=low
+
+  * Fixes: NB#91595 PDF reader application always displays "Unable to
+                     open.\nDocument corrupted" for all the unsupported files
+
+ -- sandeep sundaram <sandeep.sundaram@nokia.com>  Tue, 18 Nov 2008 15:00:00 +0530
+
+osso-pdf-viewer (1.5.47-1) unstable; urgency=low
+
+  * Fixes: NB#91744 PDF documents is not focused ,sketch is getting opened
+                     instead of pdf
+
+ -- sandeep sundaram <sandeep.sundaram@nokia.com>  Tue, 18 Nov 2008 15:00:00 +0530
+
+osso-pdf-viewer (1.5.47-1) unstable; urgency=low
+
+  * Fixes: NB#89991 'Not available' message is shown. if click on Middle in
+                      full screen
+
+ -- sandeep sundaram <sandeep.sundaram@nokia.com>  Tue, 18 Nov 2008 15:00:00 +0530
+
+osso-pdf-viewer (1.5.47-1) unstable; urgency=low
+
+  * Fixes: NB#91875 Full screen is available in pdf application menu and
+                     context senstive menu
+
+ -- sandeep sundaram <sandeep.sundaram@nokia.com>  Tue, 18 Nov 2008 15:00:00 +0530
+
+osso-pdf-viewer (1.5.46-1) unstable; urgency=low
+
+  * Fixes: NB#89942 "Document encrypted, enter your password" message
+                      is not displayed after opening an encrypted PDF document
+
+ -- sandeep sundaram <sandeep.sundaram@nokia.com>  Tue, 11 Nov 2008 15:00:00 +0530
+
+osso-pdf-viewer (1.5.46-1) unstable; urgency=low
+
+  * Fixes: NB#89943 "Incorrect password" message is displayed only at
+                     end of 3rd attempt; it is not displayed on each attempt
+
+ -- sandeep sundaram <sandeep.sundaram@nokia.com>  Tue, 11 Nov 2008 15:00:00 +0530
+
+osso-pdf-viewer (1.5.46-1) unstable; urgency=low
+
+  * Fixes: NB#89808 Cannot open next page, next and previous page icons are
+                     not displayed in full screen
+
+ -- sandeep sundaram <sandeep.sundaram@nokia.com>  Tue, 11 Nov 2008 15:00:00 +0530
+
+osso-pdf-viewer (1.5.46-1) unstable; urgency=low
+
+  * Fixes: NB#91211 Separator is missing in between show image and full
+                     screen icon  in the application tool bar
+
+ -- sandeep sundaram <sandeep.sundaram@nokia.com>  Tue, 11 Nov 2008 15:00:00 +0530
+
+osso-pdf-viewer (1.5.44-1) unstable; urgency=low
+
+  * Fixes: NB#89721 Close option is still active in application menu in PDF
+
+ -- sandeep sundaram <sandeep.sundaram@nokia.com>  Tue, 28 Oct 2008 15:00:00 +0530
+
+osso-pdf-viewer (1.5.42-1) unstable; urgency=low
+
+  * Implements NR#192021
+
+ -- sandeep sundaram <sandeep.sundaram@nokia.com>  Mon, 06 Oct 2008 15:00:00 +0530
+
+osso-pdf-viewer (1.5.40-1) unstable; urgency=low
+
+  * Removed about 7000+ warnings
+
+ -- sandeep sundaram <sandeep.sundaram@nokia.com>  Mon, 29 Sep 2008 17:30:26 +0530
+
+osso-pdf-viewer (1.5.36-0) unstable; urgency=low
+
+  * Submitting with warnings 
+
+ -- sandeep sundaram <sandeep.sundaram@nokia.com>  Thu, 28 Aug 2008 15:10:26 +0530
+
+osso-pdf-viewer (1.5.18-0) gutsy; urgency=low
+
+  * Dropping build dep on osso-email-interface
+
+ -- Qureshi Ahmad <Ahmad.Qureshi@nokia.com>  Wed, 28 Apr 2008 15:10:26 +0200
+
+osso-pdf-viewer (1.5.15-0) unstable; urgency=low
+
+  * Fixes: NB#83110 PDF reader crashed while viewing from shared folder
+  * Fixes: NB#82997 PDF reader application hanged in this below scenario
+
+ -- Qureshi Ahmad <Ahmad.Qureshi@nokia.com>  Mon, 31 Mar 2008 17:17:09 +0200
+
+osso-pdf-viewer (1.5.14-0) unstable; urgency=low
+
+  * Fixes: NB#79935 PDF reader crashed while viewing under memory full condition
+  * Fixes: NB#77297 PDF; Some junk characters are shown in file details
+  * Fixes: NB#82981 Pdf file get corrupted while saving to MMC
+
+ -- Qureshi Ahmad <Ahmad.Qureshi@nokia.com>  Mon, 31 Mar 2008 09:57:23 +0200
+
+osso-pdf-viewer (1.5.12-0) unstable; urgency=low
+
+  * Fixes: NB#77147 PDF reader should come to foreground without actually opening the next file
+  * Fixes: NB#77176 'Open PDF document ' dialog pointing to wrong folder after opening a corrupted file.
+
+ -- Qureshi Ahmad <Ahmad.Qureshi@nokia.com>  Fri, 14 Mar 2008 14:27:27 +0100
+
+osso-pdf-viewer (1.5.11-0) unstable; urgency=low
+
+  * Fixes: NB#80515 PDF Reader crashing
+
+ -- Qureshi Ahmad <Ahmad.Qureshi@nokia.com>  Mon, 10 Mar 2008 11:50:06 +0100
+
+osso-pdf-viewer (1.5.10-0) unstable; urgency=low
+
+  * Fixes: NB#77092 PDF document doesn't show images for SMB files
+
+ -- Qureshi Ahmad <Ahmad.Qureshi@nokia.com>  Mon, 03 Mar 2008 15:03:34 +0100
+
+osso-pdf-viewer (1.5.06-0) unstable; urgency=low
+
+  * Fixes: NB#79761 PDF reader Crashes while Opening
+
+ -- Qureshi Ahmad <Ahmad.Qureshi@nokia.com>  Mon, 28 Jan 2008 12:28:58 +0200
+
+osso-pdf-viewer (1.4.52-0) unstable; urgency=low
+
+  * Fixes: NB#78353 PDF Viewer compilation failed using gcc 4.2 toolchain
+
+ -- Qureshi Ahmad <Ahmad.Qureshi@nokia.com>  Mon, 17 Dec 2007 18:16:48 +0200
+
+osso-pdf-viewer (1.4.49-0) unstable; urgency=low
+
+  * Fixes: NB#77301 MMC is unreadable after its removal while in use by PDF Reader
+
+ -- Qureshi Ahmad <Ahmad.Qureshi@nokia.com>  Fri, 30 Nov 2007 12:14:23 +0200
+
+osso-pdf-viewer (1.4.41-0) unstable; urgency=low
+
+  * Fixes: NB#71771 PDF reader crashed while opening multiple files just after
+    flashing.
+
+ -- Qureshi Ahmad <Ahmad.Qureshi@nokia.com>  Wed, 03 Oct 2007 17:15:00 +0300
+
+osso-pdf-viewer (1.4.40-0) unstable; urgency=low
+
+  * Fixes: NB#71097 Application crashes.
+
+ -- Qureshi Ahmad <Ahmad.Qureshi@nokia.com>  Wed, 26 Sep 2007 16:50:00 +0300
+
+osso-pdf-viewer (1.4.39-0) unstable; urgency=low
+
+  * Fixes: NB#70351 Save documents dialog opened Tapping on ctrl + s
+
+ -- Qureshi Ahmad <Ahmad.Qureshi@nokia.com>  Thu, 20 Sep 2007 14:50:02 +0300
+
+osso-pdf-viewer (1.4.38-0) unstable; urgency=low
+
+  * Fixes: NB#68994 Info banner not  correct after MMC removed from the slot
+    while viewing PDF file.
+  * fixed a bugid in previous release, 6696 == 66696
+  * Return the correct value at ask_loading/saving
+  * Fixes: NB#69814 would be reasonable to enable floating point for PDF Reader
+  * Fixes: NB#69826 PDF viewer adds 8 MB VSZ per page switch or zoom
+
+ -- Qureshi Ahmad <Ahmad.Qureshi@nokia.com>  Mon, 17 Sep 2007 15:05:30 +0300
+
+osso-pdf-viewer (1.4.37-0) unstable; urgency=low
+
+  * Fixes: NB#67965 PDF Reader crashes under memory full condition
+  * Fixes: NB#68251 Zoom is not activated by single press of Zoom HW key.
+  * Fixes: NB#68739 Long press of Esc hard key : View switched to normal mode before closing in full-screen-mode
+  * Fixes: NB#66696 Long press of Esc key does not close PDF reader while opening document.
+
+ -- Qureshi Ahmad <Ahmad.Qureshi@nokia.com>  Tue,  4 Sep 2007 15:10:49 +0300
+
+osso-pdf-viewer (1.4.36-0) unstable; urgency=low
+
+  * Fixes: NB#67066 No action while tapping on fsm for empty pdf.
+  * Fixes: NB#67759 Application hangs with long press of Right navigation key.
+  * Fixes: NB#67787 PDF Reader does not support all PDF formats but opens files anyway
+
+ -- Qureshi Ahmad <Ahmad.Qureshi@nokia.com>  Mon,  3 Sep 2007 14:05:39 +0300
+
+osso-pdf-viewer (1.4.35-1) unstable; urgency=low
+
+  * debian/changelog
+
+ -- Qureshi Ahmad <Ahmad.Qureshi@nokia.com>  Wed, 29 Aug 2007 12:08:44 +0300
+
+osso-pdf-viewer (1.4.35-0) unstable; urgency=low
+
+  * Fixes: NB#53030 [EXT] PDF reader should advance to next page when page boundry reaches while scrolling in zoomed mode
+  * Fixes: NB#65303 Show images not working for the document opened from shared media
+  * Fixes: NB#66535 Horizontal scroll bar displayed even if the document fit within the available display
+  * Fixes: NB#66695 HW Navigation keys not working while opening document.
+  * Fixes: NB#66697 Open document dialog launched automatically in mentioned scenario
+  * Fixes: NB#52855 PDF viewer consumes extra memory by not consting arrays which contents don't change
+  * removed unused dependency
+
+ -- Qureshi Ahmad <Ahmad.Qureshi@nokia.com>  Fri, 24 Aug 2007 18:09:09 +0300
+
+osso-pdf-viewer (1.4.34-0) unstable; urgency=low
+
+  * Remove one critical warning
+  * Fixes: NB#65741 Full screen key behaviour is not correct.
+  * Fixes: NB#53030 [EXT] PDF reader should advance to next page when page boundry reaches while scrolling in zoomed mode
+  * Fixes: NB#52967 PDF Reader shall be compiled with -fPIC
+  * Fixes: NB#63742 PDF; Some junk characters are shown in file details
+
+ -- Qureshi Ahmad <Ahmad.Qureshi@nokia.com>  Wed, 15 Aug 2007 17:48:38 +0300
+
+osso-pdf-viewer (1.4.33-0) unstable; urgency=low
+
+  * Fixes: NB#64344 Device hangs and reboots while zooming the single page pdf document
+  * Fixes: NB#65255 Problems while saving document to local(device) memory
+  * Fixes: NB#65196 Open pdf document dialog launched with shortcut keys Ctrl+o while saving document
+  * Fixes: NB#65201 No information banner displayed when tapped on dimmed open.. menu option
+  * Fixes: NB#65174 Inconsistent behaviour with long press of select hard key
+  * Fixes: NB#65144 Corrupted file opening does not give error notification.
+  * Fixes: NB#65476 Font colour changes with Hide Image option.
+
+ -- Qureshi Ahmad <Ahmad.Qureshi@nokia.com>  Wed,  8 Aug 2007 15:19:22 +0300
+
+osso-pdf-viewer (1.4.32-0) unstable; urgency=low
+
+  * Fixes: NB#64552 Hard keys not functioning while opening/zooming pdf document
+  * Fixes: NB#64499 PDF reader failed to open password protected document from BT device and application crashes
+  * Fixes: NB#64607 Not able to accept /cancel Switch to page dialog with hardware key.
+  * Fixes: NB#62754 HW navigation keys not in synch with menu and toolbar options when PDF viewer is empty
+  * Fixes: NB#64361 No info banner displayed on tapping dimmed switch to page toolbar option
+  * Fixes: NB#64370 No action for 'OK" button in switch to page dialog,if number greater than maximum number is entered.
+  * Fixes: NB#64244 PDF Reader - Saving PDF from browser has wrong default folder handling
+  * Fixes: NB#64758 Tool bar is not responding when open file from gateway.
+  * Fixes: NB#62346 Left/Right arrows in FSM should be in synch with toolbar and menu Next/Prev page options
+
+ -- Qureshi Ahmad <Ahmad.Qureshi@nokia.com>  Mon, 30 Jul 2007 12:44:29 +0300
+
+osso-pdf-viewer (1.4.31-0) unstable; urgency=low
+
+  * Fixes: NB#64344 Device hangs and reboots while zooming the single page pdf document
+  * Fixes: NB#64336 Zoom hard keys not in synch with toolbar and menu zoom options
+  * Fixes: NB#63821 Contents displayed in full screen is not same as normal screen mode
+  * Fixes: NB#64409 PDF reader failed to open supported pdf document
+
+ -- Qureshi Ahmad <Ahmad.Qureshi@nokia.com>  Thu, 26 Jul 2007 14:29:52 +0300
+
+osso-pdf-viewer (1.4.30-0) unstable; urgency=low
+
+  * Fixes: NB#63251 Device hangs while navigating through pages in FSM
+  * Fixes: NB#63639 Document saved with save as.. option is not opened
+
+ -- Qureshi Ahmad <Ahmad.Qureshi@nokia.com>  Wed, 18 Jul 2007 15:31:28 +0300
+
+osso-pdf-viewer (1.4.28-0) unstable; urgency=low
+
+  * Fixes: NB#62133 Open PDF file dialog displays root folder instead of default one 
+  * Fixes: NB#52006 The number editor in Pdf Viewer goes on a loop after reaching the maximum value.
+  * Fixes: NB#62615 PDF application title getting changed ,when save as with "%xyz%" name.
+  * Fixes: NB#60793 None of the menu/CSM and toolbar options working after switch to page and FSM operations
+
+ -- Qureshi Ahmad <Ahmad.Qureshi@nokia.com>  Tue,  3 Jul 2007 16:30:58 +0300
+
+osso-pdf-viewer (1.4.26-0) unstable; urgency=low
+
+  * Fixes: NB#51292 Broken PDF document causes floating point exception in PDF reader
+  * Fixes: NB#52284 Huge PDF viewer memory usage and crash with attached PDF file
+  * Fixes: NB#51385 osso-pdf-viewer package does not contain full source (as requested by the author) and other issues.
+
+ -- Qureshi Ahmad <Ahmad.Qureshi@nokia.com>  Tue, 19 Jun 2007 14:06:27 +0300
+
+osso-pdf-viewer (1.4.25-0) unstable; urgency=low
+
+  * Fixes: NB#58360 Corrupted PDF file crashes PDF viewer
+  * Fixes: NB#58358 Corrupted PDF files crash PDF viewer
+  * Fixes: NB#59956 Recent list not updated for document received over Bluetooth
+  * Fixes: NB#55768 When a file Käyttöopas_soumi is opened from the gateway the title badisplays K%C3%A4yttC3%B6opas_soumi. 
+  * Shortcuts fixed
+
+ -- Qureshi Ahmad <Ahmad.Qureshi@nokia.com>  Tue, 12 Jun 2007 10:08:54 +0300
+
+osso-pdf-viewer (1.4.24-1) unstable; urgency=low
+
+  * libhildonhelp consolidation
+
+ -- Qureshi Ahmad <Ahmad.Qureshi@nokia.com>  Tue,  8 Jun 2007 16:52:06 +0300
+
+osso-pdf-viewer (1.4.24-0) unstable; urgency=low
+
+  * Fixes: NB#59075 Application is not responding after Tappping Show/hide image icon few times
+
+ -- Qureshi Ahmad <Ahmad.Qureshi@nokia.com>  Tue,  5 Jun 2007 16:52:06 +0300
+
+osso-pdf-viewer (1.4.23-0) unstable; urgency=low
+
+  * Fixes: NB#59074 Not able to open any File after some sequence of steps.
+
+ -- Qureshi Ahmad <Ahmad.Qureshi@nokia.com>  Thu, 31 May 2007 13:36:28 +0300
+
+osso-pdf-viewer (1.4.22-0) unstable; urgency=low
+
+  * Fixes: NB#51948 PDF viewer leaks 8KB per page switch (>100KB if zooming is also used)
+  * Fixes: NB#52512 Zooming and unzooming PDF file leaks memory
+
+ -- Qureshi Ahmad <Ahmad.Qureshi@nokia.com>  Mon, 24 May 2007 19:33:42 +0300
+
+osso-pdf-viewer (1.4.21-0) unstable; urgency=low
+
+  * Added: libcomapp integration
+  * Added: Full-screen navigation
+
+ -- Qureshi Ahmad <Ahmad.Qureshi@nokia.com>  Mon, 21 May 2007 15:48:42 +0300
+
+osso-pdf-viewer (1.4.19-0) unstable; urgency=low
+
+  * Added: Shortcuts
+
+ -- Qureshi Ahmad <Ahmad.Qureshi@nokia.com>  Mon, 7 May 2007 09:32:07 +0300
+
+osso-pdf-viewer (1.4.18-0) unstable; urgency=low
+
+  * Fixes: NB#53830 Zoom level is not displayed properly in the toolbar
+
+ -- Qureshi Ahmad <Ahmad.Qureshi@nokia.com>  Thu, 26 Apr 2007 09:32:07 +0300
+
+osso-pdf-viewer (1.4.13-0) unstable; urgency=low
+
+  * First 1.1 release
+  
+ -- Qureshi Ahmad <Ahmad.Qureshi@nokia.com>  Mon, 12 Mar 2007 12:50:46 +0300
+
+osso-pdf-viewer (1.3.59-0) unstable; urgency=low
+
+  * Fixes: NB#49409 PDF viewer leaks 16KB per page switch
+  * Fixes: NB#51388 Showing same name (some garbage value)for all recently open file in recent list.
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Mon, 12 Feb 2007 16:15:15 +0300
+
+osso-pdf-viewer (1.3.55-0) unstable; urgency=low
+
+  * Fixes: NB#49571 Unable to open a pdf file which is stored in Gateway's folder.
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Mon, 15 Jan 2007 16:15:15 +0300
+
+osso-pdf-viewer (1.3.54-0) unstable; urgency=low
+
+  * Fixes: NB#50026 PDF viewer; Info banners are shown behind application menu
+  * Fixes: NB#29848 Time to close the PDF viewer application is 2465ms.
+  * Fixes: NB#50328 Fullscreen hard key doesnot work while opening the pdf file.
+  * Fixes: NB#49896 All the menu and toolbar options are woriking while opening page from switch to page dialog.
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Mon, 8 Jan 2007 16:15:15 +0300
+
+osso-pdf-viewer (1.3.52-0) unstable; urgency=low
+
+  * Fixes: NB#50023 Resent list is always empty.
+  * Fixes: NB#49905 No debug symbol package for osso-pdf-viewer
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Mon, 22 Dec 2006 16:15:15 +0300
+
+osso-pdf-viewer (1.3.51-0) unstable; urgency=low
+
+  * Fixes: NB#49893 Problems while zooming the pdf viewer.
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Mon, 11 Dec 2006 16:15:15 +0300
+
+osso-pdf-viewer (1.3.50-0) unstable; urgency=low
+
+  * Fixes: NB#45957 Long press of "Esc" key executes several events instead of just closing the topmost view
+  * Fixes: NB#48583 pdf viewer does not initialize dbus for threads
+  * Fixes: NB#48966 Switch to page dialog remains open when open another file from FM.
+  * Fixes: NB#47283 Select button opens "Open pdf doc.." dialogue while opening pdf from GW.
+  * Fixes: NB#49109 Unable to launch menu while opening document/new page..
+  * Fixes: NB#46469 Recent menu option is not dimmed while Opening/Zooming pdf file..
+  * Fixes: NB#49199 Pdf Viewer hangs while opening a password protected file.
+  * Fixes: NB#44917 User can open pdf CSM over notes application.
+  * Fixes: NB#49656 PDF viewer doesn't restore the correct page
+  * Fixes: NB#49708 "Minimun zoom level reached" info display below CSM menu.
+  * Fixes: NB#46640 Zooming from 200 - 250 % of pdf image changes the image position
+  * Fixes: NB#45209 PDF viewer doesn't render all of the page at largest zoom level
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Mon, 11 Dec 2006 16:15:15 +0300
+
+osso-pdf-viewer (1.3.49-2) unstable; urgency=low
+
+  * Fixes: NB#46672 Zooming info banner does not go off on selecting fit page/fit width.
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Mon, 4 Dec 2006 16:15:15 +0300
+
+osso-pdf-viewer (1.3.49-1) unstable; urgency=low
+
+  * Fixes: NB#48554 Info banner is not visible in perticular language
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Mon, 4 Dec 2006 16:15:15 +0300
+
+osso-pdf-viewer (1.3.49-0) unstable; urgency=low
+
+  * Fixes: NB#47800 Empty Info banner displayed before closing PDF file which is opened from Gateway..
+  * Fixes: NB#46781 PDF viewer crashes when it's background killed
+  * Fixes: NB#46530 Pdf viewer application crashes when file is opened from MMC in full memeory condition.
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Mon, 4 Dec 2006 16:15:15 +0300
+
+osso-pdf-viewer (1.3.48-3) unstable; urgency=low
+
+  * Fixes: NB#48433 Toolbar options working when they are dimmed
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Mon, 27 Nov 2006 16:15:15 +0300
+
+osso-pdf-viewer (1.3.48-2) unstable; urgency=low
+
+  * Fixes: NB#46418 Device UI freezed when navigating between PDF UserGuide pages
+  * Fixes: NB#46718 Long Press of Right navigation key leads to pdf application crash for empty pdf file..
+  * Fixes: NB#46916 Pdf viewer application crashes while tapping on hide/Unhide button continuously.
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Mon, 27 Nov 2006 15:15:15 +0300
+
+osso-pdf-viewer (1.3.48-1) unstable; urgency=low
+
+  * Fixes: NB#48254 PDF has 770 string in the source
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Mon, 23 Nov 2006 15:15:15 +0300
+
+
+osso-pdf-viewer (1.3.47-0) unstable; urgency=low
+
+  * Fixes: NB#42572 The point of content view before and after Full Screen mode should be same
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Mon, 20 Nov 2006 15:15:15 +0300
+
+osso-pdf-viewer (1.3.46-0) unstable; urgency=low
+
+  * Fixes: NB#46730 Pdf viewer application crashes while minimising & maximising the application.
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Tue, 13 Nov 2006 15:15:15 +0300
+
+osso-pdf-viewer (1.3.45-0) unstable; urgency=low
+
+  * Fixes: NB#40970 PDF Reader application crashes while opening a pdf file through Recent menu, which is loaded in GW, in Offline mode.
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Tue, 6 Nov 2006 15:15:15 +0300
+
+osso-pdf-viewer (1.3.43-1) unstable; urgency=low
+
+  * Fixes: NB#42572 The point of content view before and after Full Screen mode should be same
+  * Fixes: NB#41118 Extra string "%20" added in file name when open from gateway.
+  * Fixes: NB#41500 Details dialogue does not disappear after removing mmc.
+  * Fixes: NB#40053 Details of previous opend file remains open on screen when open new pdf from file maneger.
+  * Fixes: NB#41408 Recent menu not getting updated after removing MMC from
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Tue, 23 Oct 2006 15:15:15 +0300
+
+osso-pdf-viewer (1.3.42-0) unstable; urgency=low
+
+  * Fixes: NB#40967 Not showing any info when tap on dimmed details of CSM menu
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Tue, 16 Oct 2006 15:15:15 +0300
+ 
+osso-pdf-viewer (1.3.40-0) unstable; urgency=low
+
+  * Fixes: NB#41010 Thumbview of others menu does not contain second line
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Tue, 02 Oct 2006 15:15:15 +0300
+
+osso-pdf-viewer (1.3.37-0) unstable; urgency=low
+
+  * Fixes: NB#40156 PDF reader application crashes when Opening a pdf file from File manager and Search results simultaneously..
+  * Fixes: NB#40342 Wrong info banner is displayed while tap on any pdf file from FM, when already one pdf file opening..
+  * Fixes: NB#40345 Gives info "unable to open document currupted" after some sequence of operation.
+  * Fixes: NB#40402 Pressing select key while opening pdf file should not open Open PDF document..
+  * Fixes: NB#35754 Information banner “Please wait. \nMemory card currently in use.” not displayed
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Tue, 12 Sep 2006 15:15:15 +0300
+
+osso-pdf-viewer (1.3.36-0) unstable; urgency=low
+
+  * Fixes: NB#39691 Entering wrong password for password protected pdf three times displays info "opening" continuously .
+  * Fixes: NB#39690 Open option of menu get dimmed after cancel "Password needed" dialog.
+  * Fixes: NB#39524 Details option is missing from CSM
+  * Fixes: NB#39689 Shows info "opening" continuously when open password protected PDF
+  * Fixes: NB#39845 Hardware Zoom+/Zoom- behaviour is not consistent.
+  * Fixes: NB#38763 Tappping on hidden page is not showing info "Not available".
+  * Fixes: NB#39848 As soon as the current page number reaches 1000 in tool bar the number gets truncated..
+  * Fixes: NB#39694 Display wrong info when reject connection from gateway.
+  * Fixes: NB#40053 Details of previous opend file remains open on screen when open new pdf from file maneger.
+  * Fixes: NB#40063 "Opening.." info banner is continuously showing while saving a pdf file from browser.
+  * Fixes: NB#40105 Application crash if remove MMC and view next page.
+  * Fixes: NB#34260 The information banner “Opening or saving interrupted.\n Memory card cover open.” is not displaying.
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Wed,  6 Sep 2006 15:15:15 +0300
+
+osso-pdf-viewer (1.3.35-0) unstable; urgency=low
+
+  * Fixes: NB#38550 Info banner " page number must between 1 and max page number" not displayed after reaching maximum page number in Enter page number box.
+  * Fixes: NB#38622 If the document area is empty, it should not launch the context-sensitive menu.
+  * Fixes: NB#38793 Zoomin option is not dimmed for Blank PDF.
+  * Fixes: NB#39014 PDF Reader; Incorrect layout of "Title" item in Details dialog (WID – DIA272)
+  * Fixes: NB#26072 Read only option is not enabled in the details dialog
+  * Fixes: NB#38826 PDF reader's application menu doesnot open when Context sensitive menu is launched
+  * Fixes: NB#38915 Zoom in .. option is not dimmed in CSM menu while opening a page.. and application crashed
+  * Fixes: NB#38021 After saving a Password protected file in the gateway application does not respond.
+  * Fixes: NB#39030 Zoom in option is not dimmed when the Maximum zoom level is reached.
+  * Fixes: NB#38784 Dimmed Send option of CSM is not giving info "Not available". 
+  * Fixes: NB#38764 Dimmed send option is not giving info "Not available"
+  * Fixes: NB#38725 Tapping on dimmed folder icon not showing info "Not available"
+  * Fixes: NB#38155 PDF viewer crashed on zoom out
+  * Fixes: NB#38402 Text gets overlapped when 'Hide Images' and 'Zoom-out' buttons are tapped
+  * Fixes: NB#39423 PDF reader applicaiton crashed while opening a pdf file when already one is opened..
+  * Fixes: NB#36495 One separator is extra in CSM menu.
+  * Fixes: NB#39394 Xpdf-1.3.32: License issues
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Thu, 31 Aug 2006 15:15:15 +0300
+
+osso-pdf-viewer (1.3.32-0) unstable; urgency=low
+
+  * Fixes: NB#37132 Menu commands functionality is not as per spec when the application area appears empty, with inactive skinned
+  * Fixes: NB#36631 Recent list is not updated with the modified file name
+  * Fixes: NB#36514 Showing same time for all files in etails which are created at defferent time.
+  * Fixes: NB#36495 One separator is extra in CSM menu.
+  * Fixes: NB#36486 Separator is missing in menu options.
+  * Fixes: NB#36483 Seperator is missing from tool bar.
+  * Fixes: NB#37317 Displays blank info box when change page from har key.
+  * Fixes: NB#37299 Switch to page dialog remain open on screen for perticular PDF.
+  * Fixes: NB#37319 Stops 2-3 page before last page,when continue increasing page numbers.
+  * Fixes: NB#36382 The Zoom level indicator goes off while tapping last page icon of a 4 MBpdf file
+  * Fixes: NB#37307 "Current page: %d / %d" in Tool bar showing incorrect total number of pages.
+  * Fixes: NB#36474 Zooming focal point is not the centre of the visible part of the pdf document.
+  * Fixes: NB#36466 Tapping dimmed" show image" icon doesnot give info "not available"
+  * Fixes: NB#36360 Menu Items Zoom and Recent are not working properly when PDF application area is idle(dimmed)
+  * Fixes: NB#36348 PDF reader not recognizing the released memory condition.
+  * Fixes: NB#36313 Menu items functionality is not working properly under PDF application view is dimmed
+  * Fixes: NB#36083 Application closed without displaying any message while opening large PDF file under Memory full condition.
+  * Fixes: NB#36080 Opening the Password protected PDF document lead to PDF application crash under memory full condition
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Thu, 31 Jul 2006 15:15:15 +0300
+
+osso-pdf-viewer (1.3.31-1) unstable; urgency=low
+
+  * Fixes: NB#36153 Unable to 'drag-scroll' to upper right corner in 150% (and stronger) zoom
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Thu, 31 Jul 2006 15:15:15 +0300
+
+osso-pdf-viewer (1.3.30-0) unstable; urgency=low
+
+  * Fixes: NB#36153 Unable to 'drag-scroll' to upper right corner in 150% (and stronger) zoom
+  * Fixes: NB#32744 Hardkey Zoom functionality not consistent.
+  * Fixes: NB#32751 Actual expected Zoom status is not displyed on toolbar.
+  * Fixes: NB#32745 Application crashes while Zooming the files.
+  * Fixes: NB#33251 logical IDs used in code but undefined in any UI Spec
+  * Fixes: NB#34477 Dialog Box is displaying with logical name.
+  * Fixes: NB#34534 Replace Confirmation note is displaying with Logical Name
+  * Fixes: NB#35523 Application Crashes When Panning and Zooming simultaneously.
+  * Fixes: NB#35288 PDF Viewer; Layout, Title of PDF file is cut out of the window if too long - Details Dialog (WID – DIA272)
+  * Fixes: NB#33322 osso-pdf-viewer package is depending on hildonbase but doesn't
+  * Fixes: NB#36303 PDF Reader cannot display certain PDFs that displayed properly in SE2005_5_2006_13_7
+  * Fixes: NB#36264 Memory optimization for PDF Reader
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Thu, 27 Jul 2006 15:15:15 +0300
+
+osso-pdf-viewer (1.2.26-1) unstable; urgency=low
+
+  * Bug 33793: PDF - Crash when pressing Full Screen Button while Zooming
+  * Improvements to toolbar button positioning and sizes
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Thu, 26 Jun 2006 15:15:15 +0300
+
+osso-pdf-viewer (1.2.26-0) unstable; urgency=low
+
+  * Bug 32313: Endurance test: glib critical errors in pdfviewer
+  * Bug 32432: Missing dependency in configure script for osso-pdf-viewer
+  * Bug 29675: Not showing details for one PDf file
+  * Bug 31892: Freezes when displaying large files over BT - TRUE
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Mon, 26 Jun 2006 16:11:29 +0300
+
+osso-pdf-viewer (1.2.24-0) unstable; urgency=low
+
+  * Bug 29145: PDF Viewer hang when displaying images on large files - TRUE
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Wed, 31 May 2006 16:33:56 +0300
+
+osso-pdf-viewer (1.2.23-0) unstable; urgency=low
+
+  * Bug 29722: When changing page the view area moves on top of the document
+  * Bug 30641: Downloaded PDF looks a blank file in PDF viewer as the Hide...
+  * Bug 30914: Full-screen action in PDF viewer should work even if no
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Wed, 31 May 2006 16:33:56 +0300
+
+osso-pdf-viewer (1.2.21-0) unstable; urgency=low
+
+  * Bug 30068: Next page option of CSM remains highlited at last page.
+  * Bug 23445: PDF reader - Failed to open PDF file from the Gateway.
+  * Bug 29278: PDF Reader start optimization
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Wed,  9 May 2006 16:33:56 +0300
+
+osso-pdf-viewer (1.2.20-0) unstable; urgency=low
+
+  * Bug 29495: PDF viewer crashes when restoring state
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Wed,  9 May 2006 16:33:56 +0300
+
+osso-pdf-viewer (1.2.19-2) unstable; urgency=low
+
+  * Infobanner fixes.
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Wed,  9 May 2006 16:33:56 +0300
+
+osso-pdf-viewer (1.2.19-1) unstable; urgency=low
+
+  * (Bug 28840) Change to more responsive UI and change dimming behavior.
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Wed,  9 May 2006 16:33:56 +0300
+
+osso-pdf-viewer (1.2.19-0) unstable; urgency=low
+
+  * Bug 28770: Logical strings ckdg_ib_nothing_to_send shown for
+  * Bug 28772: Logical string sfil_ib_nothing_to_view shown for banner
+  * Bug 28467: "Opening" is displayed as info banner instead of progress banner
+  * Bug 23186: [S+] Memory leaks in pdf viewer
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Tue,  9 May 2006 16:33:56 +0300
+
+osso-pdf-viewer (1.2.18-0) unstable; urgency=low
+
+  * Bug 27047: In PDF's tool Bar current page number not displayed properly
+  * Bug 28020: Incorrect full screen key action - action is performed at
+  * Bug 22461: S+ TRUE: PDF viewer: Show Images icon off-screen
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Tue,  2 May 2006 16:33:56 +0300
+
+osso-pdf-viewer (1.2.17-0) unstable; urgency=low
+
+  * Bug 24474: Pdf file is not opening from gateway folder
+  * Bug 27522: Endurance testing: Glib critical errors logged by pdf reader.
+  * Bug 26837: Zooming info banner remains displayed forever.
+  * Bug 26489: apply thumb code generation for PDF Reader
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Tue, 25 Apr 2006 12:30:57 +0300
+
+osso-pdf-viewer (1.2.16-0) unstable; urgency=low
+
+  * Bug 23832: Logical strings dispalyed on Document details dialog
+  * Bug 23582: PDF leaks memory when zooming in and out
+  * Bug 24162: Select "Details" from "Document" menu to check the details of
+  * Bug 23104: PDF file is not opening with content
+  * Bug 24937: pdf file is not launched from file manager
+  * Bug 25587: In Information banner Page number must be between
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Tue, 11 Apr 2006 14:49:47 +0300
+
+osso-pdf-viewer (1.2.15-0) unstable; urgency=low
+
+  * Bug 24834: PDF Reader application crashed on tapping the 'Fit Width' in
+  * Bug 23784: Show images option resets on closing the application
+  * Bug 25379: Opening 'Helsinki pocket statistics' makes the PDF app crash.
+  * Bug 23695: Logical string displayed for Open document dialog title.
+  * Bug 23405: PDF reader - Logical names displayed in the application.
+  * Bug 23638: Tapping on 'OK' when the 'Current page' is left blank closes
+  * Bug 23692: PDF file not getting opened from File manager
+  * Bug 24018: PDF Reader - MMC option in open menu is dimmed though there
+  * Bug 24215: Glib Criticals during PDF viewer startup
+  * Bug 24357: PDF Reader:Recent items not preserved after rebooting the device
+  * Bug 24371: Pdf Viewer:Not able to open pdf file in Gateway folder.
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Wed,  5 Apr 2006 10:52:24 +0200
+
+osso-pdf-viewer (1.2.14-0) unstable; urgency=low
+
+  * l10n fixes
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Tue, 28 Mar 2006 09:29:44 +0200
+
+osso-pdf-viewer (1.2.13-0) unstable; urgency=low
+
+  * Bug 21497: PDF Reader crashes on opening a document when file system is
+  * Bug 23443: PDF reader - Failed to open file in the PDF application
+  * Bug 23445: PDF reader - Failed to open PDF file from the Gateway.
+  * Bug 23553: Instead of Nokia 770 strange characters are displayed in open
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Tue, 21 Mar 2006 10:32:53 +0200
+
+osso-pdf-viewer (1.2.12-0) unstable; urgency=low
+
+  * Bug 20143: Replace file confirmation note does not come if the file
+  * Bug 20529: de-DE, 2005-40, Missing space in front of '%' sign
+  * Bug 23104: PDF file is not opening with content ,while opening from
+  * Bug 23118: Current page number is not displaying in toolbar
+  * Bug 23744: Current page number is dispalyed as ... in toolbar
+  * l10n fixes (bugs 23695, 23496, 23558, 23706 fixed/reassigned)
+  * Dependencies changed
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Tue, 14 Mar 2006 14:53:21 +0200
+
+osso-pdf-viewer (1.2.09-0) unstable; urgency=low
+
+  * Merged changes with 21482 bugfix and made definable.
+  * l10n changes
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Wed,  1 Mar 2006 11:02:59 +0200
+
+osso-pdf-viewer (1.2.08-0) unstable; urgency=low
+
+  * 22208: Switch to page dialog box closes on tapping Ok button when no
+    values are entered
+  * 21103: Empty page number in Switch to page -dialog should not 
+    close the dialog
+  * 21710: The Show Images settings is not preserved while closing the
+    application.
+  * 21773: Restoring PDF viewer takes a lot of time without any user feedback
+  * 19802
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Wed, 22 Feb 2006 12:38:28 +0200
+
+osso-pdf-viewer (1.2.06-1) unstable; urgency=low
+
+  * Disabled dbus message handling to make start from TN
+  * Bug 22665: Unable to launch PDF Reader application.
+  * Added and then removed code for information banner on opening the mmc
+    while saving the file to mmc card (now done on AF side)
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Wed, 15 Feb 2006 14:58:58 +0200
+
+osso-pdf-viewer (1.2.06-0) unstable; urgency=low
+  
+  * Reduce memory usage at >150% zoom levels to about half
+    (affects scrolling smoothness at large zooms)
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Fri, 10 Feb 2006 14:23:41 +0200
+
+osso-pdf-viewer (1.2.04-0) unstable; urgency=low
+  
+  * Migrate to dbus 0.60
+  * Zoomin and zoomout progress banner
+  * use of pdfv_tb_zoom_level (UI spec bugs 20529, 21900)
+  * Added Confirmation note when saving file with existing name (20143, 21900) 
+  * Save as menu item should be dimmed (UI spec change in bug 19600)
+  * enable show/hide images progress banners
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Tue, 24 Jan 2006 16:26:50 +0200
+
+osso-pdf-viewer (1.2.02-0) unstable; urgency=low
+
+  * (backport) fixed 21231: After remove of MMC card the card is not anymore recognized
+  * (backport) fixed 21758: Fit to width scales the PDF so that
+                 there's a horizontal scrollbar
+  * change trunk to use (this) optimized fixed point branch
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Wed, 11 Jan 2006 10:26:50 +0200
+
+osso-pdf-viewer (1.0.52-0) unstable; urgency=low
+
+  * (re)fixed 21196[PE1]: File descriptors not destroyed after closing a file 
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Thu, 29 Dec 2005 23:43:22 +0100
+
+osso-pdf-viewer (1.0.49-1) unstable; urgency=low
+
+  * (re)enabling two part application title
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Sat,  3 Dec 2005 16:40:07 +0100
+
+osso-pdf-viewer (1.0.49-0) unstable; urgency=low
+
+  * fixed 21001: Application is not reset to its initial state on deleting the
+    same file from FM 
+  * fixed 21386: Password protected pdf file name is removed from 
+                 Recent menu list.
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Sat,  3 Dec 2005 16:07:22 +0100
+
+osso-pdf-viewer (1.0.48-3) unstable; urgency=low
+
+  *  fixed 20143][PE1]: Replace file confirmation note does not come if 
+     the file already exists
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Thu,  1 Dec 2005 08:51:07 +0100
+
+osso-pdf-viewer (1.0.48-2) unstable; urgency=low
+
+  * fixed 20640[PE], 20642[PE]: Minor memory leaks from PDF document
+     opening
+  * fixed 21538[PE, PE1]: Minor memory leak when canceling PDF file open 
+  * fixed 21196[PE1]: File descriptors not destroyed after closing a file
+  * fixed 21700: Memory leak in PDF open
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Wed, 30 Nov 2005 17:18:13 +0100
+
+osso-pdf-viewer (1.0.48-1) unstable; urgency=low
+
+  * fixed bug 20641[PE]: minor memory leak of PDFViewer in case of
+    opening file details dialog. 
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Mon, 28 Nov 2005 18:52:16 +0100
+
+osso-pdf-viewer (1.0.48-0) unstable; urgency=low
+
+  *  fixed bug 18915[PE]: Opening a password protected file from the file
+     manager asks for the password twice. (dbus message queuing trouble) 
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Mon, 28 Nov 2005 17:54:12 +0100
+
+osso-pdf-viewer (1.0.47-0) unstable; urgency=low
+
+  * fixed bug 21464: Default zoom should be changed to 100%"
+  * fixed bug 21311: Zoom not resetted after restart. not only after
+    restart, but each new document open as well.
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Tue, 22 Nov 2005 07:31:32 +0100
+
+osso-pdf-viewer (1.0.45-0) unstable; urgency=low
+
+  * fixed bug 20640[PE], 20641[PE], 20642[PE]: Minor memory leaks from PDF
+    document opening 
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Thu, 10 Nov 2005 06:18:51 +0100
+
+osso-pdf-viewer (1.0.44-0) unstable; urgency=low
+
+  * fixed bug 18915 (PE): Opening a password protected file from the file
+    manager asks for the password twice. 
+  * assured that image mode is saved/reset properly
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Thu,  3 Nov 2005 04:48:12 +0100
+
+osso-pdf-viewer (1.0.42-1) unstable; urgency=low
+
+  * PDF Viewer (PM): UI fine tuning (show images banner)
+  * applying draft mode when show images is off (PM)
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Tue, 18 Oct 2005 20:56:12 +0300
+
+osso-pdf-viewer (1.0.42-0) unstable; urgency=low
+
+  * Fixes #17091 (PM): PDF viewer page changing takes too much time
+  * Fixes #17799 (PM): crashes on accepting the switch to page dialog with empty number field
+  * Bringing back to "trunk"; legal check okay.
+  * Major build system revise (oil change!)
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Tue, 18 Oct 2005 14:46:38 +0300
+
+
+osso-pdf-viewer (1.0.41-1) unstable; urgency=low
+
+  * UI fix for spread toolbar
+  * added GlobarParam showImages for show images mode function 
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Fri, 14 Oct 2005 08:48:32 +0200
+
+osso-pdf-viewer (1.0.41-0) unstable; urgency=low
+
+  * fixed bug 20123: toolbar layout (applied changed from 1.0.38)
+  * fixed bug 18993: No information banner on opening the MMC
+    cover while saving
+  * remove file from recent list when it's deleted
+  * not fixed: unload file on umount source volume or file deleted
+    this is not needed (at least not in the case if it's deleted
+    from local memory).
+  * code cleaned up
+
+ -- Ouyang Qi <qi.ouyang@nokia.com>  Tue, 11 Oct 2005 07:32:08 +0200

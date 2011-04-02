@@ -1,0 +1,20 @@
+This packaged was debianized by Ouyang Qi <qi.ouyang@nokia.com>
+
+Based on Xpdf, which can be downloaded from http://www.foolabs.com/xpdf/
+
+Upstream author:
+
+        Derek B. Noonburg  <derekn@foolabs.com>
+
+Copyright:
+
+The Xpdf software and documentation are
+copyright 1996-2004 Glyph & Cog, LLC.
+
+The PDF data structures, operators, and specification are
+copyright 1985-2003 Adobe Systems Inc.
+
+Copyright (c) 2004-2005 Nokia Corporation.
+
+For license, see /usr/share/common-licenses/GPL
+

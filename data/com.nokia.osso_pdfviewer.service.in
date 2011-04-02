@@ -1,0 +1,4 @@
+# Service description file
+[D-BUS Service]
+Name=com.nokia.osso_pdfviewer
+Exec=@prefix@/bin/osso_pdfviewer

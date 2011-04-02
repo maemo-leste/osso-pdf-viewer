@@ -1,0 +1,18 @@
+#!/bin/sh -e
+
+if [ -x /usr/sbin/update-mime ]; then
+ update-mime-database /usr/share/mime
+fi
+
+if [ -x /usr/bin/osso-update-category-database ]; then
+ osso-update-category-database /usr/share/mime
+fi
+
+
+if [ -x /usr/bin/update-desktop-database ]; then
+ update-desktop-database /usr/share/applications
+fi
+
+#DEBHELPER#
+
+exit 0

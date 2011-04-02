@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info"
+	   xmlns:osso="http://nokia.com/osso/mime-categories">
+   <mime-type type="application/pdf">
+     <osso:category name="documents"/>
+     <comment>PDF document</comment>
+     <magic priority="50">
+       <match value="%PDF-" type="string" offset="0"/>
+     </magic>
+     <glob pattern="*.pdf"/>
+   </mime-type>
+</mime-info>

@@ -1,0 +1,14 @@
+[Desktop Entry]
+Encoding=UTF-8
+Version=@VERSION@
+Type=Application
+Name=pdvi_ap_application_title
+Comment=pdvi_ap_application_title_thumb
+Exec=@prefix@/bin/osso_pdfviewer
+Icon=general_pdf
+Categories=Office;Viewer
+MimeType=application/pdf;
+X-HildonDesk-ShowInToolbar=true
+X-Osso-Service=osso_pdfviewer
+X-Osso-Type=application/x-executable
+X-Text-Domain=osso-pdf-viewer

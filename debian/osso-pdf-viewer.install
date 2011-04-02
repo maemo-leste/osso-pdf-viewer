@@ -1,0 +1,5 @@
+usr/bin/*
+usr/share/applications/hildon/*
+usr/share/dbus-1/services/*
+usr/share/mime/packages/osso-pdf-viewer.xml
+usr/share/doc/osso-pdf-viewer/*
