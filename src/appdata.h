@@ -213,6 +213,9 @@ struct _AppUIData {
     gboolean save_dialog_opened;
 
     gchar *last_uri;
+
+    /* Portrait mode */
+    gboolean isPortrait;
 };
 
 #endif /* APPDATA_H */

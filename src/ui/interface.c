@@ -72,7 +72,7 @@
 
 #define HELP_ICON_SIZE HILDON_ICON_SIZE_TOOLBAR
 
-#define CURRENT_PAGE_BUTTON_MIN_WIDTH 100
+#define CURRENT_PAGE_BUTTON_MIN_WIDTH 90
 //#define CURRENT_PAGE_BUTTON_MIN_WIDTH 80
 #define CURRENT_ZOOM_WIDGET_CHARS      6
 #define POP_MENU_ITEM_WIDTH 70
@@ -189,6 +189,9 @@ ui_create_main_window(AppData * app_data)
     g_return_if_fail(app_view != NULL);
     app_ui_data->app_view = app_view;
 
+	/* Portrait mode */
+	hildon_gtk_window_set_portrait_flags (GTK_WINDOW (app_view),
+										HILDON_PORTRAIT_MODE_SUPPORT);
 
     app = HILDON_PROGRAM(hildon_program_get_instance());
     if (app == NULL)
@@ -278,8 +281,12 @@ ui_create_main_window(AppData * app_data)
     g_signal_connect(G_OBJECT(app_view), "delete_event",
                      G_CALLBACK(on_delete_event), app_ui_data);
 
-     g_signal_connect(G_OBJECT(app_view), "window-state-event",
-                      G_CALLBACK(window_state_changed), app_ui_data); 
+    g_signal_connect(G_OBJECT(app_view), "window-state-event",
+                     G_CALLBACK(window_state_changed), app_ui_data); 
+
+	/* Portrait mode support */
+	g_signal_connect(G_OBJECT(app_ui_data->app_view), "configure-event",
+					G_CALLBACK(configure_event_cb), app_ui_data);
      
     /* Show all widgets */
     gtk_widget_show_all(GTK_WIDGET(app_view));
@@ -1566,6 +1573,7 @@ build_toolbar(GtkActionGroup * actions, AppUIData * app_ui_data)
 
     /* create Current Zoom widget */
     tool_item = gtk_tool_item_new();
+	g_object_ref(tool_item);
     gtk_tool_item_set_homogeneous(tool_item, FALSE);
     gtk_tool_item_set_expand(tool_item, FALSE);
     box = gtk_hbox_new(FALSE, 0);
@@ -1718,7 +1726,7 @@ build_application_area(AppUIData * app_ui_data)
 
    g_signal_connect(G_OBJECT(app_ui_data->vscroll), "button_release_event",
                     G_CALLBACK(on_scroll_release), app_ui_data);
-    
+
     /* TODO change to appropriate widget */
     page_image = gtk_image_new_from_pixbuf(NULL);
 

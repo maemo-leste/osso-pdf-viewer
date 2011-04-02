@@ -42,6 +42,7 @@
 #include "state_save.h"
 #include "debug.h"
 #include "main.h"
+#include "ui.h"
 
 
 #define NO_RESET_STATE_FILE
@@ -756,16 +757,37 @@ on_screen_release(GtkWidget * widget, GdkEventButton * event,
 			( abs(app_ui_data->press_lasty - event->y) < MOVE_THRESHOLD ) ) {
 		
 		//if (press_pos >= (scrollbar_pos + SCREEN_WIDTH - ACTIVE_AREA_WIDTH)) {
-		if (press_pos >= (scrollbar_pos + SCREEN_WIDTH - ACTIVE_AREA_WIDTH) &&
+		if(!app_ui_data->isPortrait) {
+			if (press_pos >= (scrollbar_pos + SCREEN_WIDTH - ACTIVE_AREA_WIDTH) &&
 				(press_pos_fs <= (v_scrollbar_pos + SCREEN_HEIGHT - ACTIVE_AREA_HEIGHT))) {
-        		move = 1;
-        	} else if( press_pos <= (scrollbar_pos + ACTIVE_AREA_WIDTH) ) {
-        		move = -1;
-        	}
+	        		move = 1;
+        		} else if(press_pos <= (scrollbar_pos + ACTIVE_AREA_WIDTH)) {
+        			move = -1;
+        		}
+		}
+		else {
+			if (press_pos >= (scrollbar_pos + SCREEN_HEIGHT - ACTIVE_AREA_WIDTH) &&
+				(press_pos_fs <= (v_scrollbar_pos + SCREEN_WIDTH - ACTIVE_AREA_HEIGHT))) {
+	        		move = 1;
+        		} else if(press_pos <= (scrollbar_pos + ACTIVE_AREA_WIDTH)) {
+        			move = -1;
+        		}
+		}
+
 		/* Calculating the activation area of  fullscreen overlay*/
-		if ((press_pos_fs >= v_scrollbar_pos + SCREEN_HEIGHT - ACTIVE_AREA_HEIGHT)
-		     && ((press_pos >= (scrollbar_pos + SCREEN_WIDTH - ACTIVE_AREA_WIDTH)))){ 
-		      move = 2;
+		if(!app_ui_data->isPortrait) {
+			/* Landscape mode */
+			if ((press_pos_fs >= v_scrollbar_pos + SCREEN_HEIGHT - ACTIVE_AREA_HEIGHT)
+			     && ((press_pos >= (scrollbar_pos + SCREEN_WIDTH - ACTIVE_AREA_WIDTH)))){ 
+			      move = 2;
+			}
+		}
+		else {
+			/* Portrait mode */
+			if ((press_pos_fs >= v_scrollbar_pos + SCREEN_WIDTH - ACTIVE_AREA_HEIGHT)
+			     && ((press_pos >= (scrollbar_pos + SCREEN_HEIGHT - ACTIVE_AREA_WIDTH)))){ 
+			      move = 2;
+			}
 		}
 		
 														  
@@ -1076,7 +1098,7 @@ on_file_changed(GnomeVFSMonitorHandle * handle,
 
                 g_free(loaded_uri);
             }
-
+	
             OSSO_LOG_DEBUG("file has been deleted! info: %s, monitor: %s\n",
                            info_uri, monitor_uri);
 
@@ -1108,6 +1130,70 @@ gboolean take_screen_shot(gpointer widget)
    }
 
    return FALSE;
+}
+
+gboolean
+configure_event_cb (GtkWidget *widget, GdkEvent *event, gpointer user_data)
+{
+	GtkWidget *toolbar_widget;
+
+	g_return_val_if_fail(widget != NULL && HILDON_IS_WINDOW(widget), FALSE);
+	g_return_val_if_fail(event->type == GDK_CONFIGURE, FALSE);
+	g_return_val_if_fail(user_data != NULL, FALSE);
+
+	AppUIData *app_ui_data = (AppUIData *) user_data;
+	GdkEventConfigure *configure_event = (GdkEventConfigure*)event;
+
+	if (configure_event->height > configure_event->width) 
+	{
+		/* Portrait mode */
+		app_ui_data->isPortrait = TRUE;
+		gtk_tool_item_set_expand(app_ui_data->current_page_item, FALSE);
+		
+		if(app_ui_data->current_zoom_item != NULL)
+			gtk_container_remove(app_ui_data->toolbar, app_ui_data->current_zoom_item);
+
+		toolbar_widget = gtk_ui_manager_get_widget(app_ui_data->ui_manager,
+        					               "/ToolBar/"
+							       "pdfv_me_menu_screen_zoom_out");
+		if (toolbar_widget != NULL)
+	        	gtk_container_remove(app_ui_data->toolbar, toolbar_widget);
+
+		toolbar_widget = gtk_ui_manager_get_widget(app_ui_data->ui_manager,
+        					               "/ToolBar/"
+							       "pdfv_me_menu_screen_zoom_in");
+		if (toolbar_widget != NULL)
+	        	gtk_container_remove(app_ui_data->toolbar, toolbar_widget);
+	}
+	else
+	{
+		/* Landscape mode */
+		app_ui_data->isPortrait = FALSE;
+		gtk_tool_item_set_expand(app_ui_data->current_page_item, TRUE);
+
+		if(gtk_toolbar_get_item_index(app_ui_data->toolbar, app_ui_data->current_zoom_item) != TOOLBAR_POS_CURRENT_ZOOM_WIDGET) 
+		{
+			toolbar_widget = gtk_ui_manager_get_widget(app_ui_data->ui_manager,
+        						               "/ToolBar/"
+								       "pdfv_me_menu_screen_zoom_out");
+			if (toolbar_widget != NULL)
+				gtk_toolbar_insert(GTK_TOOLBAR(app_ui_data->toolbar),
+        		               toolbar_widget, (TOOLBAR_POS_CURRENT_ZOOM_WIDGET-1));
+
+			if(app_ui_data->current_zoom_item != NULL)
+				gtk_toolbar_insert(GTK_TOOLBAR(app_ui_data->toolbar),
+        	        	       app_ui_data->current_zoom_item, TOOLBAR_POS_CURRENT_ZOOM_WIDGET);
+
+			toolbar_widget = gtk_ui_manager_get_widget(app_ui_data->ui_manager,
+        						               "/ToolBar/"
+								       "pdfv_me_menu_screen_zoom_in");
+			if (toolbar_widget != NULL)
+				gtk_toolbar_insert(GTK_TOOLBAR(app_ui_data->toolbar),
+        		               toolbar_widget, (TOOLBAR_POS_CURRENT_ZOOM_WIDGET+1));
+		}
+
+	}
+	return FALSE;
 }
 
 void

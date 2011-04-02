@@ -108,5 +108,7 @@ void on_file_changed(GnomeVFSMonitorHandle * handle,
                      const gchar * info_uri,
                      GnomeVFSMonitorEventType event_type, gpointer user_data);
 
+gboolean configure_event_cb (GtkWidget *widget, GdkEvent *event, gpointer user_data);
+
 #endif
  /* CALLBACKS_H */
