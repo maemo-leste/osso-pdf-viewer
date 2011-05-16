@@ -439,3 +439,7 @@ void PDFDoc::getLinks(Page *page) {
   links = new Links(page->getAnnots(&obj), catalog->getBaseURI());
   obj.free();
 }
+
+Links *PDFDoc::myGetLinks(int page) {
+	return catalog->getPage(page)->getLinks(catalog);
+}

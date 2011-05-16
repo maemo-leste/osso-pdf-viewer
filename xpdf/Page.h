@@ -162,6 +162,8 @@ public:
   void getDefaultCTM(double *ctm, double hDPI, double vDPI,
 		     int rotate, GBool upsideDown);
 
+  Links *Page::getLinks(Catalog *catalog);
+
 private:
 
   XRef *xref;			// the xref table for this PDF file

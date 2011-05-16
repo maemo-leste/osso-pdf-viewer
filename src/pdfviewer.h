@@ -114,6 +114,8 @@ extern "C" {
 
     extern int pdf_viewer_get_zoom_percent(void);
     extern void pdf_viewer_move_after_fullscreen_togle(void);
+    extern gboolean pdf_clicking_hyperlink(int x, int y);
+    //extern void doAction(LinkAction *action);
 
     gboolean scrollbar_change_idle(gpointer app_ui_data);
     

@@ -28,6 +28,7 @@
 #include "Error.h"
 #include "Page.h"
 #include "debug.h"
+#include "Catalog.h"
 
 //------------------------------------------------------------------------
 // PageAttrs
@@ -386,4 +387,13 @@ void Page::getDefaultCTM(double *ctm, double hDPI, double vDPI,
     ctm[i] = state->getCTM()[i];
   }
   delete state;
+}
+
+Links *Page::getLinks(Catalog *catalog) {
+	Links *links;
+	Object obj;
+	
+  	links = new Links(getAnnots(&obj), catalog->getBaseURI());
+	obj.free();
+	return links;
 }

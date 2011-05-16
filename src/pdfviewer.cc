@@ -48,6 +48,7 @@
 #include "UnicodeMap.h"
 #include "OssoOutputDev.h"
 #include "OssoStream.h"
+#include "Link.h"
 
 #include "pdfviewer.h"
 #include "constant.h"
@@ -142,6 +143,9 @@ static double get_custom_zoom_level(gboolean fit_width);
 static void on_outputdev_redraw(void *user_data);
 static GBool on_abort_check(void *user_data);
 static gint on_progress_info(GnomeVFSXferProgressInfo * info, gpointer data);
+
+void doAction(LinkAction *action);
+void displayDest(LinkDest *dest);
 
 static size_t custom_floor(const void *array,
                            const void *key,
@@ -2827,4 +2831,131 @@ pdf_viewer_cancel_if_render() {
     DLOCKED(gdk);
 }
 
+/* check the point that user is clicking whether or not is a hyperlink */
+gboolean pdf_clicking_hyperlink(int x, int y)
+{
+	Links *links;
+	double xx, yy;
+	double ux, uy;
+	
+	xx = yy = 0;
+	ux = uy = 0;
+		
+	xx = double(x);
+	yy = double(y);
+
+	/* convert the device coordinate to the user coordinate */
+	priv->output_dev->cvtDevToUser(xx, yy, &ux, &uy);
+	links = priv->pdf_doc->myGetLinks(priv->current_page);
+	
+	if(links->onLink(ux, uy))
+	{
+		doAction(links->find(ux, uy));
+		return gTrue;
+
+	}
+	return gFalse;
+}
+
+/* parse the action of the hyperlink that the user are clicking  */
+void doAction(LinkAction *action)
+{
+	LinkActionKind kind;
+	LinkDest *dest;
+	GString *namedDest;
+	int topPageA;
+	Ref pageRef;
+	
+	switch(kind = action->getKind())
+	{
+		case actionGoTo:
+			g_print("@@ actionGoTo\n");
+			dest = NULL;
+			namedDest = NULL;
+			
+			if ((dest = ((LinkGoTo *)action)->getDest()))
+			{
+				dest = dest->copy();
+			}
+			else if ((namedDest = ((LinkGoTo *)action)->getNamedDest())) 
+			{	
+				namedDest = namedDest->copy();
+			}
+			
+			if(namedDest)
+			{
+				dest = priv->pdf_doc->findDest(namedDest);
+				delete namedDest;
+			}
+			else
+				return;
+
+			if(dest)
+				displayDest(dest);
+			delete dest;
+			break;
+		case actionGoToR:
+			g_print("@@ actionGoToR\n");
+			break;
+		case actionLaunch:
+			g_print("@@ actionLaunch\n");
+			break;
+		case actionURI:
+			g_print("@@ actionURI\n");
+			break;
+		case actionNamed:
+			g_print("@@ actionNamed\n");
+			break;
+		case actionMovie:
+			g_print("@@ actionMovie\n");
+			break;
+		case actionUnknown:
+			g_print("@@ actionUnknown\n");
+			break;
+	}
+}
+
+/*display the destination that the hyperlink link to*/
+void displayDest(LinkDest *dest)
+{
+	Ref pageRef;
+	int topPageA;
+	int dx, dy, scrollXA, scrollYA;
+
+	if(dest->isPageRef())
+	{
+		pageRef = dest->getPageRef();
+		topPageA = priv->pdf_doc->findPage(pageRef.num, pageRef.gen);
+	}
+	else
+		topPageA = dest->getPageNum();
+	if(topPageA <= 0 || topPageA > priv->pdf_doc->getNumPages())
+	{
+		topPageA = 1;
+	}
+	scrollXA = priv->scroll_x;
+	scrollYA = priv->scroll_y;
+	
+	switch(dest->getKind())
+	{
+		case destXYZ:
+			priv->output_dev->cvtUserToDev(dest->getLeft(), dest->getTop(), &dx, &dy);
+			break;
+		default:
+			break;
+	}
+	priv->x = priv->y = 0;
+
+	priv->current_page = topPageA;
+	gtk_range_set_value(GTK_RANGE(priv->app_ui_data->vscroll), dy);
+	
+	PDF_FLAGS_UNSET(priv->app_ui_data->flags, PDF_FLAGS_PAGE_ERROR);
+	gtk_image_set_from_pixmap(GTK_IMAGE(priv->app_ui_data->page_image),
+			NULL, NULL);
+	priv->app_ui_data->opening_banner = ui_show_progress_banner(GTK_WINDOW(priv->app_ui_data->app_view),
+			_("pdfv_ib_opening"));
+	pdf_viewer_refresh_insensitive_messages();
+	refresh_zooms_insensitive_messages(priv->app_ui_data);
+	render_page();
+}
 /* EOF */

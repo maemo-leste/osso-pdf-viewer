@@ -697,6 +697,12 @@ on_screen_press(GtkWidget * widget, GdkEventButton * event,
     app_ui_data->press_lastx = app_ui_data->lastx = (gint) event->x;
     app_ui_data->press_lasty = app_ui_data->lasty = (gint) event->y;
 
+    /*check if the point that user is clicking is a hyperlink or not */
+    if(pdf_clicking_hyperlink(app_ui_data->lastx, app_ui_data->lasty))
+    {
+	    /* Change the page number showed in UI */
+	    ui_update_current_page(app_ui_data);
+    }
     /* We are not panning yet */
     PDF_FLAGS_UNSET(app_ui_data->flags, PDF_FLAGS_PANNING);
     PDF_FLAGS_SET(app_ui_data->flags, PDF_FLAGS_BUTTON_DOWN);
