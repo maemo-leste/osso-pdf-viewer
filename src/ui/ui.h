@@ -86,6 +86,15 @@ static GtkActionEntry action_entries[] = {
     {"pdfv_me_menu_screen_zoom_width", GTK_STOCK_ZOOM_100,
      "pdfv_me_menu_screen_zoom_width", "", NULL,
      G_CALLBACK(on_screen_zoom_width)},
+
+    /*  Display       */
+    {"Single page", "qgn_toolb_gene_Single_page",
+     "Single page", "", NULL,
+     G_CALLBACK(display_single_page)},
+
+     {"Single page Continuous", "qgn_toolb_gene_Single_page_continuous",
+     "Single page continuous", "", NULL,
+     G_CALLBACK(display_single_page_continuous)},
 };
 static guint n_action_entries = G_N_ELEMENTS(action_entries);
 
@@ -115,6 +124,10 @@ static const gchar *ui_info =
     "    <toolitem action='pdfv_me_menu_page_previous'/>" 
     "    <toolitem action='pdfv_me_menu_page_next'/>" 
     "    <toolitem action='pdfv_me_menu_page_last'/>" 
+    "    <menu action='Display'>"
+    "      <menuitem action='Single page'/>"
+    "      <menuitem action='Single page Continuous'/>"
+    "    </menu>"
     "    <toolitem action='pdfv_me_menu_screen_zoom_out'/>" 
     "    <toolitem action='pdfv_me_menu_screen_zoom_in'/>" 
     "    <toolitem action='pdfv_me_menu_screen_full_screen'/>" 

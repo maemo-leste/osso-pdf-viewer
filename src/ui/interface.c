@@ -1935,6 +1935,22 @@ ui_enable_page_controls(AppUIData * app_ui_data, PDFDim dim, gboolean enable)
             if (widget != NULL)
                 gtk_widget_set_sensitive(widget, enable);
 
+            /* 'Display Single page' */
+            widget = gtk_ui_manager_get_widget(app_ui_data->ui_manager,
+                                               "/ToolBar/pdfv_me_main_menu_view/Display"
+                                               "/Single page");
+
+            if (widget != NULL)
+                gtk_widget_set_sensitive(widget, enable);
+
+            /* 'Display Single page Continuous' */
+            widget = gtk_ui_manager_get_widget(app_ui_data->ui_manager,
+                                               "/ToolBar/pdfv_me_main_menu_view/Display"
+                                               "/Single page continuous");
+
+            if (widget != NULL)
+                 gtk_widget_set_sensitive(widget, enable);
+
             break;
 
         case DIM_SWITCH_TO:

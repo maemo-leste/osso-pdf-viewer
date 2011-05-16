@@ -63,6 +63,9 @@ void on_screen_show_images(GtkAction * action, gpointer user_data);
 
 /* other callbacks */
 
+void display_single_page();
+void display_single_page_continuous();
+
 void on_switch_to_page_help(GtkAction * action, gpointer user_data);
 
 gboolean key_press(GtkWidget * widget, GdkEventKey * event, gpointer data);
@@ -70,7 +73,7 @@ gboolean key_press(GtkWidget * widget, GdkEventKey * event, gpointer data);
 gboolean key_release(GtkWidget * widget, GdkEventKey * event, gpointer data);
 
 /* screen callbacks */
-void on_screen_scroll(GtkAdjustment * adjustment, gpointer user_data);
+int on_screen_scroll(GtkAdjustment * adjustment, gpointer user_data);
 void on_screen_tap_and_hold_event(GtkWidget * widget, gpointer data);
 gboolean on_screen_event(GtkWidget * widget,
                          GdkEvent * event, gpointer user_data);

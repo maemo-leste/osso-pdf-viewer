@@ -54,6 +54,8 @@
 #define ACTIVE_AREA_HEIGHT 72
 #define SCREEN_HEIGHT 480
 
+int display_mode = 0;
+
 /*
  * Action callbacks for document menu
  */
@@ -62,6 +64,7 @@ void
 on_document_open(GtkAction * action, gpointer user_data)
 {
     AppUIData *app_ui_data;
+    display_mode = 0 ;
 
     g_return_if_fail(user_data != NULL);
 
@@ -407,6 +410,8 @@ key_press(GtkWidget * widget, GdkEventKey * event, gpointer data)
 
 				if ((w != NULL) && (GTK_WIDGET_IS_SENSITIVE(w))) {
 					on_page_previous(NULL, data);
+					adj = gtk_layout_get_vadjustment(GTK_LAYOUT          (app_ui_data->layout));	
+					gtk_adjustment_set_value(adj,adj->value + adj->upper - adj->page_size -0.0001);
 				} else {
 					if (pdf_viewer_get_current_page() == 1) {
                             ui_show_banner(GTK_WIDGET(app_ui_data->app_view),
@@ -631,12 +636,53 @@ key_release(GtkWidget * widget, GdkEventKey * event, gpointer data)
 }
 
 
-void
+int
 on_screen_scroll(GtkAdjustment * adjustment, gpointer user_data)
 {
+    GtkAdjustment *adj = NULL;
+    GtkWidget *w = NULL;
     AppData *app_data = get_app_data();
     ui_hide_arrows_if_exists(app_data->app_ui_data, FALSE);
     pdf_viewer_scroller_changed((PDFScroll) GPOINTER_TO_UINT(user_data));
+   if ( display_mode ==1){
+   	adj = gtk_layout_get_vadjustment(GTK_LAYOUT(app_data->app_ui_data->layout));
+	if ( !adj) {
+	/* Ignore when no document loaded */
+	     if ( app_data->state == PDF_VIEWER_STATE_EMPTY ) {
+		  ui_show_banner(GTK_WIDGET(app_data->app_ui_data->app_view),
+						_("pdfv_ib_menu_not_available") );
+            	  return TRUE;
+             }
+	     adj = gtk_layout_get_hadjustment(GTK_LAYOUT(app_data->app_ui_data->layout));
+         }
+/* If scroll is far left/top or page fits to screen then try to move to previous page */
+	 //g_print("adj->value %f",adj->value);
+         if ( adj->upper <= adj->page_size || adj->value < 0.0001 ) {
+              w = gtk_ui_manager_get_widget(app_data->app_ui_data->ui_manager,
+					"/ToolBar/pdfv_me_menu_page_previous");
+	      if ( (w != NULL) && (GTK_WIDGET_IS_SENSITIVE(w))) {	
+		   pdf_viewer_navigate_page(pdf_viewer_get_current_page()-1);
+                   ui_update_current_page(app_data->app_ui_data);
+		   adj = gtk_layout_get_vadjustment(GTK_LAYOUT(app_data->app_ui_data->layout));	
+		   gtk_adjustment_set_value(adj,adj->value + adj->upper - adj->page_size -0.0001);
+	      } else {
+			if ( pdf_viewer_get_current_page() == 1) {
+                             ui_show_banner(GTK_WIDGET(app_data->app_ui_data->app_view),
+                                           _("pdfv_ib_first_page_reached"));
+                    	}
+                 }
+          return TRUE;
+           }                   	
+	 if ( adj->page_size < adj->upper &&adj->value < ( adj->upper - adj->page_size ) ) {
+	      return TRUE;	       
+	 } else {
+	           pdf_viewer_navigate_page(pdf_viewer_get_current_page()+1);
+                   ui_update_current_page(app_data->app_ui_data);
+		   adj = gtk_layout_get_vadjustment(GTK_LAYOUT(app_data->app_ui_data->layout));	
+		   gtk_adjustment_set_value(adj,adj->value + 0.0001);
+	   }	
+         return TRUE;     
+   }        
 }
 
 
@@ -1207,3 +1253,15 @@ game_get_screenshot(GtkWidget *widget, GdkEventKey *event, gpointer data)
 {
   g_idle_add((GSourceFunc)(take_screen_shot), (gpointer)(widget));
 }  
+
+void
+display_single_page()
+{
+  display_mode = 0;
+}
+
+void
+display_single_page_continuous()
+{
+  display_mode = 1;
+}
