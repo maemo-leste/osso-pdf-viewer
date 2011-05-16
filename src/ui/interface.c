@@ -2074,7 +2074,7 @@ ui_get_toolitem_is_sensitive(AppUIData * app_ui_data, PDFDim dim)
     if (!app_ui_data->app_data->low_memory
         && !PDF_FLAGS_IS_SET(app_ui_data->flags, PDF_FLAGS_PAGE_ERROR)
         && (pdf_viewer_get_num_pages() > 0) &&
-        pdf_viewer_get_current_zoom() == 288)
+        fabs(pdf_viewer_get_current_zoom() - 288) < 1E-5)
     {
 	ui_show_banner(GTK_WIDGET(app_ui_data->app_view),
 		       _("pdfv_ib_maximum_zoom"));	 

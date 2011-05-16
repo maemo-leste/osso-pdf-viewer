@@ -319,16 +319,10 @@ get_custom_zoom_level(gboolean fit_width)
 
     /* 
      * in case of fit to width request or if the the current page's ratio is
-     * bigger than the request is like a 'fit to page' so return zoom_w! */
+     * bigger than the request is like a 'fit to page'! */
     if (fit_width || !ratio)
     {
-    	double zoom_w = screen_width / page_hsize;
-    	
-    	/* Check for the scroller bars (now 40px is it good?) */
-    	if( fit_width && screen_height < zoom_w * page_hsize ) {
-    		zoom_w = ( screen_width - 40 ) / page_hsize;
-    	}
-        return zoom_w;
+        return screen_width / page_hsize;
     }
 
     /* the request was a fit to page and ratio was smaller. */
@@ -610,7 +604,7 @@ on_outputdev_redraw(void *user_data)
 }
 
 static void
-calc_size_dpi(guint dpi, guint * width, guint * height,
+calc_size_dpi(double dpi, guint * width, guint * height,
               guint * screen_w, guint * screen_h)
 {
     guint _width, _height, rotate;
@@ -680,7 +674,7 @@ calc_size_dpi(guint dpi, guint * width, guint * height,
 }
 
 static void
-adjust_focus_point(guint old_dpi)
+adjust_focus_point(double old_dpi)
 {
     guint old_width, old_height, width, height;
     guint old_sw, old_sh, sw, sh;
@@ -688,7 +682,7 @@ adjust_focus_point(guint old_dpi)
     guint scx, scy;
 
     calc_size_dpi(old_dpi, &old_width, &old_height, &old_sw, &old_sh);
-    calc_size_dpi((guint) priv->dpi, &width, &height, &sw, &sh);
+    calc_size_dpi(priv->dpi, &width, &height, &sw, &sh);
 
     TDB("Adjust focus: old (%d, %d)-(%d, %d)\n", old_width, old_height,
         old_sw, old_sh);
@@ -701,8 +695,8 @@ adjust_focus_point(guint old_dpi)
     old_y = old_height < old_sh ? old_height / 2 : (scy + old_sh / 2);
 
     TDB("Old center: (%d, %d)\n", old_x, old_y);
-    x = (guint) ((gdouble) old_x * (gdouble) priv->dpi / (gdouble) old_dpi);
-    y = (guint) ((gdouble) old_y * (gdouble) priv->dpi / (gdouble) old_dpi);
+    x = (guint) (old_x * priv->dpi / old_dpi);
+    y = (guint) (old_y * priv->dpi / old_dpi);
     TDB("New center: (%d, %d)\n", x, y);
 
     if (priv->dpi > FULL_RENDER_DPI)
@@ -745,7 +739,7 @@ resize_layout()
     gtk_layout_get_size(GTK_LAYOUT(priv->app_ui_data->layout),
                         &layout_w, &layout_h);
 
-    calc_size_dpi((guint) priv->dpi, &width, &height, &screen_w, &screen_h);
+    calc_size_dpi(priv->dpi, &width, &height, &screen_w, &screen_h);
 
     /* enable or disable scrollbars as necessary */
     ui_enable_scrollbars(priv->app_ui_data,
@@ -1122,7 +1116,8 @@ empty_application_area(void)
 int
 pdf_viewer_get_zoom_percent(void)
 {
-    if (priv->zoom_level >= 0 && dpi_array[priv->zoom_level] == priv->dpi)
+    if (priv->zoom_level >= 0
+        && fabs(dpi_array[priv->zoom_level] - priv->dpi) < 1E-5)
     {
         return zoom_numbers[priv->zoom_level];
     }
@@ -1136,7 +1131,7 @@ pdf_viewer_get_zoom_percent(void)
 int
 compare(const void *a, const void *b)
 {
-    return (*(int *) a - *(int *) b);
+    return (int)(*(double *) a - *(int *) b);
 }
 
 /**
@@ -2186,7 +2181,7 @@ pdf_viewer_zoom(PDFZoom zoom_level)
 {
     double custom_dpi = -1;
     gboolean refresh = FALSE;
-    gint current_dpi = (gint) priv->dpi;
+    double current_dpi = priv->dpi;
     //GtkWidget *banner = NULL;
 
     disable_all_ui();
@@ -2215,7 +2210,7 @@ pdf_viewer_zoom(PDFZoom zoom_level)
                 (PDFZoom) custom_ceil(dpi_array, &current_dpi, 15, sizeof(int),
                                       compare);
 
-            if (priv->dpi != dpi_array[priv->zoom_level])
+            if (fabs(priv->dpi - dpi_array[priv->zoom_level]) > 1E-5)
             {
                 priv->dpi = dpi_array[priv->zoom_level];
 
@@ -2228,7 +2223,7 @@ pdf_viewer_zoom(PDFZoom zoom_level)
                 (PDFZoom) custom_floor(dpi_array, &current_dpi, 15,
                                        sizeof(int), compare);
 
-            if (priv->dpi != dpi_array[priv->zoom_level])
+            if (fabs(priv->dpi - dpi_array[priv->zoom_level]) > 1E-5)
             {
                 priv->dpi = dpi_array[priv->zoom_level];
 
@@ -2249,7 +2244,7 @@ pdf_viewer_zoom(PDFZoom zoom_level)
                 priv->zoom_level = DOC_ZOOM_PAGE;
             }
 
-            if (priv->dpi != custom_dpi)
+            if (fabs(priv->dpi - custom_dpi) > 1E-5)
             {
                 priv->dpi = custom_dpi;
                 refresh = TRUE;
@@ -2388,10 +2383,10 @@ pdf_viewer_get_num_pages()
 	@return current zoom level
 */
 
-int
+double
 pdf_viewer_get_current_zoom(void)
 {
-    return ((int) priv->dpi);
+    return (priv->dpi);
 }
 
 /**
@@ -2615,7 +2610,7 @@ pdf_viewer_get_state(AppState * app_state, gchar ** uri_str, gchar ** passwd)
         g_strdup(priv->password->getCString()) : NULL;
 
     app_state->current_page = priv->current_page;
-    app_state->dpi = (gint) priv->dpi;
+    app_state->dpi = priv->dpi;
     app_state->zoom_level = (gint) priv->zoom_level;
 
     app_state->show_images =

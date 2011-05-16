@@ -37,7 +37,7 @@ struct _AppState {
     gint fullscreen;
     gint show_images;
     gint current_page;
-    gint dpi;
+    double dpi;
     gint zoom_level;
 };
 

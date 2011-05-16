@@ -106,7 +106,7 @@ extern "C" {
     extern GnomeVFSURI *pdf_viewer_get_uri(void);
     extern int pdf_viewer_get_num_pages(void);
     extern int pdf_viewer_get_current_page(void);
-    extern int pdf_viewer_get_current_zoom(void);
+    extern double pdf_viewer_get_current_zoom(void);
 
     extern void pdf_viewer_scroller_changed(PDFScroll scrl);
     extern void pdf_viewer_toggle_fullscreen(void);
