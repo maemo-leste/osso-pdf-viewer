@@ -2973,8 +2973,6 @@ void displayDest(LinkDest *dest)
 			NULL, NULL);
 	priv->app_ui_data->opening_banner = ui_show_progress_banner(GTK_WINDOW(priv->app_ui_data->app_view),
 			_("pdfv_ib_opening"));
-	pdf_viewer_refresh_insensitive_messages();
-	refresh_zooms_insensitive_messages(priv->app_ui_data);
 	render_page();
 }
 /* EOF */

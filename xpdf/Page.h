@@ -162,7 +162,7 @@ public:
   void getDefaultCTM(double *ctm, double hDPI, double vDPI,
 		     int rotate, GBool upsideDown);
 
-  Links *Page::getLinks(Catalog *catalog);
+  Links *getLinks(Catalog *catalog);
 
 private:
 

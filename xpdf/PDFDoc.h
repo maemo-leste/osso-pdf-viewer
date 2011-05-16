@@ -154,7 +154,7 @@ public:
   // Return a pointer to the GUI (XPDFCore or WinPDFCore object).
   void *getGUIData() { return guiData; }
 
-  Links *PDFDoc::myGetLinks(int page);
+  Links *myGetLinks(int page);
 
 
 private:
