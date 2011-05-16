@@ -43,11 +43,19 @@ typedef enum {
     DOC_ZOOM_IN,
     DOC_ZOOM_OUT,
     DOC_ZOOM_50 = 0,
+    DOC_ZOOM_75,
     DOC_ZOOM_100,
+    DOC_ZOOM_125,
     DOC_ZOOM_150,
+    DOC_ZOOM_175,
     DOC_ZOOM_200,
+    DOC_ZOOM_225,
     DOC_ZOOM_250,
+    DOC_ZOOM_275,
     DOC_ZOOM_300,
+    DOC_ZOOM_325,
+    DOC_ZOOM_350,
+    DOC_ZOOM_375,
     DOC_ZOOM_400
 } PDFZoom;
 

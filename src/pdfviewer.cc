@@ -111,20 +111,36 @@ struct _PDFViewerPrivate {
 static _PDFViewerPrivate *priv = NULL;
 
 int dpi_array[] = { 36,         /* 50% */
+	54,							/* 75% */
     72,                         /* 100% */
+    90,							/* 125% */
     108,                        /* 150% */
+    126,						/* 175% */
     144,                        /* 200% */
+    162,						/* 225% */
     180,                        /* 250% */
+    198,						/* 275% */
     216,                        /* 300% */
+    234,						/* 325% */
+    252,						/* 350% */
+    270,						/* 375% */
     288
 };                              /* 400% */
 
 static int zoom_numbers[] = { 50,
+	75,	
     100,
+    125,
     150,
+    175,
     200,
+    225,
     250,
+    275,
     300,
+    325,
+    350,
+    375,
     400
 };
 
@@ -2196,7 +2212,7 @@ pdf_viewer_zoom(PDFZoom zoom_level)
 
         case DOC_ZOOM_IN:
             priv->zoom_level =
-                (PDFZoom) custom_ceil(dpi_array, &current_dpi, 7, sizeof(int),
+                (PDFZoom) custom_ceil(dpi_array, &current_dpi, 15, sizeof(int),
                                       compare);
 
             if (priv->dpi != dpi_array[priv->zoom_level])
@@ -2209,7 +2225,7 @@ pdf_viewer_zoom(PDFZoom zoom_level)
 
         case DOC_ZOOM_OUT:
             priv->zoom_level =
-                (PDFZoom) custom_floor(dpi_array, &current_dpi, 7,
+                (PDFZoom) custom_floor(dpi_array, &current_dpi, 15,
                                        sizeof(int), compare);
 
             if (priv->dpi != dpi_array[priv->zoom_level])
@@ -2243,11 +2259,19 @@ pdf_viewer_zoom(PDFZoom zoom_level)
 
         case DOC_ZOOM_INVALID:
         case DOC_ZOOM_50:
+        case DOC_ZOOM_75:	
         case DOC_ZOOM_100:
+        case DOC_ZOOM_125:
         case DOC_ZOOM_150:
+        case DOC_ZOOM_175:
         case DOC_ZOOM_200:
+        case DOC_ZOOM_225:
         case DOC_ZOOM_250:
+        case DOC_ZOOM_275:
         case DOC_ZOOM_300:
+        case DOC_ZOOM_325:
+        case DOC_ZOOM_350:
+        case DOC_ZOOM_375:
         case DOC_ZOOM_400:
             break;
 
