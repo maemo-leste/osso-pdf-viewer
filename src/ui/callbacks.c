@@ -54,7 +54,7 @@
 #define ACTIVE_AREA_HEIGHT 72
 #define SCREEN_HEIGHT 480
 
-int display_mode = 0;
+int display_mode = 1;
 
 /*
  * Action callbacks for document menu
@@ -64,7 +64,7 @@ void
 on_document_open(GtkAction * action, gpointer user_data)
 {
     AppUIData *app_ui_data;
-    display_mode = 0 ;
+    display_mode = 1;
 
     g_return_if_fail(user_data != NULL);
 
@@ -1255,13 +1255,7 @@ game_get_screenshot(GtkWidget *widget, GdkEventKey *event, gpointer data)
 }  
 
 void
-display_single_page()
+display_single_page_continuous(GtkAction * action)
 {
-  display_mode = 0;
-}
-
-void
-display_single_page_continuous()
-{
-  display_mode = 1;
+  display_mode = gtk_toggle_action_get_active(GTK_TOGGLE_ACTION(action));
 }

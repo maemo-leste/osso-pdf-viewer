@@ -63,8 +63,7 @@ void on_screen_show_images(GtkAction * action, gpointer user_data);
 
 /* other callbacks */
 
-void display_single_page();
-void display_single_page_continuous();
+void display_single_page_continuous(GtkAction * action);
 
 void on_switch_to_page_help(GtkAction * action, gpointer user_data);
 
