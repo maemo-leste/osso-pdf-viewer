@@ -347,6 +347,14 @@ ui_create_menu(AppUIData * app_ui_data)
     hildon_app_menu_append (app_ui_data->menu, GTK_BUTTON (button));
     app_ui_data->menu_details = button; /* store reference */
 
+    /* Single page continuous */
+    button = hildon_check_button_new (buttonsize);
+    gtk_button_set_label (GTK_BUTTON (button), _("pdfv_me_menu_single_page_continuous"));
+    hildon_check_button_set_active (GTK_BUTTON (button), get_display_single_page_continuous_mode());
+    g_signal_connect_after (button, "toggled", G_CALLBACK (display_single_page_continuous), app_ui_data);
+    hildon_app_menu_append (app_ui_data->menu, GTK_BUTTON (button));
+    app_ui_data->menu_single_page_continuous = button; /* store reference */
+
     gtk_widget_show_all(GTK_WIDGET(app_ui_data->menu));
 
     hildon_window_set_app_menu (HILDON_WINDOW (app_ui_data->app_view), 
@@ -1803,9 +1811,11 @@ ui_enable_document_controls(AppUIData * app_ui_data, gboolean enable)
     if (enable) {
         gtk_widget_show(app_ui_data->menu_save);
         gtk_widget_show(app_ui_data->menu_details);
+        gtk_widget_show(app_ui_data->menu_single_page_continuous);
     } else {
         gtk_widget_hide(app_ui_data->menu_save);
         gtk_widget_hide(app_ui_data->menu_details);
+        gtk_widget_hide(app_ui_data->menu_single_page_continuous);
     }
 
     /* 'Document Details' */
@@ -1934,12 +1944,6 @@ ui_enable_page_controls(AppUIData * app_ui_data, PDFDim dim, gboolean enable)
                                                "/Popup/pdfv_me_menu_page_next");
             if (widget != NULL)
                 gtk_widget_set_sensitive(widget, enable);
-
-            widget = gtk_ui_manager_get_widget(app_ui_data->ui_manager,
-                                               "/ToolBar/pdfv_me_menu_single_page_continuous");
-
-            if (widget != NULL)
-                 gtk_widget_set_sensitive(widget, enable);
 
             break;
 

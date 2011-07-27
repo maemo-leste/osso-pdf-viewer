@@ -36,6 +36,7 @@
 	Public interface
 */
 
+int get_display_single_page_continuous_mode ();
 
 /* ACTION callbacks */
 gboolean menu_opened(GtkWidget * widget,
@@ -63,7 +64,7 @@ void on_screen_show_images(GtkAction * action, gpointer user_data);
 
 /* other callbacks */
 
-void display_single_page_continuous(GtkAction * action);
+void display_single_page_continuous(HildonCheckButton *button);
 
 void on_switch_to_page_help(GtkAction * action, gpointer user_data);
 
@@ -111,6 +112,7 @@ void on_file_changed(GnomeVFSMonitorHandle * handle,
                      GnomeVFSMonitorEventType event_type, gpointer user_data);
 
 gboolean configure_event_cb (GtkWidget *widget, GdkEvent *event, gpointer user_data);
+
 
 #endif
  /* CALLBACKS_H */

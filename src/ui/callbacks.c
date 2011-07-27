@@ -1255,7 +1255,20 @@ game_get_screenshot(GtkWidget *widget, GdkEventKey *event, gpointer data)
 }  
 
 void
-display_single_page_continuous(GtkAction * action)
+display_single_page_continuous (HildonCheckButton *button)
 {
-  display_mode = gtk_toggle_action_get_active(GTK_TOGGLE_ACTION(action));
+  gboolean active;
+
+  active = hildon_check_button_get_active (button);
+  
+  if(active)
+    display_mode = 1;
+  else
+    display_mode = 0;
+}
+
+int
+get_display_single_page_continuous_mode ()
+{
+  return display_mode;
 }

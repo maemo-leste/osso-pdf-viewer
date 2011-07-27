@@ -118,6 +118,7 @@ struct _AppUIData {
     GtkWidget *menu_open;
     GtkWidget *menu_save;
     GtkWidget *menu_details;
+    GtkWidget *menu_single_page_continuous;
 
     /* Toolbar label widgets */
     GtkAction *current_page;
