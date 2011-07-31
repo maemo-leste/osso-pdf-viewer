@@ -676,10 +676,12 @@ on_screen_scroll(GtkAdjustment * adjustment, gpointer user_data)
 	 if ( adj->page_size < adj->upper &&adj->value < ( adj->upper - adj->page_size ) ) {
 	      return TRUE;	       
 	 } else {
+		if ( pdf_viewer_get_num_pages() != pdf_viewer_get_current_page() ) {
 	           pdf_viewer_navigate_page(pdf_viewer_get_current_page()+1);
                    ui_update_current_page(app_data->app_ui_data);
 		   adj = gtk_layout_get_vadjustment(GTK_LAYOUT(app_data->app_ui_data->layout));	
 		   gtk_adjustment_set_value(adj,adj->value + 0.0001);
+		}
 	   }	
          return TRUE;     
    }        
