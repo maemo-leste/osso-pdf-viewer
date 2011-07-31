@@ -91,11 +91,6 @@ static guint n_action_entries = G_N_ELEMENTS(action_entries);
 
 
 static GtkToggleActionEntry toggle_action_entries[] = {
-    {"pdfv_me_menu_single_page_continuous", "pdf_viewer_single_page_continuous",
-     "pdfv_me_menu_single_page_continuous", "", NULL,
-     G_CALLBACK(display_single_page_continuous),
-     TRUE},
-
     {"pdfv_me_menu_screen_full_screen", "general_fullsize", 
      "pdfv_me_menu_screen_full_screen", NULL, NULL,
      G_CALLBACK(on_screen_full_screen),
@@ -120,7 +115,6 @@ static const gchar *ui_info =
     "    <toolitem action='pdfv_me_menu_page_previous'/>" 
     "    <toolitem action='pdfv_me_menu_page_next'/>" 
     "    <toolitem action='pdfv_me_menu_page_last'/>" 
-    "    <toolitem action='pdfv_me_menu_single_page_continuous'/>" 
     "    <toolitem action='pdfv_me_menu_screen_zoom_out'/>" 
     "    <toolitem action='pdfv_me_menu_screen_zoom_in'/>" 
     "    <toolitem action='pdfv_me_menu_screen_full_screen'/>" 
