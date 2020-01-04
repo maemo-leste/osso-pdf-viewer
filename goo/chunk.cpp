@@ -46,7 +46,7 @@ namespace ObjectPool
    void Chunk :: info(FILE* output) const
    {
 #if OP_STATISTICS
-      fprintf(output, "  0x%08x: free %u used %u succ 0x%08x\n", (unsigned)this, myFreeCounter, myUsedCounter, (unsigned)mySuccessor);
+      fprintf(output, "  0x%p: free %u used %u succ 0x%p\n", (void*)this, myFreeCounter, myUsedCounter, (void*)mySuccessor);
 #endif
    } /* info */
 
