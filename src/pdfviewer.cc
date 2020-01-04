@@ -489,7 +489,7 @@ create_rendering() {
         g_thread_join( priv->render_join_thread );
     }
     priv->render_join_thread = priv->render_thread =
-    	g_thread_create(render_page_func, NULL, TRUE, NULL);
+        g_thread_new("render_thread", render_page_func, NULL);
     if( priv->render_thread == NULL ) {
         g_critical( "Can't create render thread" );
     }	
@@ -532,8 +532,11 @@ render_page()
     DLOCKED(cancel_mutex);
     if( priv->render_thread != NULL ) {
         if (!priv->cancel_thread) {
+            // XXX: Ported from g_thread_create, with joinable=FALSE, think we
+            // need to deref here
             priv->cancel_thread =
-            	g_thread_create(cancel_rendering_func, NULL, FALSE, NULL);
+                g_thread_new("cancel", cancel_rendering_func, NULL);
+            g_thread_unref(priv->cancel_thread);
         }
     } else {
         create_rendering();
@@ -1250,7 +1253,7 @@ pdf_viewer_init(AppUIData * app_ui_data)
 
     // xInitMutex(&priv->cancel_mutex);
     priv->app_ui_data = app_ui_data;
-    priv->thread = g_thread_create(init_thread_func, app_ui_data, TRUE, NULL);
+    priv->thread = g_thread_new("init", init_thread_func, app_ui_data);
 
     /* state loading is not in thread because D-BUS dies with it! */
 
