@@ -16,6 +16,7 @@ AM_INIT_AUTOMAKE([foreign])
 
 AM_PROG_CC_C_O
 AC_PROG_CC
+AC_PROG_CXX
 AC_PROG_CPP
 AC_PROG_INSTALL
 AC_PROG_LIBTOOL
@@ -35,26 +36,27 @@ CXXFLAGS += $(CPPFLAGS)
 
 # Check module dependencies, will automatically inlude all needed
 # compiler options to DEPS-variables, see src/Makefile.am for details
-PKG_CHECK_MODULES( GDEPS, 
+PKG_CHECK_MODULES(GDEPS, [
 	gtk+-2.0 >= 2.2  
 	glib-2.0 >= 2.2 
 	gnome-vfs-2.0 >= 2.2 
 	gnome-vfs-module-2.0 >= 2.2 
 	gconf-2.0 >= 2.6.4 
-	comapp >= 0.1.1
+	comapp >= 0.1.1,
+	x11]
 )
-AC_SUBST( GDEPS_CFLAGS )
-AC_SUBST( GDEPS_LIBS )
+AC_SUBST(GDEPS_CFLAGS)
+AC_SUBST(GDEPS_LIBS)
 
 # 'libossohelp' dependency
-PKG_CHECK_MODULES( HILDON, 
+PKG_CHECK_MODULES(HILDON, [
 	hildon-1 >= 0.8.1
 	hildon-fm-2 >= 0.8.1 
 	libosso >= 0.8.1 
-	libhildonmime
+	libhildonmime]
 )
-AC_SUBST( HILDON_CFLAGS )
-AC_SUBST( HILDON_LIBS )
+AC_SUBST(HILDON_CFLAGS)
+AC_SUBST(HILDON_LIBS)
 
 AC_MSG_CHECKING([for Bluetooth support])
 conbtui=`pkg-config --cflags conbtdialogs 2> /dev/null`
