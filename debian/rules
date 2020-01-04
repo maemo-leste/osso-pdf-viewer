@@ -111,12 +111,12 @@ install: build
 	cp $(CURDIR)/data/osso-pdf-viewer.xml $(CURDIR)/debian/tmp/usr/share/mime/packages
 
 	# setup application for maemo launcher
-ifeq "$(strip $(LAUNCHER))" "yes"
-	mv $(CURDIR)/debian/tmp/usr/bin/osso_pdfviewer \
-	   $(CURDIR)/debian/tmp/usr/bin/osso_pdfviewer.launch
-	ln -s /usr/bin/maemo-invoker \
-	      $(CURDIR)/debian/tmp/usr/bin/osso_pdfviewer
-endif
+#ifeq "$(strip $(LAUNCHER))" "yes"
+#	mv $(CURDIR)/debian/tmp/usr/bin/osso_pdfviewer \
+#	   $(CURDIR)/debian/tmp/usr/bin/osso_pdfviewer.launch
+#	ln -s /usr/bin/maemo-invoker \
+#	      $(CURDIR)/debian/tmp/usr/bin/osso_pdfviewer
+#endif
 
 # Build architecture-independent files here.
 binary-indep: build install
