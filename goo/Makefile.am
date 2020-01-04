@@ -10,7 +10,6 @@ libGoo_include_HEADERS =			\
 	GString.h				\
 	gmem.h					\
 	gtypes.h				\
-	gmem.h					\
 	gfile.h					\
 	allocatable.h				\
 	chunk.h					\
