@@ -29,6 +29,12 @@ else
 	CFLAGS += -O2
 endif
 
+ifeq (,$(findstring nolauncher,$(DEB_BUILD_OPTIONS)))
+    OPTS += "--enable-maemo-launcher=yes"
+    USE_MAEMO_LAUNCHER = true
+    LAUNCHER_DEPENDS = -Vlauncher:Depends="maemo-launcher"
+endif
+
 # Prefer hardware floating point if enabled
 ifneq (,$(findstring vfp,$(DEB_BUILD_OPTIONS)))
 	CFLAGS += -mfpu=vfp -mfloat-abi=softfp
@@ -42,19 +48,10 @@ endif
 CPPFLAGS += $(CFLAGS)
 CXXFLAGS += $(CPPFLAGS)
 
-ifeq (,$(findstring nostrip,$(DEB_BUILD_OPTIONS)))
-	INSTALL_PROGRAM += -s
-endif
+#ifeq (,$(findstring nostrip,$(DEB_BUILD_OPTIONS)))
+#	INSTALL_PROGRAM += -s
+#endif
 
-# VG 2005.06.23: maemo-launcher dependency 
-ifeq (,$(findstring nolauncher,$(DEB_BUILD_OPTIONS)))
-	LAUNCHER = yes
-endif
-ifeq "$(strip $(LAUNCHER))" "yes"
-	LAUNCHER_DEPENDS = -Vlauncher:Depends="maemo-launcher"
-	LAUNCHER_CFLAGS = $(shell pkg-config --cflags maemo-launcher-app)
-	LAUNCHER_LDFLAGS = $(shell pkg-config --libs maemo-launcher-app) -export-dynamic 
-endif
 
 config.status: configure
 	dh_testdir
@@ -73,9 +70,7 @@ build-stamp:  config.status
 	dh_testdir
 
 	# Add here commands to compile the package.
-	$(MAKE) \
-	  MAEMO_LAUNCHER_CFLAGS="$(LAUNCHER_CFLAGS)" \
-	  MAEMO_LAUNCHER_LDFLAGS="$(LAUNCHER_LDFLAGS)"
+	$(MAKE)
 	#/usr/bin/docbook-to-man debian/osso-pdf-viewer.sgml > osso-pdf-viewer.1
 
 	touch build-stamp
@@ -110,13 +105,6 @@ install: build
 	mkdir -p $(CURDIR)/debian/tmp/usr/share/mime/packages
 	cp $(CURDIR)/data/osso-pdf-viewer.xml $(CURDIR)/debian/tmp/usr/share/mime/packages
 
-	# setup application for maemo launcher
-ifeq "$(strip $(LAUNCHER))" "yes"
-	mv $(CURDIR)/debian/tmp/usr/bin/osso_pdfviewer \
-	   $(CURDIR)/debian/tmp/usr/bin/osso_pdfviewer.launch
-	ln -s /usr/bin/maemo-invoker \
-	      $(CURDIR)/debian/tmp/usr/bin/osso_pdfviewer
-endif
 
 # Build architecture-independent files here.
 binary-indep: build install
@@ -131,7 +119,10 @@ binary-arch: build install
 	dh_installexamples
 	dh_install --sourcedir=debian/tmp -v
 	dh_link
-	dh_strip --dbg-package=osso-pdf-viewer
+	if test "x$(USE_MAEMO_LAUNCHER)" = "xtrue"; then \
+		dh_maemolauncher /usr/bin/osso_pdfviewer; \
+	fi
+	#dh_strip --dbg-package=osso-pdf-viewer
 	dh_compress
 	dh_fixperms
 	dh_installdeb
