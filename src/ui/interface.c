@@ -62,6 +62,7 @@
 
 #include "i18n.h"
 #include "utility.h"
+#include "settings.h"
 #include "interface.h"
 #include "ui.h"
 #include "callbacks.h"
