@@ -296,7 +296,7 @@ ui_create_main_window(AppData * app_data)
     Atom atom;
     unsigned long val = 1;
     
-    display = gdk_drawable_get_display(GTK_WIDGET(app_ui_data->app_view)->window);
+    display = gdk_window_get_display(GTK_WIDGET(app_ui_data->app_view)->window);
     
     atom = gdk_x11_get_xatom_by_name_for_display(display, "_HILDON_ZOOM_KEY_ATOM");
     
@@ -1490,8 +1490,7 @@ build_toolbar(GtkActionGroup * actions, AppUIData * app_ui_data)
         if (!GTK_IS_SEPARATOR_TOOL_ITEM(tool_item))
         {
             /* gtk_tool_item_set_expand(tool_item, TRUE); */
-            GTK_WIDGET_UNSET_FLAGS(gtk_bin_get_child(GTK_BIN(tool_item)),
-                                   GTK_CAN_FOCUS);
+            gtk_widget_set_can_focus(gtk_bin_get_child(GTK_BIN(tool_item)), FALSE);
 
             gtk_tool_item_set_expand(tool_item, FALSE);
             //gtk_tool_item_set_expand(tool_item, TRUE);
@@ -1535,7 +1534,7 @@ build_toolbar(GtkActionGroup * actions, AppUIData * app_ui_data)
     gtk_tool_item_set_expand(tool_item, TRUE);
     gtk_tool_item_set_homogeneous(tool_item, FALSE);
     button = gtk_button_new();
-    GTK_WIDGET_UNSET_FLAGS(button, GTK_CAN_FOCUS);
+    gtk_widget_set_can_focus(button, FALSE);
 
     /* set minimum horizontal size for button to avoid other toolbar buttons
      * moving around with longer page numbers */
@@ -2054,7 +2053,7 @@ ui_get_toolitem_is_sensitive(AppUIData * app_ui_data, PDFDim dim)
 
 
     return ((path != NULL) ?
-            GTK_WIDGET_IS_SENSITIVE(gtk_ui_manager_get_widget
+            gtk_widget_is_sensitive(gtk_ui_manager_get_widget
                                     (app_ui_data->ui_manager, path)) : FALSE);
 }
 

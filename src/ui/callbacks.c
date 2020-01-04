@@ -408,7 +408,7 @@ key_press(GtkWidget * widget, GdkEventKey * event, gpointer data)
             	w = gtk_ui_manager_get_widget(app_ui_data->ui_manager,
 					"/ToolBar/pdfv_me_menu_page_previous");
 
-				if ((w != NULL) && (GTK_WIDGET_IS_SENSITIVE(w))) {
+				if ((w != NULL) && (gtk_widget_is_sensitive(w))) {
 					on_page_previous(NULL, data);
 					adj = gtk_layout_get_vadjustment(GTK_LAYOUT          (app_ui_data->layout));	
 					gtk_adjustment_set_value(adj,adj->value + adj->upper - adj->page_size -0.0001);
@@ -506,7 +506,7 @@ key_press(GtkWidget * widget, GdkEventKey * event, gpointer data)
         case GDK_F8:
 	        w = gtk_ui_manager_get_widget(app_ui_data->ui_manager,
 				"/ToolBar/pdfv_me_menu_screen_zoom_out");
-			if ((w != NULL) && (GTK_WIDGET_IS_SENSITIVE(w))) {
+			if ((w != NULL) && (gtk_widget_is_sensitive(w))) {
 				pdf_viewer_zoom(DOC_ZOOM_OUT);
 			} else if (pdf_viewer_get_zoom_percent() <= 50) {
 				ui_show_banner(GTK_WIDGET(app_ui_data->app_view),
@@ -518,7 +518,7 @@ key_press(GtkWidget * widget, GdkEventKey * event, gpointer data)
         case GDK_F7:
 	        w = gtk_ui_manager_get_widget(app_ui_data->ui_manager,
  	           "/ToolBar/pdfv_me_menu_screen_zoom_in");
-            if ((w != NULL) && (GTK_WIDGET_IS_SENSITIVE(w))) {
+            if ((w != NULL) && (gtk_widget_is_sensitive(w))) {
 				pdf_viewer_zoom(DOC_ZOOM_IN);
 			} else if (pdf_viewer_get_zoom_percent() >= 400) {
 	            ui_show_banner(GTK_WIDGET(app_ui_data->app_view),
@@ -538,7 +538,7 @@ key_press(GtkWidget * widget, GdkEventKey * event, gpointer data)
             PDF_FLAGS_UNSET(app_ui_data->flags, PDF_FLAGS_SELECT_KEY_ALLOWED);
             
             if( (pdf_viewer_get_num_pages() != 0) ||
-                !(GTK_WIDGET_IS_SENSITIVE( gtk_ui_manager_get_widget
+                !(gtk_widget_is_sensitive( gtk_ui_manager_get_widget
                   (app_ui_data->ui_manager,
                   	"/MenuBar/pdfv_me_main_menu_document/"
                   	"pdfv_me_menu_document_open")))) {
@@ -586,7 +586,7 @@ key_release(GtkWidget * widget, GdkEventKey * event, gpointer data)
             if( ( key_pressed_was == GDK_KP_Enter ||
             	key_pressed_was == GDK_Return ) &&
             	(pdf_viewer_get_num_pages() == 0))/* &&
-                (GTK_WIDGET_IS_SENSITIVE
+                (gtk_widget_is_sensitive
                  (gtk_ui_manager_get_widget
                   (app_ui_data->ui_manager,
                    "/MenuBar/pdfv_me_main_menu_document/"
@@ -660,7 +660,7 @@ on_screen_scroll(GtkAdjustment * adjustment, gpointer user_data)
          if ( adj->upper <= adj->page_size || adj->value < 0.0001 ) {
               w = gtk_ui_manager_get_widget(app_data->app_ui_data->ui_manager,
 					"/ToolBar/pdfv_me_menu_page_previous");
-	      if ( (w != NULL) && (GTK_WIDGET_IS_SENSITIVE(w))) {	
+	      if ( (w != NULL) && (gtk_widget_is_sensitive(w))) {	
 		   pdf_viewer_navigate_page(pdf_viewer_get_current_page()-1);
                    ui_update_current_page(app_data->app_ui_data);
 		   adj = gtk_layout_get_vadjustment(GTK_LAYOUT(app_data->app_ui_data->layout));	
