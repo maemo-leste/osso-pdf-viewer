@@ -34,6 +34,28 @@ CFLAGS="$CFLAGS -Wall -Wmissing-prototypes -Wmissing-declarations"
 CPPFLAGS ="-Wall -Wmissing-declarations"
 CXXFLAGS += $(CPPFLAGS)
 
+AC_MSG_CHECKING([whether to use maemo launcher])
+AC_ARG_ENABLE([maemo-launcher],
+          [AS_HELP_STRING([--enable-maemo-launcher],
+          [default=yes])],
+          [
+           case "${enableval}" in
+           yes) maemo_launcher=true
+                AC_MSG_RESULT([yes])
+            PKG_CHECK_MODULES(MAEMO_LAUNCHER, [maemo-launcher-app])
+            AC_SUBST(MAEMO_LAUNCHER_CFLAGS)
+            AC_SUBST(MAEMO_LAUNCHER_LIBS)
+            ;;
+           no)  maemo_launcher=false
+                    AC_MSG_RESULT([no])
+            ;;
+           *) AC_MSG_ERROR([
+            "Bad value ${enableval} for --enable-maemo-launcher,\n"
+            "give exactly 'yes' or 'no' value."]) ;;
+              esac
+         ], [maemo_launcher=false])
+
+
 # Check module dependencies, will automatically inlude all needed
 # compiler options to DEPS-variables, see src/Makefile.am for details
 PKG_CHECK_MODULES(GDEPS, [

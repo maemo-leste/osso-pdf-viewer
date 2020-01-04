@@ -100,7 +100,7 @@ UNWANTED = -export-dynamic 		\
 
 osso_pdfviewer_LDADD = 				\
 	$(filter-out $(UNWANTED), 		\
-	$(MAEMO_LAUNCHER_LDFLAGS) 		\
+	$(MAEMO_LAUNCHER_LIBS) 		\
 	$(HILDON_LIBS)				\
 	$(GDEPS_LIBS) 				\
 	$(XPDF_OBJS)				\
