@@ -83,7 +83,7 @@ main(int argc, char *argv[])
 {
     gboolean result;
 
-    g_thread_init(NULL);
+    //g_thread_init(NULL);
     dbus_g_thread_init();
     gdk_threads_init();
 
