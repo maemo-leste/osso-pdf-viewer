@@ -15,6 +15,6 @@ Description: OSSO PDF Viewer
 Package: osso-pdf-viewer-dbg
 Architecture: any
 Section: devel
-Depends: osso-pdf-viewer (= ${Source-Version})
+Depends: osso-pdf-viewer (= ${source:Version})
 Description: OSSO PDF Viewer debug package
  PDF Viewer application debug package.
