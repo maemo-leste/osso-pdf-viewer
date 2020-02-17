@@ -95,15 +95,11 @@ XPDF_OBJS = \
 
 AM_LDFLAGS = -Wl,--version-script=export.map
 
-UNWANTED = -export-dynamic 		\
-	-Wl,--export-dynamic
-
 osso_pdfviewer_LDADD = 				\
-	$(filter-out $(UNWANTED), 		\
-	$(MAEMO_LAUNCHER_LIBS) 		\
+	$(MAEMO_LAUNCHER_LIBS) 			\
 	$(HILDON_LIBS)				\
 	$(GDEPS_LIBS) 				\
 	$(XPDF_OBJS)				\
 	-L../goo -lGoo 				\
 	-L../splash -lsplash			\
-	-L../fofi -lfofi )
+	-L../fofi -lfofi
