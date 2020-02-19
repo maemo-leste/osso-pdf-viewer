@@ -1,3 +1,9 @@
+osso-pdf-viewer (1.9.1) unstable; urgency=low
+
+  * Fix launcher support
+
+ -- Merlijn Wajer <merlijn@wizzup.org>  Wed, 19 Feb 2020 14:39:39 +0100
+
 osso-pdf-viewer (1.9.0) unstable; urgency=low
 
   * Initial Leste import
