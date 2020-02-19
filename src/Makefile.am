@@ -93,7 +93,7 @@ XPDF_OBJS = \
 	../xpdf/UnicodeTypeTable.o 	\
 	../xpdf/XRef.o
 
-AM_LDFLAGS = -Wl,--version-script=export.map -Wl,--export-dynamic
+AM_LDFLAGS = -Wl,--version-script=export.map
 
 osso_pdfviewer_LDADD = 				\
 	$(MAEMO_LAUNCHER_LIBS) 			\

@@ -30,7 +30,7 @@ else
 endif
 
 ifeq (,$(findstring nolauncher,$(DEB_BUILD_OPTIONS)))
-    OPTS += "--enable-maemo-launcher=yes"
+    ENABLE_LAUNCHER += --enable-maemo-launcher
     USE_MAEMO_LAUNCHER = true
     LAUNCHER_DEPENDS = -Vlauncher:Depends="maemo-launcher"
 endif
@@ -56,7 +56,7 @@ CXXFLAGS += $(CPPFLAGS)
 config.status: configure
 	dh_testdir
 	# Add here commands to configure the package.
-	CFLAGS="$(CFLAGS)" CPPFLAGS="$(CPPFLAGS)" CXXFLAGS="$(CXXFLAGS)" ./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) --prefix=/usr --mandir=\$${prefix}/share/man --infodir=\$${prefix}/share/info
+	CFLAGS="$(CFLAGS)" CPPFLAGS="$(CPPFLAGS)" CXXFLAGS="$(CXXFLAGS)" ./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) --prefix=/usr --mandir=\$${prefix}/share/man --infodir=\$${prefix}/share/info $(ENABLE_LAUNCHER)
 
 configure: configure-stamp
 configure-stamp:
