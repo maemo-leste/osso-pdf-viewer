@@ -77,18 +77,27 @@ get_time(void)
 gchar *
 get_basename_for_display(const gchar * uri)
 {
-    gchar * basename;
-    gchar * unescaped;
+    GFile* file;
+    GFileInfo* fileinfo;
+    const gchar* basename;
+    gchar * res = NULL;
+    GError *error = NULL;
 
-	g_assert( uri != NULL );
-    
-    /* Get base name */
-    basename = g_path_get_basename(uri);
-    
-    unescaped = gnome_vfs_unescape_string_for_display(basename);
+    file = g_file_new_for_uri(uri);
+    fileinfo = g_file_query_info(file, G_FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME, G_FILE_QUERY_INFO_NONE, NULL, &error);
+    if (error != NULL) {
+        fprintf(stderr, "get_basename_for_display: error: g_file_query_info: %s\n", error->message);
+        g_error_free(error);
+    } else {
+        basename = g_file_info_get_display_name(fileinfo);
+        res = g_strdup(basename);
 
-    g_free( basename );
-    return unescaped;
+        g_object_unref(fileinfo);
+    }
+
+    g_object_unref(file);
+
+    return res;
 }
 
 /**
@@ -127,8 +136,12 @@ mime_type_is_supported(const gchar * mime_type)
 gboolean
 file_is_supported(const gchar * uri_str)
 {
-    GnomeVFSURI *uri;
-    GnomeVFSFileInfo *info;
+    GFile* file;
+    GFileInfo* fileinfo;
+    GFileType filetype;
+    GError *error = NULL;
+    const gchar *contenttype;
+
     gboolean retval = FALSE;
 
     if (!uri_str)
@@ -136,27 +149,26 @@ file_is_supported(const gchar * uri_str)
         return FALSE;
     }
 
-    uri = gnome_vfs_uri_new(uri_str);
-
-    info = gnome_vfs_file_info_new();
-    gnome_vfs_get_file_info_uri(uri, info,
-                                GNOME_VFS_FILE_INFO_DEFAULT |
-                                GNOME_VFS_FILE_INFO_GET_MIME_TYPE);
-
-    if (info
-        && (info->valid_fields & GNOME_VFS_FILE_INFO_FIELDS_TYPE)
-        && (info->valid_fields & GNOME_VFS_FILE_INFO_FIELDS_MIME_TYPE))
-    {
-
-        if (info->type == GNOME_VFS_FILE_TYPE_REGULAR
-            && mime_type_is_supported(info->mime_type))
-        {
-            retval = TRUE;
-        }
+    file = g_file_new_for_uri(uri_str);
+    fileinfo = g_file_query_info(file, "standard::*", G_FILE_QUERY_INFO_NONE, NULL, &error);
+    //fileinfo = g_file_query_info(gfile, G_FILE_ATTRIBUTE_STANDARD_CONTENT_TYPE, G_FILE_QUERY_INFO_NONE, NULL, &error);
+    if (error != NULL) {
+        fprintf(stderr, "file_is_supported: error in g_file_query_info: %s\n", error->message);
+        g_error_free(error);
+        goto end;
     }
 
-    gnome_vfs_file_info_unref(info);
-    gnome_vfs_uri_unref(uri);
+    filetype = g_file_info_get_file_type(fileinfo);
+    contenttype = g_file_info_get_content_type(fileinfo);
+
+    if ((filetype == G_FILE_TYPE_REGULAR) && mime_type_is_supported(contenttype) ) {
+        retval = TRUE;
+    }
+
+    g_object_unref(fileinfo);
+
+end:
+    g_object_unref(file);
 
     return retval;
 }

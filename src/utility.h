@@ -56,6 +56,8 @@ extern "C" {
 
     gchar *get_basename_for_display(const gchar * uri);
 
+    gchar* uri_to_string(gchar *);
+
 #ifdef __cplusplus
 }
 #endif
