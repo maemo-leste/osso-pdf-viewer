@@ -28,14 +28,13 @@
 #include "OssoStream.h"
 #include "gtk-switch.h"
 #include <gtk/gtk.h>
-#include <libgnomevfs/gnome-vfs.h>
 #include "gtk-switch.h"
 
 #ifndef NO_DECRYPTION
 #include "Decrypt.h"
 #endif
 
-OssoStream::OssoStream(GnomeVFSHandle *handleA, Guint startA, GBool limitedA,
+OssoStream::OssoStream(GFileInputStream *handleA, Guint startA, GBool limitedA,
 		       Guint lengthA, Object *dictA):BaseStream(dictA) {
 	
   handle = handleA;
@@ -46,7 +45,7 @@ OssoStream::OssoStream(GnomeVFSHandle *handleA, Guint startA, GBool limitedA,
   buffPos = start;
   savePos = 0;
   saved = gFalse;
-}												   
+}
 
 OssoStream::~OssoStream(){
   close();
@@ -59,12 +58,14 @@ Stream* OssoStream::makeSubStream(Guint startA, GBool limitedA,
 }
 
 void OssoStream::reset() {
-  GnomeVFSFileSize offsetReturn;
-  if( gnome_vfs_tell(handle, &offsetReturn) == GNOME_VFS_OK) {
+  goffset offsetReturn;
+
+  offsetReturn = g_seekable_tell((GSeekable*)handle);
     savePos = (Guint)offsetReturn;
     saved = gTrue;
-  }
-  gnome_vfs_seek(handle, GNOME_VFS_SEEK_START, start);
+
+  g_seekable_seek((GSeekable*)handle, start, G_SEEK_SET, NULL, NULL);
+  
   buffPtr = buffEnd = buff;
   buffPos = start;
 #ifndef NO_DECRYPTION
@@ -75,7 +76,7 @@ void OssoStream::reset() {
 
 void OssoStream::close(){
   if(saved) {
-    gnome_vfs_seek(handle, GNOME_VFS_SEEK_START, savePos);
+    g_seekable_seek((GSeekable*)handle, savePos, G_SEEK_SET, NULL, NULL);
     saved = gFalse;
   }
 }
@@ -84,7 +85,8 @@ extern gboolean _pdf_abort_rendering;
 
 GBool OssoStream::fillBuff() {
   int n;
-  GnomeVFSFileSize bytesRead;
+  GError *error = NULL;
+  gssize bytesRead;
 #ifndef NO_DECRYPTION
   char *p;
 #endif
@@ -101,16 +103,18 @@ GBool OssoStream::fillBuff() {
   if( limited && buffPos >= start + length ) {
     return gFalse;
   }
-  if( limited && buffPos + gnomeVFSStreamBufSize > start + length ) {
+  if( limited && buffPos + gioStreamBufSize > start + length ) {
     n = start + length - buffPos;
   } else {
-    n = gnomeVFSStreamBufSize;
+    n = gioStreamBufSize;
   }
-
-  if(gnome_vfs_read(handle, buff, n, &bytesRead) != GNOME_VFS_OK) {
-  //fprintf(stderr, "error: %s\n",gnome_vfs_result_to_string(result));
+  bytesRead = g_input_stream_read((GInputStream*)handle, buff, n, NULL, &error);
+  if (error != NULL ) {
+    fprintf(stderr, "OssoStream::fillBuff g_input_stream_read: error: g_input_stream_read: %s\n", error->message);
+    g_error_free(error);
     return gFalse;
   }
+
   buffEnd = buff + bytesRead;
   if( buffPtr >= buffEnd ) {
     return gFalse;
@@ -128,25 +132,45 @@ GBool OssoStream::fillBuff() {
 }
 
 void OssoStream::setPos(Guint pos, int dir) {
+  GError *error = NULL;
+  goffset offsetReturn;
+
   if( dir >= 0 ) {
-    if(gnome_vfs_seek(handle, GNOME_VFS_SEEK_START, pos) == GNOME_VFS_OK) {
-      buffPos = pos;
+
+    g_seekable_seek((GSeekable*)handle, pos, G_SEEK_SET, NULL, &error);
+    if (error == NULL) {
+        buffPos = pos;
+    } else {
+        // VFS code also didn't do anything special on error.
+        fprintf(stderr, "OssoStream::setPos: error: g_seekable_seek: %s\n", error->message);
+        g_error_free(error);
     }
   } else {
-    GnomeVFSFileSize offsetReturn;
-    if(gnome_vfs_seek(handle, GNOME_VFS_SEEK_END, 0) ==
-       GNOME_VFS_OK && 
-       gnome_vfs_tell(handle, &offsetReturn) == GNOME_VFS_OK) {
-      buffPos = (Guint)offsetReturn;
-      if( pos > buffPos )
-	pos = (Guint)buffPos;
-      if(gnome_vfs_seek(handle, GNOME_VFS_SEEK_END, -(int)pos) ==
-	 GNOME_VFS_OK &&
-	 gnome_vfs_tell(handle, &offsetReturn) == GNOME_VFS_OK){
-	buffPos = (Guint)offsetReturn;
-      }
+    g_seekable_seek((GSeekable*)handle, 0, G_SEEK_END, NULL, &error);
+    if (error != NULL) {
+        // XXX: act on this?
+        g_error_free(error);
+        goto end;
     }
+
+    offsetReturn = g_seekable_tell((GSeekable*)handle);
+    buffPos = (Guint)offsetReturn;
+    if (pos > buffPos) {
+        pos = (Guint)buffPos;
+    }
+
+    g_seekable_seek((GSeekable*)handle, -(int)pos, G_SEEK_END, NULL, &error);
+    if (error != NULL) {
+        // XXX: act on this?
+        g_error_free(error);
+        goto end;
+    }
+
+    offsetReturn = g_seekable_tell((GSeekable*)handle);
+    buffPos = (Guint)offsetReturn;
   }
+
+end:
   buffPtr = buffEnd = buff;
 }
 

@@ -27,18 +27,18 @@
 #define OSSOSTREAM_H
 
 #include "gtk-switch.h"
-#include <libgnomevfs/gnome-vfs-handle.h>
+#include <gio/gio.h>
 #include "gtk-switch.h"
 #include "Object.h"
 #include "Stream.h"
 
-#define gnomeVFSStreamBufSize fileStreamBufSize
+#define gioStreamBufSize fileStreamBufSize
 
 class OssoStream: public BaseStream {
 public:
-	
-        OssoStream(GnomeVFSHandle *handleA, Guint startA, GBool limitedA,
-		   Guint lengthA, Object *dictA);
+
+	OssoStream(GFileInputStream *handleA, Guint startA, GBool limitedA,
+	   Guint lengthA, Object *dictA);
 	virtual ~OssoStream();
 
 	virtual Stream* makeSubStream(Guint startA, GBool limitedA,
@@ -55,14 +55,14 @@ public:
 	virtual void moveStart(int delta);
 
 private:
-	
+
 	GBool fillBuff();
 
-	GnomeVFSHandle *handle;
+	GFileInputStream *handle;
 	Guint start;
 	GBool limited;
 	Guint length;
-	char buff[gnomeVFSStreamBufSize];
+	char buff[gioStreamBufSize];
 	char *buffPtr;
 	char *buffEnd;
 	Guint buffPos;
