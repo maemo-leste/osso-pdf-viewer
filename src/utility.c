@@ -237,5 +237,13 @@ free_mime_filters(void)
     }
 }
 
+gchar* uri_to_string(gchar* in_uri) {
+    GFile* gfile = g_file_new_for_uri(in_uri);
+    gchar* uri = g_file_get_path(gfile);
+    g_object_unref(gfile);
+    return uri;
+}
+
+
 
 /* EOF */

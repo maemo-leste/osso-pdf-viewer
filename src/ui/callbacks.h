@@ -30,7 +30,7 @@
 #include "appdata.h"
 #include <gtk/gtk.h>
 #include <hildon/hildon-number-editor.h>
-#include <libgnomevfs/gnome-vfs-monitor.h>
+#include <gio/gio.h>
 
 /**
 	Public interface

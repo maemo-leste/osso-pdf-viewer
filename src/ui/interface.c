@@ -34,8 +34,7 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
-#include <libgnomevfs/gnome-vfs-result.h>
-#include <libgnomevfs/gnome-vfs.h>
+#include <gio/gio.h>
 #include <libosso.h>
 #include <hildon/hildon-defines.h>
 #include <hildon/hildon-program.h>
@@ -392,11 +391,15 @@ ui_run_file_chooser(AppUIData * app_ui_data, GtkFileChooserAction action)
 	if( (strncmp( uri_str, "file:///var/tmp/", 16 ) == 0 )/* for files opened from web*/
              || ((strncmp( uri_str, "/var/tmp/", 9 ) == 0 ))) {/*for files opened as an email attachment*/	
                 gchar * filename = strrchr( uri_str, '/' );
-		filename = gnome_vfs_unescape_string(filename, NULL); // handles the spaces between the words
-		gchar * new_path = g_build_filename( get_factory_default_folder(), filename, NULL );
-	    gchar * new_uri_str = gnome_vfs_make_uri_from_input( new_path );
-	    g_free( new_path );
-		g_free( uri_str );
+		filename = g_uri_unescape_string(filename, NULL); // handles the spaces between the words
+
+        char* path = g_build_filename(get_factory_default_folder(), filename, NULL);
+        GFile* gfile = g_file_new_for_path(path);
+		//gfile = g_file_new_build_filename(get_factory_default_folder(), filename, NULL);
+		gchar * new_uri_str = g_file_get_uri(gfile);
+		g_object_unref(gfile);
+		g_free(uri_str);
+        g_free(path);
 		uri_str = new_uri_str;
 	}
 
@@ -499,20 +502,22 @@ _ui_open_document(AppUIData * app_ui_data,
     int retries;
     PDFViewerResult result;
     gboolean gpd;
+    GFile *gfile;
     
     g_assert( filename != NULL );
     g_debug( "%s: '%s'", __FUNCTION__, filename );
 
     /* Validates the file name to URI format (free before return!) */
-    uri = gnome_vfs_make_uri_from_input(filename);
+    gfile = g_file_new_for_uri(filename);
+    uri = g_file_get_uri(gfile);
+    g_object_unref(gfile);
     g_debug( "%s: uri: '%s'", __FUNCTION__, uri );
     
     /* check if the currently opened document is the same as the upcoming one */
     if (pdf_viewer_get_uri() != NULL)
     {
         gint strcmp_res;
-        gchar *current_uri = gnome_vfs_uri_to_string(pdf_viewer_get_uri(),
-                                                     GNOME_VFS_URI_HIDE_NONE);
+        gchar* current_uri = pdf_viewer_get_uri();
 
         /* the file is already opened */
         strcmp_res = strcmp(current_uri, uri);
@@ -889,8 +894,8 @@ ui_run_details_dialog(AppUIData * app_ui_data)
     /* fill libcomapp's details dialog structure and let it create the dialog 
      */
 
-    gchar *uri = gnome_vfs_uri_to_string(pdf_viewer_get_uri(),
-                                         GNOME_VFS_URI_HIDE_NONE);
+    gchar* uri = pdf_viewer_get_uri();
+
     ComappDetailsData cdd = {
         .details_data = details,
         .window_title = _("pdfv_me_menu_document_details"),
@@ -1381,8 +1386,7 @@ ui_update(AppUIData * app_ui_data)
         ui_set_current_page(app_ui_data, pdf_viewer_get_current_page(), pdf_viewer_get_num_pages());
 
         /* get the newly opened document's location */
-        file = gnome_vfs_uri_to_string(pdf_viewer_get_uri(),
-                                       GNOME_VFS_URI_HIDE_NONE);
+        file = pdf_viewer_get_uri();
 
         /* get the base name (w/o path) */
         title = get_basename_for_display(file);
