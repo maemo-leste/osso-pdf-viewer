@@ -31,8 +31,7 @@
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
 #include <gconf/gconf-client.h>
-#include <libgnomevfs/gnome-vfs-monitor.h>
-#include <libgnomevfs/gnome-vfs-volume-monitor.h>
+#include <gio/gio.h>
 #include <hildon/hildon.h>
 #include <hildon/hildon-file-system-model.h>
 #include <libosso.h>
