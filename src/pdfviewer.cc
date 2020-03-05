@@ -158,7 +158,9 @@ static void resize_layout(void);
 static double get_custom_zoom_level(gboolean fit_width);
 static void on_outputdev_redraw(void *user_data);
 static GBool on_abort_check(void *user_data);
+#if 0
 static gint on_progress_info(GnomeVFSXferProgressInfo * info, gpointer data);
+#endif
 
 void doAction(LinkAction *action);
 void displayDest(LinkDest *dest);
@@ -176,8 +178,10 @@ static size_t custom_ceil(const void *array,
                           size_t width,
                           int (*compar) (const void *, const void *));
 
+#if 0
 static void volume_unmounted_cb(GnomeVFSVolumeMonitor * vfsvolumemonitor,
                                 GnomeVFSVolume * arg1, gpointer user_data);
+#endif
 
 
 static void empty_application_area(void);
@@ -883,6 +887,7 @@ on_abort_check(void *user_data)
 
 static GtkWidget *pb_banner = NULL;
 
+#if 0
 static gint
 on_progress_info(GnomeVFSXferProgressInfo * info, gpointer data)
 {
@@ -906,6 +911,7 @@ on_progress_info(GnomeVFSXferProgressInfo * info, gpointer data)
 
     return 1;
 }
+#endif
 
 /**
    Returns the nearest (from down) value to the given key
@@ -1011,6 +1017,7 @@ custom_ceil(const void *array,
 }
 
 
+#if 0
 static void
 volume_unmounted_cb(GnomeVFSVolumeMonitor * vfsvolumemonitor,
                     GnomeVFSVolume * volume, gpointer user_data)
@@ -1086,6 +1093,7 @@ volume_unmounted_cb(GnomeVFSVolumeMonitor * vfsvolumemonitor,
     if (volume_uri)
         g_free(volume_uri);
 }
+#endif
 
 /**
    Helper function.
@@ -1179,10 +1187,12 @@ init_thread_func(gpointer data)
     }
 
     /* Volume monitor (singleton object, no refcounting) */
+#if 0
     app_ui_data->app_data->volume_monitor = gnome_vfs_get_volume_monitor();
     g_signal_connect(G_OBJECT(app_ui_data->app_data->volume_monitor),
                      "volume_pre_unmount",
                      G_CALLBACK(volume_unmounted_cb), app_ui_data->app_data);
+#endif
     return NULL;
 }
 
@@ -1485,6 +1495,7 @@ pdf_viewer_empty_document()
 static gboolean
 pdf_viewer_copy_from_gw(gpointer data)
 {
+#if 0
     static GnomeVFSFileSize bytes_read, bytes_written;
     static GnomeVFSResult vfs_result;
     gchar buffer[128 * 1024];
@@ -1574,6 +1585,7 @@ pdf_viewer_copy_from_gw(gpointer data)
     }
     // any problem???
     return FALSE;
+#endif
 }
 
 
@@ -2634,6 +2646,7 @@ pdf_viewer_get_state(AppState * app_state, gchar ** uri_str, gchar ** passwd)
 PDFViewerResult
 pdf_viewer_save(const char *dst)
 {
+#if 0
     GnomeVFSURI *src_uri = NULL;
     GnomeVFSURI *dst_uri = NULL;
     GnomeVFSURI *dst_parent = NULL;
@@ -2816,6 +2829,7 @@ pdf_viewer_save(const char *dst)
     priv->app_ui_data->app_data->state = PDF_VIEWER_STATE_LOADED;
 
     return res;
+#endif
 }
 
 void

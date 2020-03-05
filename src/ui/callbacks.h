@@ -106,10 +106,12 @@ gboolean on_number_editor_error(HildonNumberEditor * hildonnumbereditor,
                                 gint arg1, gpointer user_data);
 
 
+#if 0
 void on_file_changed(GnomeVFSMonitorHandle * handle,
                      const gchar * monitor_uri,
                      const gchar * info_uri,
                      GnomeVFSMonitorEventType event_type, gpointer user_data);
+#endif
 
 gboolean configure_event_cb (GtkWidget *widget, GdkEvent *event, gpointer user_data);
 

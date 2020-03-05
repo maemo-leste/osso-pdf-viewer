@@ -66,7 +66,8 @@ struct _AppData {
     AppUIData *app_ui_data;
     ComappSystemData *comapp_system;
 
-    GnomeVFSVolumeMonitor *volume_monitor;
+    // XXX: TODO
+    //GnomeVFSVolumeMonitor *volume_monitor;
     gchar *mmc_uri;
 
     PDFViewerState state;
