@@ -25,7 +25,7 @@
 #ifndef PDFVIEWER_H
 #define PDFVIEWER_H
 
-#include <libgnomevfs/gnome-vfs-uri.h>
+#include <gio/gio.h>
 #include "appdata.h"
 #include "state_save.h"
 
@@ -103,7 +103,7 @@ extern "C" {
     extern void pdf_viewer_zoom(PDFZoom zoom_level);
     extern void pdf_viewer_toggle_images(void);
 
-    extern GnomeVFSURI *pdf_viewer_get_uri(void);
+    extern char *pdf_viewer_get_uri(void);
     extern int pdf_viewer_get_num_pages(void);
     extern int pdf_viewer_get_current_page(void);
     extern double pdf_viewer_get_current_zoom(void);
