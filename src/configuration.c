@@ -21,7 +21,6 @@
     02111-1307 USA
 */
 
-
 #include <string.h>
 #include <glib.h>
 
@@ -42,35 +41,31 @@
 	@param app_data Application data
 	@returns gboolean TRUE if successful; FALSE otherwise
 */
-gboolean
-get_configuration(gint argc, gchar * argv[], AppData * app_data)
+gboolean get_configuration(gint argc, gchar * argv[], AppData * app_data)
 {
-    gboolean show_images = TRUE;
-    gboolean first_run = TRUE;
+	gboolean show_images = TRUE;
+	gboolean first_run = TRUE;
 
-    TDB("Get conf\n");
-    /* default images on */
-    first_run = settings_get_bool(GCONF_KEY_FIRST_RUN);
-    if (!first_run)
-    {
-        settings_set_bool(GCONF_KEY_IMAGES, TRUE);
-        settings_set_bool(GCONF_KEY_FIRST_RUN, TRUE);
-    }
+	TDB("Get conf\n");
+	/* default images on */
+	first_run = settings_get_bool(GCONF_KEY_FIRST_RUN);
+	if (!first_run) {
+		settings_set_bool(GCONF_KEY_IMAGES, TRUE);
+		settings_set_bool(GCONF_KEY_FIRST_RUN, TRUE);
+	}
 
-    /* get show images option */
-    show_images = settings_get_bool(GCONF_KEY_IMAGES);
+	/* get show images option */
+	show_images = settings_get_bool(GCONF_KEY_IMAGES);
 
-    if (show_images == TRUE)
-    {
-        PDF_FLAGS_SET(app_data->app_ui_data->flags, PDF_FLAGS_SHOW_IMAGES);
-    }
-    else
-    {
-        PDF_FLAGS_UNSET(app_data->app_ui_data->flags, PDF_FLAGS_SHOW_IMAGES);
-    }
-    return TRUE;
+	if (show_images == TRUE) {
+		PDF_FLAGS_SET(app_data->app_ui_data->flags,
+			      PDF_FLAGS_SHOW_IMAGES);
+	} else {
+		PDF_FLAGS_UNSET(app_data->app_ui_data->flags,
+				PDF_FLAGS_SHOW_IMAGES);
+	}
+	return TRUE;
 }
-
 
 /**
 	Save application configuration to GConf
@@ -78,18 +73,16 @@ get_configuration(gint argc, gchar * argv[], AppData * app_data)
 	@param app_data Application data
 	@returns gboolean TRUE if successful; FALSE otherwise
 */
-gboolean
-save_configuration(AppData * app_data)
+gboolean save_configuration(AppData * app_data)
 {
-    g_return_val_if_fail(app_data, FALSE);
-    /* store boolean value into gconf */
-    settings_set_bool(GCONF_KEY_IMAGES,
-                      (gboolean) (PDF_FLAGS_IS_SET
-                                  (app_data->app_ui_data->flags,
-                                   PDF_FLAGS_SHOW_IMAGES)));
+	g_return_val_if_fail(app_data, FALSE);
+	/* store boolean value into gconf */
+	settings_set_bool(GCONF_KEY_IMAGES,
+			  (gboolean) (PDF_FLAGS_IS_SET
+				      (app_data->app_ui_data->flags,
+				       PDF_FLAGS_SHOW_IMAGES)));
 
-    return TRUE;
+	return TRUE;
 }
-
 
 /* EOF */

@@ -4,7 +4,7 @@
     Interface to Xpdf engine.
 
     Copyright (c) 2004-2006 Nokia Corporation.
-	
+
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation; either version 2 of the License, or
@@ -69,7 +69,7 @@ struct _PDFViewerPrivate {
     GThread *thread;
 
     GThread *render_thread;
-    GThread *render_join_thread;    
+    GThread *render_join_thread;
     GThread *cancel_thread;
 
     unsigned int num_pages;
@@ -111,38 +111,38 @@ struct _PDFViewerPrivate {
 static _PDFViewerPrivate *priv = NULL;
 
 int dpi_array[] = { 36,         /* 50% */
-	54,							/* 75% */
-    72,                         /* 100% */
-    90,							/* 125% */
-    108,                        /* 150% */
-    126,						/* 175% */
-    144,                        /* 200% */
-    162,						/* 225% */
-    180,                        /* 250% */
-    198,						/* 275% */
-    216,                        /* 300% */
-    234,						/* 325% */
-    252,						/* 350% */
-    270,						/* 375% */
-    288
-};                              /* 400% */
+                    54,							/* 75% */
+                    72,                         /* 100% */
+                    90,							/* 125% */
+                    108,                        /* 150% */
+                    126,						/* 175% */
+                    144,                        /* 200% */
+                    162,						/* 225% */
+                    180,                        /* 250% */
+                    198,						/* 275% */
+                    216,                        /* 300% */
+                    234,						/* 325% */
+                    252,						/* 350% */
+                    270,						/* 375% */
+                    288
+                  };                              /* 400% */
 
 static int zoom_numbers[] = { 50,
-	75,	
-    100,
-    125,
-    150,
-    175,
-    200,
-    225,
-    250,
-    275,
-    300,
-    325,
-    350,
-    375,
-    400
-};
+                              75,
+                              100,
+                              125,
+                              150,
+                              175,
+                              200,
+                              225,
+                              250,
+                              275,
+                              300,
+                              325,
+                              350,
+                              375,
+                              400
+                            };
 
 /* the value from where we use partial rendering (in dpi) */
 #define FULL_RENDER_DPI  dpi_array[DOC_ZOOM_400]
@@ -201,7 +201,7 @@ static void
 display_page()
 {
     g_assert(priv->pdf_doc);
-    
+
     TDB( "%s start",  __FUNCTION__ );
 
     PDF_FLAGS_SET(priv->app_ui_data->flags, PDF_FLAGS_RENDERING);
@@ -239,49 +239,49 @@ display_page()
 
         if (!priv->cancel_render)
         {
-	    DTRY(gdk);
+            DTRY(gdk);
             GDK_THR_ENTER;
-	    DLOCKED(gdk);
+            DLOCKED(gdk);
             gtk_layout_move(GTK_LAYOUT(priv->app_ui_data->layout),
                             priv->app_ui_data->page_image,
                             (int) priv->x, (int) priv->y);
             GDK_THR_LEAVE;
-	    DUNLOCKED(gdk);
+            DUNLOCKED(gdk);
         }
     }
     else
     {
         TDB("render full: %p\n", priv->thread);
         try {
-        	priv->pdf_doc->displayPage(priv->output_dev, priv->current_page,
-            	priv->dpi, priv->dpi, 0, gFalse,
-                gFalse, gFalse, &on_abort_check, NULL);
+            priv->pdf_doc->displayPage(priv->output_dev, priv->current_page,
+                                       priv->dpi, priv->dpi, 0, gFalse,
+                                       gFalse, gFalse, &on_abort_check, NULL);
         } catch( int e ) {
-		    PDF_FLAGS_UNSET(priv->app_ui_data->flags, PDF_FLAGS_RENDERING);
-		    throw 0;
+            PDF_FLAGS_UNSET(priv->app_ui_data->flags, PDF_FLAGS_RENDERING);
+            throw 0;
         }
         TDB("render full end\n");
     }
     if (globalParams->getBigImage() == gTrue)
     {
         globalParams->ackBigImage();
-	DTRY(gdk);
+        DTRY(gdk);
         GDK_THR_ENTER;
-	DLOCKED(gdk);
+        DLOCKED(gdk);
         ui_show_banner(GTK_WIDGET(priv->app_ui_data->app_view),
                        _("pdfv_ni_not_enough_memory_page"));
         GDK_THR_LEAVE;
-	DUNLOCKED(gdk);
+        DUNLOCKED(gdk);
     }
     PDF_FLAGS_UNSET(priv->app_ui_data->flags, PDF_FLAGS_RENDERING);
-    
-    TDB( "%s end",  __FUNCTION__ );    
+
+    TDB( "%s end",  __FUNCTION__ );
 }
 
 /**
  Helper function for page fit zoom and width fit zoom,
  to avoid unnecesseary variables allocations.
- 
+
  @param TRUE if page width fit zoom, FALSE if page fit zoom
  @return ratio of the layout size and page size
 */
@@ -316,12 +316,12 @@ get_custom_zoom_level(gboolean fit_width)
     /* if the ratio of the current page is smaller than the ratio of screen
      * we have to consider the vertical scrollbar's size request. */
     if ((ratio =
-         ((page_hsize / page_vsize) < (screen_width / screen_height))))
+                ((page_hsize / page_vsize) < (screen_width / screen_height))))
     {
         screen_width -= (double) SCROLLBAR_SIZE;
     }
 
-    /* 
+    /*
      * in case of fit to width request or if the the current page's ratio is
      * bigger than the request is like a 'fit to page'! */
     if (fit_width || !ratio)
@@ -345,10 +345,10 @@ disable_all_ui()
     ui_enable_document_open(priv->app_ui_data, FALSE);
     ui_enable_document_controls(priv->app_ui_data, FALSE);
     ui_enable_page_controls(priv->app_ui_data, DIM_ALL, FALSE);
-	ui_scrollbars_sensitive( priv->app_ui_data, FALSE );
-	
-	g_debug( "%s done", __FUNCTION__ );
-        
+    ui_scrollbars_sensitive( priv->app_ui_data, FALSE );
+
+    g_debug( "%s done", __FUNCTION__ );
+
 }
 
 static void
@@ -363,7 +363,7 @@ enable_all_ui()
                              priv->current_page ? FALSE : TRUE));
     ui_enable_page_controls(priv->app_ui_data, DIM_SWITCH_TO,
                             (priv->num_pages == 1 ? FALSE : TRUE));
-	ui_scrollbars_sensitive( priv->app_ui_data, TRUE );
+    ui_scrollbars_sensitive( priv->app_ui_data, TRUE );
 
     /* Enable/disable zoom controls */
     if (priv->dpi <= dpi_array[DOC_ZOOM_50])
@@ -392,7 +392,7 @@ enable_all_ui()
     }
     if (PDF_FLAGS_IS_SET(priv->app_ui_data->flags, PDF_FLAGS_PAGE_ERROR))
     {
-	ui_enable_page_controls(priv->app_ui_data, DIM_ZOOM_IN, FALSE);
+        ui_enable_page_controls(priv->app_ui_data, DIM_ZOOM_IN, FALSE);
     }
     ui_enable_document_open(priv->app_ui_data, TRUE);
     ui_enable_document_controls(priv->app_ui_data, TRUE);
@@ -412,9 +412,9 @@ enable_all_ui()
     }
 
     priv->app_ui_data->app_data->state = PDF_VIEWER_STATE_LOADED;
-    
-	g_debug( "%s done", __FUNCTION__  );    
-    
+
+    g_debug( "%s done", __FUNCTION__  );
+
 }
 
 G_LOCK_DEFINE_STATIC(cancel_mutex);
@@ -434,53 +434,53 @@ render_page_func(gpointer data)
             g_warning( "Not enough memory on flash." );
             throw (0);
         }
-    	display_page();
+        display_page();
     } catch( int e ) {
-    	fprintf( stderr, "%s: Can't display page\n", __FUNCTION__ );
-	    empty_application_area();
-	    
-	    // This should only happen when there isn't enough memory to show
-	    // page. Show let's so banner for that. Fix this if exception is later
-	    // used for other signals
-        GDK_THR_ENTER;	    
-    	ui_show_banner(GTK_WIDGET(priv->app_ui_data->app_view),
-			_("pdfv_ni_not_enough_memory_page"));		
+        fprintf( stderr, "%s: Can't display page\n", __FUNCTION__ );
+        empty_application_area();
+
+        // This should only happen when there isn't enough memory to show
+        // page. Show let's so banner for that. Fix this if exception is later
+        // used for other signals
+        GDK_THR_ENTER;
+        ui_show_banner(GTK_WIDGET(priv->app_ui_data->app_view),
+                       _("pdfv_ni_not_enough_memory_page"));
         enable_all_ui();
 
-	 /* bug: 80343 STARTS */
-	GtkWidget* widget = gtk_ui_manager_get_widget(priv->app_ui_data->ui_manager,
-                                       "/MenuBar/pdfv_me_main_menu_view"
-                                       "/pdfv_me_menu_screen_show_images");
+        /* bug: 80343 STARTS */
+        GtkWidget* widget = gtk_ui_manager_get_widget(priv->app_ui_data->ui_manager,
+                            "/MenuBar/pdfv_me_main_menu_view"
+                            "/pdfv_me_menu_screen_show_images");
         if (widget != NULL)
-        	gtk_widget_set_sensitive(widget, FALSE);
+            gtk_widget_set_sensitive(widget, FALSE);
 
-    	widget = gtk_ui_manager_get_widget(priv->app_ui_data->ui_manager,
-                                       "/ToolBar/"
-                                       "pdfv_me_menu_screen_show_images");
-   	 if (widget != NULL)
-        	gtk_widget_set_sensitive(widget, FALSE);
-	 /* bug: 80343 ENDS */
-	 
+        widget = gtk_ui_manager_get_widget(priv->app_ui_data->ui_manager,
+                                           "/ToolBar/"
+                                           "pdfv_me_menu_screen_show_images");
+        if (widget != NULL)
+            gtk_widget_set_sensitive(widget, FALSE);
+        /* bug: 80343 ENDS */
+
         // Disable zoom in because it will fail next time too
         ui_enable_page_controls( priv->app_ui_data, DIM_ZOOM_IN, FALSE );
         // Disable zoom out because it will fail next time too
         ui_enable_page_controls( priv->app_ui_data, DIM_ZOOM_OUT, FALSE );
         GDK_THR_LEAVE;
-        priv->render_thread = NULL;      
+        priv->render_thread = NULL;
         return NULL;
     }
- 	
+
     if (!priv->cancel_render)
     {
-		DTRY(gdk);
+        DTRY(gdk);
         GDK_THR_ENTER;
-		DLOCKED(gdk);
+        DLOCKED(gdk);
         resize_layout();
         enable_all_ui();
         GDK_THR_LEAVE;
-		DUNLOCKED(gdk);
+        DUNLOCKED(gdk);
     }
-    
+
     priv->render_thread = NULL;
     TDB("render_page_func end\n");
 
@@ -493,10 +493,10 @@ create_rendering() {
         g_thread_join( priv->render_join_thread );
     }
     priv->render_join_thread = priv->render_thread =
-        g_thread_new("render_thread", render_page_func, NULL);
+                                   g_thread_new("render_thread", render_page_func, NULL);
     if( priv->render_thread == NULL ) {
         g_critical( "Can't create render thread" );
-    }	
+    }
 }
 
 static gpointer
@@ -644,8 +644,8 @@ calc_size_dpi(double dpi, guint * width, guint * height,
 
     /* Get the current widht and height of the application actual window*/
     gtk_window_get_size(GTK_WINDOW(priv->app_ui_data->app_view), &current_width, &current_height);
-#if 0    
-    /* 
+#if 0
+    /*
      * get the screen's dimensions. the scrollbars' size DOES count in the
      * actual area! */
     if (PDF_FLAGS_IS_SET(priv->app_ui_data->flags, PDF_FLAGS_FULLSCREEN))
@@ -671,13 +671,13 @@ calc_size_dpi(double dpi, guint * width, guint * height,
                 ((_width < current_width) ? 0 : SCROLLBAR_SIZE);
     }
 #endif
-    /* screen width/height is fetched from current window size 
+    /* screen width/height is fetched from current window size
      * it will take care of both normal and fullscreen mode */
-        if (screen_w)
-            *screen_w = current_width;
+    if (screen_w)
+        *screen_w = current_width;
 
-        if (screen_h)
-            *screen_h = current_height;
+    if (screen_h)
+        *screen_h = current_height;
 }
 
 static void
@@ -723,7 +723,7 @@ adjust_focus_point(double old_dpi)
 	Resizes the GtkLayout in case of partial rendering.
 	We need to resize the gtklayout size, since in case of
 	partial rendering we still need a proper scroller
-	
+
 	@return void
 */
 static void
@@ -735,7 +735,7 @@ resize_layout()
     g_return_if_fail(priv->pdf_doc != NULL);
 
     if (PDF_FLAGS_IS_SET(priv->app_ui_data->flags, PDF_FLAGS_PAGE_ERROR)
-        /* || priv->app_ui_data->app_data->low_memory */ )
+            /* || priv->app_ui_data->app_data->low_memory */ )
     {
         return;
     }
@@ -755,23 +755,23 @@ resize_layout()
     /* center the document */
     if (priv->dpi <= FULL_RENDER_DPI)
     {
- 
-    	if (PDF_FLAGS_IS_SET(priv->app_ui_data->flags, PDF_FLAGS_FULLSCREEN))
-    	{
-     	    gtk_layout_move(GTK_LAYOUT(priv->app_ui_data->layout),
-                        priv->app_ui_data->page_image,
-                        (screen_w < (screen_w - width) / 2)
-                        ? 0 : (screen_w - width) / 2,
-                        (screen_h < (screen_h - height) / 2)
-                        ? 0 : (screen_h - height) / 2);
-    	}
-    	else
-    	{
-     	    gtk_layout_move(GTK_LAYOUT(priv->app_ui_data->layout),
-                        priv->app_ui_data->page_image,
-                        (screen_w < (screen_w - width) / 2)
-                        ? 0 : (screen_w - width) / 2, 0);
-   	}
+
+        if (PDF_FLAGS_IS_SET(priv->app_ui_data->flags, PDF_FLAGS_FULLSCREEN))
+        {
+            gtk_layout_move(GTK_LAYOUT(priv->app_ui_data->layout),
+                            priv->app_ui_data->page_image,
+                            (screen_w < (screen_w - width) / 2)
+                            ? 0 : (screen_w - width) / 2,
+                            (screen_h < (screen_h - height) / 2)
+                            ? 0 : (screen_h - height) / 2);
+        }
+        else
+        {
+            gtk_layout_move(GTK_LAYOUT(priv->app_ui_data->layout),
+                            priv->app_ui_data->page_image,
+                            (screen_w < (screen_w - width) / 2)
+                            ? 0 : (screen_w - width) / 2, 0);
+        }
     }
     else
     {
@@ -794,27 +794,27 @@ void
 pdf_viewer_move_after_fullscreen_togle(void)
 {
     if (PDF_FLAGS_IS_SET(priv->app_ui_data->flags, PDF_FLAGS_FULLSCREEN))
-    {     
-    
-    	/* Togled to fullscreen mode */
-    	gint x, y;
+    {
+
+        /* Togled to fullscreen mode */
+        gint x, y;
 
         x = (gint)gtk_range_get_value(GTK_RANGE(priv->app_ui_data->hscroll))
             - (FULLSCREEN_WIDTH - VIEWPORT_WIDTH) / 2;
         if (x < 0)
             priv->scroll_x = 0;
-		else
-        	priv->scroll_x = x;
+        else
+            priv->scroll_x = x;
 
         y = (gint)gtk_range_get_value(GTK_RANGE(priv->app_ui_data->vscroll))
             - (FULLSCREEN_HEIGHT - VIEWPORT_HEIGHT) / 2;
         if (y < 0)
             priv->scroll_y = 0;
-		else
-	        priv->scroll_y = y;
+        else
+            priv->scroll_y = y;
     }
     else
-    {                           /* out from fullscreen mode */
+    {   /* out from fullscreen mode */
         priv->scroll_x =
             (guint) gtk_range_get_value(GTK_RANGE(priv->app_ui_data->hscroll))
             + (FULLSCREEN_WIDTH - VIEWPORT_WIDTH) / 2;
@@ -825,11 +825,11 @@ pdf_viewer_move_after_fullscreen_togle(void)
 }
 
 /**
-   Abort checker callback function 
+   Abort checker callback function
    Used for passing to the PDFDoc->display() function, so in case
    of errors while rendering a page we can stop the actual rendering.
 
-   @param 
+   @param
    @return GBool - if TRUE the page rendering stops,
                    if FALSE the page rendering continues.
 */
@@ -852,19 +852,19 @@ on_abort_check(void *user_data)
 
         priv->app_ui_data->app_data->low_memory = FALSE;
 
-        // show information banner 
-	DTRY(gdk);
-	gdk_threads_enter();
-	DLOCKED(gdk);
-	ui_show_banner(GTK_WIDGET(priv->app_ui_data->app_view),
+        // show information banner
+        DTRY(gdk);
+        gdk_threads_enter();
+        DLOCKED(gdk);
+        ui_show_banner(GTK_WIDGET(priv->app_ui_data->app_view),
                        _("pdfv_ni_not_enough_memory_page"));
-	gdk_threads_leave();
-	DUNLOCKED(gdk);
+        gdk_threads_leave();
+        DUNLOCKED(gdk);
 
-        // empty application area 
+        // empty application area
         empty_application_area();
 
-        // disable zoom controls 
+        // disable zoom controls
 //	gdk_threads_enter();
 //        ui_enable_page_controls(priv->app_ui_data, DIM_ERROR, FALSE);
 //	gdk_threads_leave();
@@ -875,7 +875,7 @@ on_abort_check(void *user_data)
 }
 
 
-/** 
+/**
     Callback function for saving method.
     Checks if saving lasts more than SAVE_TIMEOUT, if yes
     a "Saving..." banner appears.
@@ -944,7 +944,7 @@ custom_floor(const void *array,
     /* obvious case */
     index = nmemb;
     current = (void *) (((char *) array) + ((index - 1) * width));  // last
-                                                                    // element
+    // element
     if (0 < compar(key, current))
         return --index;
 
@@ -1037,14 +1037,14 @@ volume_unmounted_cb(GnomeVFSVolumeMonitor * vfsvolumemonitor,
     /* get the URI regarding to state */
     switch (appdata->state)
     {
-        case PDF_VIEWER_STATE_LOADED:
-        case PDF_VIEWER_STATE_LOADING:
-        case PDF_VIEWER_STATE_SAVING:
-            uri = uri_to_string(pdf_viewer_get_uri());
-            break;
-        default:
-            uri = NULL;
-            break;
+    case PDF_VIEWER_STATE_LOADED:
+    case PDF_VIEWER_STATE_LOADING:
+    case PDF_VIEWER_STATE_SAVING:
+        uri = uri_to_string(pdf_viewer_get_uri());
+        break;
+    default:
+        uri = NULL;
+        break;
     }
 
     if (uri != NULL)
@@ -1062,7 +1062,7 @@ volume_unmounted_cb(GnomeVFSVolumeMonitor * vfsvolumemonitor,
             if (settings_get_bool("/system/osso/af/usb-cable-attached"))
             {
                 if (appdata->state == PDF_VIEWER_STATE_LOADING
-                    || appdata->state == PDF_VIEWER_STATE_SAVING)
+                        || appdata->state == PDF_VIEWER_STATE_SAVING)
                     ui_show_banner(GTK_WIDGET(priv->app_ui_data->app_view),
                                    _("mmc_ib_please_wait"));
             }
@@ -1106,7 +1106,7 @@ empty_application_area(void)
 
     /* document is already loaded */
     if (priv->pdf_doc
-        || (priv->app_ui_data->app_data->state == PDF_VIEWER_STATE_LOADED))
+            || (priv->app_ui_data->app_data->state == PDF_VIEWER_STATE_LOADED))
     {
 
         /* reinitialize output device */
@@ -1126,7 +1126,7 @@ int
 pdf_viewer_get_zoom_percent(void)
 {
     if (priv->zoom_level >= 0
-        && fabs(dpi_array[priv->zoom_level] - priv->dpi) < 1E-5)
+            && fabs(dpi_array[priv->zoom_level] - priv->dpi) < 1E-5)
     {
         return zoom_numbers[priv->zoom_level];
     }
@@ -1197,7 +1197,7 @@ init_thread_func(gpointer data)
 }
 
 /**
-  
+
 */
 static gint64
 get_free_space()
@@ -1220,10 +1220,10 @@ get_free_space()
         else
             free -= RESERVED_SPACE;
     } else {
-    	free = 0;
+        free = 0;
     }
 
-	g_debug( "%s: %d", __FUNCTION__, (gint)free );
+    g_debug( "%s: %d", __FUNCTION__, (gint)free );
     return free;
 }
 
@@ -1255,7 +1255,7 @@ pdf_viewer_init(AppUIData * app_ui_data)
     if (priv == NULL)
     {
         OSSO_LOG_CRIT
-            ("Memory allocation for 'PDFViewerPrivate' structure failed");
+        ("Memory allocation for 'PDFViewerPrivate' structure failed");
         return;
     }
 
@@ -1310,8 +1310,8 @@ pdf_viewer_init(AppUIData * app_ui_data)
 
         TDB(("state11\n"));
         globalParams->
-            setShowImages(PDF_FLAGS_IS_SET
-                          (priv->app_ui_data->flags, PDF_FLAGS_SHOW_IMAGES));
+        setShowImages(PDF_FLAGS_IS_SET
+                      (priv->app_ui_data->flags, PDF_FLAGS_SHOW_IMAGES));
 
         appdata->state = PDF_VIEWER_STATE_EMPTY;
     }
@@ -1434,22 +1434,22 @@ pdf_viewer_deinit()
 }
 
 void
-pdf_viewer_empty_document() 
+pdf_viewer_empty_document()
 {
-	g_debug( "%s start", __FUNCTION__ );
+    g_debug( "%s start", __FUNCTION__ );
 
     cancel_if_render();
 
-	/* g_debug( "%s 1", __FUNCTION__ ); */
+    /* g_debug( "%s 1", __FUNCTION__ ); */
     empty_application_area();
 
-	/* g_debug( "%s 2", __FUNCTION__ ); */
+    /* g_debug( "%s 2", __FUNCTION__ ); */
     if (priv->pdf_doc) {
         delete priv->pdf_doc;
         priv->pdf_doc = 0;
     }
-    
-	/* g_debug( "%s 3", __FUNCTION__ ); */
+
+    /* g_debug( "%s 3", __FUNCTION__ ); */
     if (priv->file_URI) {
         g_free(priv->file_URI);
         priv->file_URI = NULL;
@@ -1459,7 +1459,7 @@ pdf_viewer_empty_document()
         priv->file_URI_gateway = 0;
     }
 
-	/* g_debug( "%s 4", __FUNCTION__ ); */
+    /* g_debug( "%s 4", __FUNCTION__ ); */
     priv->app_ui_data->app_data->state = PDF_VIEWER_STATE_EMPTY;
     priv->num_pages = PDF_PAGE_INIT;
     priv->current_page = PDF_PAGE_INIT;
@@ -1483,10 +1483,10 @@ pdf_viewer_empty_document()
         priv->file_handle = NULL;
     }
 
-	/* g_debug( "%s 5", __FUNCTION__ ); */
+    /* g_debug( "%s 5", __FUNCTION__ ); */
     ui_enable_document_open(priv->app_ui_data, TRUE);
 
-	/* g_debug( "%s 6", __FUNCTION__ ); */
+    /* g_debug( "%s 6", __FUNCTION__ ); */
     ui_update(priv->app_ui_data);
 
     g_debug( "%s done\n", __FUNCTION__ );
@@ -1501,10 +1501,10 @@ pdf_viewer_copy_from_gw(gpointer data)
     gchar buffer[128 * 1024];
     TDB("%s called\n", __FUNCTION__);
     if (((!priv->app_ui_data->close_called))
-        &&
-        (gnome_vfs_read
-         (priv->read_handle, buffer, sizeof(buffer),
-          &bytes_read) == GNOME_VFS_OK))
+            &&
+            (gnome_vfs_read
+             (priv->read_handle, buffer, sizeof(buffer),
+              &bytes_read) == GNOME_VFS_OK))
     {
         vfs_result =
             gnome_vfs_write(priv->write_handle, buffer, bytes_read,
@@ -1529,16 +1529,16 @@ pdf_viewer_copy_from_gw(gpointer data)
                 remove(GATEWAY_TMP_FILE);
             }
 
-	    DTRY(gdk);
+            DTRY(gdk);
             GDK_THR_ENTER;
-	    DLOCKED(gdk);
+            DLOCKED(gdk);
             ui_show_result(priv->app_ui_data, RESULT_INSUFFICIENT_MEMORY);
             GDK_THR_LEAVE;
-	    DUNLOCKED(gdk);
+            DUNLOCKED(gdk);
             return FALSE;
         }
         else
-        {                       // write ok... putting this to idle again
+        {   // write ok... putting this to idle again
             return TRUE;
         }
     }
@@ -1578,7 +1578,7 @@ pdf_viewer_copy_from_gw(gpointer data)
         /* everything was ok, now calling the opener function again, to
          * continue where we stopped */
         TDB("Calling ui_open_document again\n");
-	g_debug("new URI = %s\n", priv->uri_from_gateway);
+        g_debug("new URI = %s\n", priv->uri_from_gateway);
         ui_open_document(priv->app_ui_data, priv->uri_from_gateway,
                          priv->password_from_gateway);
         return FALSE;
@@ -1613,7 +1613,7 @@ pdf_viewer_open(const char *uri, const char *password)
     gboolean freepriv = FALSE;
 
     _pdf_abort_rendering = FALSE;
-    
+
     g_debug( __FUNCTION__ );
 
     cancel_if_render();
@@ -1622,14 +1622,14 @@ pdf_viewer_open(const char *uri, const char *password)
     /* Make the ovr_image_orig NULL for a new document */
     if(priv->app_ui_data->ovr_image_orig != NULL)
     {
-    	g_object_unref(priv->app_ui_data->ovr_image_orig);
-	priv->app_ui_data->ovr_image_orig = NULL;
+        g_object_unref(priv->app_ui_data->ovr_image_orig);
+        priv->app_ui_data->ovr_image_orig = NULL;
     }
 
     if (!priv->app_ui_data->copy_from_gw) {
-    
-    	g_debug( "%s open non-copy '%s'", __FUNCTION__, uri );
-    
+
+        g_debug( "%s open non-copy '%s'", __FUNCTION__, uri );
+
         priv->app_ui_data->opening_banner =
             ui_show_progress_banner(GTK_WINDOW(priv->app_ui_data->app_view),
                                     _("pdfv_ib_opening"));
@@ -1646,9 +1646,9 @@ pdf_viewer_open(const char *uri, const char *password)
 
         /* If opening for gateway/shared, copy to tmp first */
         if (g_str_has_prefix(uri, "obex://") ||
-            g_str_has_prefix(uri, "upnpav://") ||
-            g_str_has_prefix(uri, "smb://")) {
-            
+                g_str_has_prefix(uri, "upnpav://") ||
+                g_str_has_prefix(uri, "smb://")) {
+
             g_debug( "%s, Make local copy out of remote file", __FUNCTION__ );
             priv->is_gateway = TRUE;
 
@@ -1701,19 +1701,19 @@ pdf_viewer_open(const char *uri, const char *password)
             priv->password_from_gateway = g_strdup(password);
             g_idle_add(pdf_viewer_copy_from_gw, NULL);
             return RESULT_COPY_STARTED;
-        }   
+        }
 
     } else {
         priv->app_ui_data->copy_from_gw = FALSE;
-		freepriv = TRUE;
+        freepriv = TRUE;
         uri_gateway = priv->uri_from_gateway;
         password = priv->password_from_gateway;
         uri = GATEWAY_TMP_FILE;
         g_debug( "There was a copy '%s' %s' '%s'",
-        	uri_gateway, password, uri );
+                 uri_gateway, password, uri );
     }
-    
-    g_debug( "%s, start opening", __FUNCTION__ );         
+
+    g_debug( "%s, start opening", __FUNCTION__ );
 
     app_data = priv->app_ui_data->app_data;
 
@@ -1721,12 +1721,12 @@ pdf_viewer_open(const char *uri, const char *password)
 
     /* check flash memory space */
     if( get_free_space() == 0 ) {
-    	g_warning( "Not enough memory on flash." );
+        g_warning( "Not enough memory on flash." );
         pdf_viewer_empty_document();
-		if (freepriv) {
-	    	g_free(priv->uri_from_gateway);
-	    	g_free(priv->password_from_gateway);
-		}
+        if (freepriv) {
+            g_free(priv->uri_from_gateway);
+            g_free(priv->password_from_gateway);
+        }
         return RESULT_INSUFFICIENT_MEMORY;
     }
 
@@ -1757,7 +1757,7 @@ pdf_viewer_open(const char *uri, const char *password)
         /* if non-pdf file is opened directly from the File Manager*/
         if(!file_is_supported(uri))
             result =  RESULT_UNSUPPORTED_FORMAT;
-    
+
         /* couldn't load the document */
         pdf_viewer_empty_document();
         if (freepriv) {
@@ -1810,12 +1810,12 @@ pdf_viewer_open(const char *uri, const char *password)
     }
 
     /* If the coming file is not a pdf file then
-       return unsupported format */    
-    if(!file_is_supported(uri)){
-	  if(pdf_stream != NULL)
-	      g_free(pdf_stream); //CID 6549
+       return unsupported format */
+    if(!file_is_supported(uri)) {
+        if(pdf_stream != NULL)
+            g_free(pdf_stream); //CID 6549
 
-          return RESULT_UNSUPPORTED_FORMAT;
+        return RESULT_UNSUPPORTED_FORMAT;
     }
 
     /* Same password used for both owner and user fields. This way, either
@@ -1836,64 +1836,64 @@ pdf_viewer_open(const char *uri, const char *password)
             g_object_unref(infile);
             infile = NULL;
         }
-        	
+
 
         switch (err)
         {
-            case errOpenFile:
-                TDB("pdf_viewer_open: Invalid URI\n");
-                result = RESULT_INVALID_URI;
-                break;
-            case errDamaged:
-                TDB("pdf_viewer_open: Corrupted file\n");
-                result = RESULT_CORRUPTED_FILE;
-                break;
-            case errEncrypted:
-                TDB("pdf_viewer_open: Encrypted file\n");
-                result = RESULT_ENCRYPTED_FILE;
-		break;
-           
-            case errBadCatalog:
-                TDB("pdf_viewer_open: file saving not over\n");
-                result = RESULT_SAVING_NOT_COMPLETED;
-                
-                break;
-            default:
-                if (priv->cancelled && priv->is_mmc)
-                {
-                    TDB("pdf_viewer_open: Interrupped MMC open\n");
-                    result = RESULT_INTERRUPTED_MMC_OPEN;
-                }
-                else
-                {
-                    TDB("pdf_viewer_open: Unsupported format\n");
-                    result = RESULT_UNSUPPORTED_FORMAT;
-                }
-        }	
-               
+        case errOpenFile:
+            TDB("pdf_viewer_open: Invalid URI\n");
+            result = RESULT_INVALID_URI;
+            break;
+        case errDamaged:
+            TDB("pdf_viewer_open: Corrupted file\n");
+            result = RESULT_CORRUPTED_FILE;
+            break;
+        case errEncrypted:
+            TDB("pdf_viewer_open: Encrypted file\n");
+            result = RESULT_ENCRYPTED_FILE;
+            break;
+
+        case errBadCatalog:
+            TDB("pdf_viewer_open: file saving not over\n");
+            result = RESULT_SAVING_NOT_COMPLETED;
+
+            break;
+        default:
+            if (priv->cancelled && priv->is_mmc)
+            {
+                TDB("pdf_viewer_open: Interrupped MMC open\n");
+                result = RESULT_INTERRUPTED_MMC_OPEN;
+            }
+            else
+            {
+                TDB("pdf_viewer_open: Unsupported format\n");
+                result = RESULT_UNSUPPORTED_FORMAT;
+            }
+        }
+
         // At least in case of corrupted file we should clear uris
         if( result == RESULT_CORRUPTED_FILE ) {
-	    	if (priv->file_URI) {
-    	    	g_free(priv->file_URI);
-    	    	priv->file_URI = NULL;
-    	    }
-		    if (priv->file_URI_gateway) {
-    	    	g_free(priv->file_URI_gateway);
-    	    	priv->file_URI_gateway = NULL;
-    		}
-    	}
-    	
-        pdf_viewer_empty_document();    	
+            if (priv->file_URI) {
+                g_free(priv->file_URI);
+                priv->file_URI = NULL;
+            }
+            if (priv->file_URI_gateway) {
+                g_free(priv->file_URI_gateway);
+                priv->file_URI_gateway = NULL;
+            }
+        }
 
-		if (freepriv) {
-	    	g_free(priv->uri_from_gateway);
-	    	g_free(priv->password_from_gateway);
-		}
-		
+        pdf_viewer_empty_document();
+
+        if (freepriv) {
+            g_free(priv->uri_from_gateway);
+            g_free(priv->password_from_gateway);
+        }
+
         /* reset zoom level to 100% */
         priv->dpi = dpi_array[DOC_ZOOM_100];
         ui_set_current_zoom(priv->app_ui_data, pdf_viewer_get_zoom_percent());
-        
+
         return result;
     }
 
@@ -1977,10 +1977,10 @@ pdf_viewer_open(const char *uri, const char *password)
 
         app_data->state = PDF_VIEWER_STATE_EMPTY;
 
-	if (freepriv) {
-	    g_free(priv->uri_from_gateway);
-	    g_free(priv->password_from_gateway);
-	}
+        if (freepriv) {
+            g_free(priv->uri_from_gateway);
+            g_free(priv->password_from_gateway);
+        }
         return RESULT_INVALID_URI;
     }
 
@@ -2025,10 +2025,10 @@ pdf_viewer_open(const char *uri, const char *password)
         result = RESULT_INSUFFICIENT_MEMORY;
 
         app_data->low_memory = FALSE;
-	if (freepriv) {
-	    g_free(priv->uri_from_gateway);
-	    g_free(priv->password_from_gateway);
-	}
+        if (freepriv) {
+            g_free(priv->uri_from_gateway);
+            g_free(priv->password_from_gateway);
+        }
         return result;
     }
 
@@ -2070,7 +2070,7 @@ pdf_remove_leftright_source(AppUIData * app_ui_data)
 void
 pdf_viewer_navigate(PDFNavigate navigate_to)
 {
-    ui_hide_arrows_if_exists(priv->app_ui_data, TRUE); 
+    ui_hide_arrows_if_exists(priv->app_ui_data, TRUE);
     pdf_remove_leftright_source(priv->app_ui_data);
     ui_arrow_hide(priv->app_ui_data);
     g_return_if_fail(priv != NULL);
@@ -2079,8 +2079,8 @@ pdf_viewer_navigate(PDFNavigate navigate_to)
         return;
 
     TDB("pdf_viewer_navigate");
-    
-    /* 
+
+    /*
      * when switching page the inner layout coordinates shall be resetted to
      * 0,0 coordinates */
     priv->x = priv->y = 0;
@@ -2089,43 +2089,43 @@ pdf_viewer_navigate(PDFNavigate navigate_to)
 
     switch (navigate_to)
     {
-        case DOC_NAVI_FIRST:
-            if (priv->current_page == 1)
-                return;
-            priv->current_page = 1;
-            break;
-        case DOC_NAVI_PREVIOUS:
-            if (priv->current_page == 1) {
-	            ui_show_banner(GTK_WIDGET(priv->app_ui_data->app_view),
-					_("pdfv_ib_first_page_reached"));            
-                return;
-            }
-            priv->current_page--;
-	    /* don't save ovr_image_orig*/
-	    priv->app_ui_data->ovr_image_orig = NULL; 
-            break;
+    case DOC_NAVI_FIRST:
+        if (priv->current_page == 1)
+            return;
+        priv->current_page = 1;
+        break;
+    case DOC_NAVI_PREVIOUS:
+        if (priv->current_page == 1) {
+            ui_show_banner(GTK_WIDGET(priv->app_ui_data->app_view),
+                           _("pdfv_ib_first_page_reached"));
+            return;
+        }
+        priv->current_page--;
+        /* don't save ovr_image_orig*/
+        priv->app_ui_data->ovr_image_orig = NULL;
+        break;
 
-        case DOC_NAVI_NEXT:
-            if (priv->current_page == priv->num_pages) {
-	            ui_show_banner(GTK_WIDGET(priv->app_ui_data->app_view),
-					_("pdfv_ib_last_page_reached"));
-                return;
-            }
-            priv->current_page++;
-	    /* don't save ovr_image_orig*/
-	    priv->app_ui_data->ovr_image_orig = NULL;
-            break;
+    case DOC_NAVI_NEXT:
+        if (priv->current_page == priv->num_pages) {
+            ui_show_banner(GTK_WIDGET(priv->app_ui_data->app_view),
+                           _("pdfv_ib_last_page_reached"));
+            return;
+        }
+        priv->current_page++;
+        /* don't save ovr_image_orig*/
+        priv->app_ui_data->ovr_image_orig = NULL;
+        break;
 
-        case DOC_NAVI_LAST:
-            if (priv->current_page == priv->num_pages)
-                return;
-            priv->current_page = priv->num_pages;
-            break;
-    }  
-    
+    case DOC_NAVI_LAST:
+        if (priv->current_page == priv->num_pages)
+            return;
+        priv->current_page = priv->num_pages;
+        break;
+    }
+
     disable_all_ui();
-    
-    /* 
+
+    /*
      * when switching page the inner layout coordinates shall be resetted to
      * 0,0 coordinates */
     gtk_image_set_from_pixmap(GTK_IMAGE(priv->app_ui_data->page_image),
@@ -2136,18 +2136,18 @@ pdf_viewer_navigate(PDFNavigate navigate_to)
 
 
     if ((navigate_to == DOC_NAVI_PREVIOUS)
-        && (PDF_FLAGS_IS_SET(priv->app_ui_data->flags, PDF_FLAGS_FULLSCREEN)))
+            && (PDF_FLAGS_IS_SET(priv->app_ui_data->flags, PDF_FLAGS_FULLSCREEN)))
     {
         priv->app_ui_data->arrow_left_id =
             g_idle_add(ui_put_left_arrow_on_idle, priv->app_ui_data);
     }
 
     if ((navigate_to == DOC_NAVI_NEXT)
-        && (PDF_FLAGS_IS_SET(priv->app_ui_data->flags, PDF_FLAGS_FULLSCREEN)))
+            && (PDF_FLAGS_IS_SET(priv->app_ui_data->flags, PDF_FLAGS_FULLSCREEN)))
     {
         priv->app_ui_data->arrow_right_id =
             g_idle_add(ui_put_right_arrow_on_idle, priv->app_ui_data);
-    		
+
     }
     priv->need_show_info = TRUE;
 
@@ -2155,7 +2155,7 @@ pdf_viewer_navigate(PDFNavigate navigate_to)
         ui_show_progress_banner(GTK_WINDOW(priv->app_ui_data->app_view),
                                 _("pdfv_ib_opening"));*/
     render_page();
-    
+
 }
 
 
@@ -2207,17 +2207,17 @@ pdf_viewer_zoom(PDFZoom zoom_level)
     disable_all_ui();
 
     if (!priv->pdf_doc
-        || (priv->app_ui_data->app_data->low_memory
-	    || PDF_FLAGS_IS_SET(priv->app_ui_data->flags, PDF_FLAGS_PAGE_ERROR) && zoom_level == DOC_ZOOM_IN))
+            || (priv->app_ui_data->app_data->low_memory
+                || PDF_FLAGS_IS_SET(priv->app_ui_data->flags, PDF_FLAGS_PAGE_ERROR) && zoom_level == DOC_ZOOM_IN))
     {
-	return;
+        return;
     }
 
     PDF_FLAGS_UNSET(priv->app_ui_data->flags, PDF_FLAGS_PAGE_ERROR);
 
     /*banner = ui_show_progress_banner(GTK_WINDOW(priv->app_ui_data->app_view),
                                      _("pdfv_pb_zooming"));*/
-   // priv->app_ui_data->zooming_banner = banner;
+    // priv->app_ui_data->zooming_banner = banner;
 
     /* don't save the ovr_image_orig after zoom in/out operations*/
     priv->app_ui_data->ovr_image_orig = NULL;
@@ -2225,70 +2225,70 @@ pdf_viewer_zoom(PDFZoom zoom_level)
     switch (zoom_level)
     {
 
-        case DOC_ZOOM_IN:
-            priv->zoom_level =
-                (PDFZoom) custom_ceil(dpi_array, &current_dpi, 15, sizeof(int),
-                                      compare);
+    case DOC_ZOOM_IN:
+        priv->zoom_level =
+            (PDFZoom) custom_ceil(dpi_array, &current_dpi, 15, sizeof(int),
+                                  compare);
 
-            if (fabs(priv->dpi - dpi_array[priv->zoom_level]) > 1E-5)
-            {
-                priv->dpi = dpi_array[priv->zoom_level];
+        if (fabs(priv->dpi - dpi_array[priv->zoom_level]) > 1E-5)
+        {
+            priv->dpi = dpi_array[priv->zoom_level];
 
-                refresh = TRUE;
-            }
-            break;
+            refresh = TRUE;
+        }
+        break;
 
-        case DOC_ZOOM_OUT:
-            priv->zoom_level =
-                (PDFZoom) custom_floor(dpi_array, &current_dpi, 15,
-                                       sizeof(int), compare);
+    case DOC_ZOOM_OUT:
+        priv->zoom_level =
+            (PDFZoom) custom_floor(dpi_array, &current_dpi, 15,
+                                   sizeof(int), compare);
 
-            if (fabs(priv->dpi - dpi_array[priv->zoom_level]) > 1E-5)
-            {
-                priv->dpi = dpi_array[priv->zoom_level];
+        if (fabs(priv->dpi - dpi_array[priv->zoom_level]) > 1E-5)
+        {
+            priv->dpi = dpi_array[priv->zoom_level];
 
-                refresh = TRUE;
-            }
-            break;
+            refresh = TRUE;
+        }
+        break;
 
-        case DOC_ZOOM_WIDTH:
+    case DOC_ZOOM_WIDTH:
 
-            custom_dpi = SCREEN_DPI * (double) get_custom_zoom_level(TRUE);
-            priv->zoom_level = DOC_ZOOM_WIDTH;
+        custom_dpi = SCREEN_DPI * (double) get_custom_zoom_level(TRUE);
+        priv->zoom_level = DOC_ZOOM_WIDTH;
 
-        case DOC_ZOOM_PAGE:
-            if (custom_dpi == -1)
-            {
-                custom_dpi =
-                    SCREEN_DPI * (double) get_custom_zoom_level(FALSE);
-                priv->zoom_level = DOC_ZOOM_PAGE;
-            }
+    case DOC_ZOOM_PAGE:
+        if (custom_dpi == -1)
+        {
+            custom_dpi =
+                SCREEN_DPI * (double) get_custom_zoom_level(FALSE);
+            priv->zoom_level = DOC_ZOOM_PAGE;
+        }
 
-            if (fabs(priv->dpi - custom_dpi) > 1E-5)
-            {
-                priv->dpi = custom_dpi;
-                refresh = TRUE;
-            }
+        if (fabs(priv->dpi - custom_dpi) > 1E-5)
+        {
+            priv->dpi = custom_dpi;
+            refresh = TRUE;
+        }
 
-            break;
+        break;
 
-        case DOC_ZOOM_INVALID:
-        case DOC_ZOOM_50:
-        case DOC_ZOOM_75:	
-        case DOC_ZOOM_100:
-        case DOC_ZOOM_125:
-        case DOC_ZOOM_150:
-        case DOC_ZOOM_175:
-        case DOC_ZOOM_200:
-        case DOC_ZOOM_225:
-        case DOC_ZOOM_250:
-        case DOC_ZOOM_275:
-        case DOC_ZOOM_300:
-        case DOC_ZOOM_325:
-        case DOC_ZOOM_350:
-        case DOC_ZOOM_375:
-        case DOC_ZOOM_400:
-            break;
+    case DOC_ZOOM_INVALID:
+    case DOC_ZOOM_50:
+    case DOC_ZOOM_75:
+    case DOC_ZOOM_100:
+    case DOC_ZOOM_125:
+    case DOC_ZOOM_150:
+    case DOC_ZOOM_175:
+    case DOC_ZOOM_200:
+    case DOC_ZOOM_225:
+    case DOC_ZOOM_250:
+    case DOC_ZOOM_275:
+    case DOC_ZOOM_300:
+    case DOC_ZOOM_325:
+    case DOC_ZOOM_350:
+    case DOC_ZOOM_375:
+    case DOC_ZOOM_400:
+        break;
 
     }
 
@@ -2310,8 +2310,8 @@ pdf_viewer_zoom(PDFZoom zoom_level)
                             priv->scroll_x);
         gtk_range_set_value(GTK_RANGE(priv->app_ui_data->vscroll),
                             priv->scroll_y);
- 
-	ui_show_zoom_banner(priv->app_ui_data);
+
+        ui_show_zoom_banner(priv->app_ui_data);
 
         render_page();
     }
@@ -2327,7 +2327,7 @@ pdf_viewer_zoom(PDFZoom zoom_level)
         enable_all_ui();
     }
 
-    
+
 }
 
 /**
@@ -2343,15 +2343,15 @@ pdf_viewer_toggle_images()
         ui_close_all_banners(priv->app_ui_data->app_data);
 
         PDF_FLAGS_IS_SET(priv->app_ui_data->flags, PDF_FLAGS_SHOW_IMAGES) ?
-            priv->app_ui_data->show_images_banner =
+        priv->app_ui_data->show_images_banner =
             ui_show_progress_banner(GTK_WINDOW(priv->app_ui_data->app_view),
                                     _("pdfv_pb_show_images")) : priv->
             app_ui_data->hide_images_banner =
-            ui_show_progress_banner(GTK_WINDOW(priv->app_ui_data->app_view),
-                                    _("pdfv_pb_hide_images"));
+                ui_show_progress_banner(GTK_WINDOW(priv->app_ui_data->app_view),
+                                        _("pdfv_pb_hide_images"));
         globalParams->
-            setShowImages(PDF_FLAGS_IS_SET
-                          (priv->app_ui_data->flags, PDF_FLAGS_SHOW_IMAGES));
+        setShowImages(PDF_FLAGS_IS_SET
+                      (priv->app_ui_data->flags, PDF_FLAGS_SHOW_IMAGES));
         /* display_page(); resize_layout();
          * ui_close_all_banners(priv->app_ui_data->app_data); */
         render_page();
@@ -2445,69 +2445,69 @@ pdf_viewer_scroller_changed(PDFScroll scrl)
 #endif
         switch (scrl)
         {
-            case SCROLL_HOR:
-                gadj =
-                    gtk_layout_get_hadjustment(GTK_LAYOUT
-                                               (priv->app_ui_data->layout));
+        case SCROLL_HOR:
+            gadj =
+                gtk_layout_get_hadjustment(GTK_LAYOUT
+                                           (priv->app_ui_data->layout));
 #ifndef LOWMEM
-                if ((priv->x + BUFFER_WIDTH < gadj->upper)
+            if ((priv->x + BUFFER_WIDTH < gadj->upper)
                     && ((priv->x + BUFFER_WIDTH / 2) <= gadj->value))
-                {
-                    priv->x = gadj->value - BUFFER_WIDTH / 4;
-                    render = TRUE;
-                }
-                if ((BUFFER_WIDTH / 4 < priv->x) && (gadj->value < priv->x))
-                {
-                    priv->x = gadj->value - BUFFER_WIDTH / 4;
-                    render = TRUE;
-                }
+            {
+                priv->x = gadj->value - BUFFER_WIDTH / 4;
+                render = TRUE;
+            }
+            if ((BUFFER_WIDTH / 4 < priv->x) && (gadj->value < priv->x))
+            {
+                priv->x = gadj->value - BUFFER_WIDTH / 4;
+                render = TRUE;
+            }
 #endif
 #ifdef LOWMEM
-                if (((priv->x + buf_w) < gadj->upper)
+            if (((priv->x + buf_w) < gadj->upper)
                     && ((priv->x) <= gadj->value))
-                {
-                    priv->x = gadj->value;
-                    render = TRUE;
-                }
+            {
+                priv->x = gadj->value;
+                render = TRUE;
+            }
 
-                if ((gadj->value < priv->x))
-                {
-                    priv->x = gadj->value;
-                    render = TRUE;
-                }
+            if ((gadj->value < priv->x))
+            {
+                priv->x = gadj->value;
+                render = TRUE;
+            }
 #endif
-                break;
-            case SCROLL_VER:
-                gadj =
-                    gtk_layout_get_vadjustment(GTK_LAYOUT
-                                               (priv->app_ui_data->layout));
+            break;
+        case SCROLL_VER:
+            gadj =
+                gtk_layout_get_vadjustment(GTK_LAYOUT
+                                           (priv->app_ui_data->layout));
 #ifndef LOWMEM
-                if ((priv->y + BUFFER_HEIGHT < gadj->upper)
+            if ((priv->y + BUFFER_HEIGHT < gadj->upper)
                     && ((priv->y + BUFFER_HEIGHT / 2) <= gadj->value))
-                {
-                    priv->y = gadj->value - BUFFER_HEIGHT / 4;
-                    render = TRUE;
-                }
-                if ((BUFFER_HEIGHT / 4 < priv->y) && (gadj->value < priv->y))
-                {
-                    priv->y = gadj->value - BUFFER_HEIGHT / 4;
-                    render = TRUE;
-                }
+            {
+                priv->y = gadj->value - BUFFER_HEIGHT / 4;
+                render = TRUE;
+            }
+            if ((BUFFER_HEIGHT / 4 < priv->y) && (gadj->value < priv->y))
+            {
+                priv->y = gadj->value - BUFFER_HEIGHT / 4;
+                render = TRUE;
+            }
 #endif
 #ifdef LOWMEM
-                if (((priv->y + buf_h) < gadj->upper)
+            if (((priv->y + buf_h) < gadj->upper)
                     && ((priv->y) <= gadj->value))
-                {
-                    priv->y = gadj->value;
-                    render = TRUE;
-                }
-                if ((gadj->value < priv->y))
-                {
-                    priv->y = gadj->value;
-                    render = TRUE;
-                }
+            {
+                priv->y = gadj->value;
+                render = TRUE;
+            }
+            if ((gadj->value < priv->y))
+            {
+                priv->y = gadj->value;
+                render = TRUE;
+            }
 #endif
-                break;
+            break;
         }
 
         if (render)
@@ -2558,7 +2558,7 @@ scrollbar_change_idle(gpointer app_ui_data)
 	when non-NULL value is returned.
 
 	@param key key to document information dictionary
-	@return value corresponding to the key in UTF8; 
+	@return value corresponding to the key in UTF8;
                 NULL if error or not found
 */
 gchar *
@@ -2586,17 +2586,17 @@ pdf_viewer_get_info(char *key)
 
         // check if BOM exists
         if (str->getLength() >= 2 &&
-            str->getChar(0) == '\xfe' && str->getChar(1) == '\xff')
+                str->getChar(0) == '\xfe' && str->getChar(1) == '\xff')
         {
             // UTF16 big-endian
             value = g_convert(str->getCString() + 2, str->getLength() - 2,
-                    "UTF-8", "UTF-16BE", &bytes_read, &bytes_written, &err);
+                              "UTF-8", "UTF-16BE", &bytes_read, &bytes_written, &err);
         }
         else
         {
             // assume it's latin1
             value = g_convert(str->getCString(), str->getLength(),
-                    "UTF-8", "ISO-8859-1", &bytes_read, &bytes_written, &err);
+                              "UTF-8", "ISO-8859-1", &bytes_read, &bytes_written, &err);
         }
         if (err)
             g_warning("error in conversion: %s", err->message);
@@ -2623,10 +2623,10 @@ pdf_viewer_get_state(AppState * app_state, gchar ** uri_str, gchar ** passwd)
     g_assert(app_state != NULL);
 
     *uri_str = (priv->pdf_doc != NULL) ?
-        pdf_viewer_get_uri() : NULL;
+               pdf_viewer_get_uri() : NULL;
 
     *passwd = (priv->password != NULL) ?
-        g_strdup(priv->password->getCString()) : NULL;
+              g_strdup(priv->password->getCString()) : NULL;
 
     app_state->current_page = priv->current_page;
     app_state->dpi = priv->dpi;
@@ -2668,8 +2668,8 @@ pdf_viewer_save(const char *dst)
     priv->is_mmc = FALSE;
 
     priv->save_dst = g_strdup(dst);
-    
-	/* g_print( "dst: '%s', save_dst: '%s'\n", dst, priv->save_dst ); */
+
+    /* g_print( "dst: '%s', save_dst: '%s'\n", dst, priv->save_dst ); */
 
     /* change state to saving */
     priv->app_ui_data->app_data->state = PDF_VIEWER_STATE_SAVING;
@@ -2713,39 +2713,39 @@ pdf_viewer_save(const char *dst)
         formatted_name = get_basename_for_display(dst);
 
         text = g_strdup_printf("%s\n%s",
-                                D_("docm_nc_replace_file"), formatted_name);
+                               D_("docm_nc_replace_file"), formatted_name);
 
         if (text != NULL)
         {
-                replace_dialog =
-                        GTK_WIDGET(hildon_note_new_confirmation
-                                  (GTK_WINDOW(priv->app_ui_data->app_view),
-                                  text));
-		priv->app_ui_data->replace_dialog = replace_dialog;
+            replace_dialog =
+                GTK_WIDGET(hildon_note_new_confirmation
+                           (GTK_WINDOW(priv->app_ui_data->app_view),
+                            text));
+            priv->app_ui_data->replace_dialog = replace_dialog;
 
-                ret = gtk_dialog_run(GTK_DIALOG(replace_dialog));
-                gtk_widget_destroy(GTK_WIDGET(replace_dialog));
-		priv->app_ui_data->replace_dialog = NULL;		
+            ret = gtk_dialog_run(GTK_DIALOG(replace_dialog));
+            gtk_widget_destroy(GTK_WIDGET(replace_dialog));
+            priv->app_ui_data->replace_dialog = NULL;
         }
 
         if (formatted_name != NULL)
-                g_free(formatted_name);
+            g_free(formatted_name);
 
         if (text != NULL)
-                g_free(text);
-        
+            g_free(text);
+
         if (ret != GTK_RESPONSE_OK)
         {
             /* cancel saving to this destination */
             res = RESULT_SAVE_CANCELLED;
             goto done;
         }
-        /* 
+        /*
          * else continue and rewrite w/o check
          * GNOME_VFS_XFER_OVERWRITE_MODE_REPLACE */
     }
 
-    /* 
+    /*
      * adding timer for saving, if saving takes more than SAVE_TIMEOUT, then
      * a 'Saving...' banner appears. SAVE_TIMEOUT defined in constant.h */
     save_time = g_timer_new();
@@ -2772,13 +2772,13 @@ pdf_viewer_save(const char *dst)
 
     ui_enable_document_open(priv->app_ui_data, TRUE);
 
-    /* 
+    /*
      * transform gnomevfserror to pdfviewererror (if dst location unmounted
      * during save gnome-vfs-result is _still_ GNOME_VFS_OK for some reason) */
     if (priv->cancelled)
     {
 
-        /* 
+        /*
          * the volume got unmounted, but we have specified infobanner just
          * for MMC */
 
@@ -2793,34 +2793,34 @@ pdf_viewer_save(const char *dst)
 
         switch (vfs_res)
         {
-            case GNOME_VFS_OK:
-            {
-                GnomeVFSFileInfo info = { 0 };
-                info.atime = info.mtime = info.ctime = time(NULL);
-                gnome_vfs_set_file_info_uri(dst_uri, &info,
-                                            GNOME_VFS_SET_FILE_INFO_TIME);
-                res = RESULT_SAVE_OK;
-            }
-                break;
+        case GNOME_VFS_OK:
+        {
+            GnomeVFSFileInfo info = { 0 };
+            info.atime = info.mtime = info.ctime = time(NULL);
+            gnome_vfs_set_file_info_uri(dst_uri, &info,
+                                        GNOME_VFS_SET_FILE_INFO_TIME);
+            res = RESULT_SAVE_OK;
+        }
+        break;
 
-            case GNOME_VFS_ERROR_NO_SPACE:
-            case GNOME_VFS_ERROR_NO_MEMORY:
-                res = RESULT_NO_SPACE_ON_DEVICE;
-                break;
+        case GNOME_VFS_ERROR_NO_SPACE:
+        case GNOME_VFS_ERROR_NO_MEMORY:
+            res = RESULT_NO_SPACE_ON_DEVICE;
+            break;
 
-            case GNOME_VFS_ERROR_NOT_PERMITTED:
-            case GNOME_VFS_ERROR_READ_ONLY_FILE_SYSTEM:
-            case GNOME_VFS_ERROR_ACCESS_DENIED:
-            case GNOME_VFS_ERROR_READ_ONLY:
-                res = RESULT_SAVE_NOT_ALLOWED;
-                break;
+        case GNOME_VFS_ERROR_NOT_PERMITTED:
+        case GNOME_VFS_ERROR_READ_ONLY_FILE_SYSTEM:
+        case GNOME_VFS_ERROR_ACCESS_DENIED:
+        case GNOME_VFS_ERROR_READ_ONLY:
+            res = RESULT_SAVE_NOT_ALLOWED;
+            break;
 
-            default:
-                res = RESULT_SAVE_FAILED;
+        default:
+            res = RESULT_SAVE_FAILED;
         }
     }
 
-  done:
+done:
     gnome_vfs_uri_unref(dst_uri);
 
     g_free(priv->save_dst);
@@ -2851,7 +2851,7 @@ pdf_viewer_unload(void)
 
 gboolean
 pdf_viewer_is_rendering() {
-	return IS_RENDERING( priv );
+    return IS_RENDERING( priv );
 }
 
 void
@@ -2860,7 +2860,7 @@ pdf_viewer_cancel_if_render() {
 
     /* pdf_viewer_cancel_if_render is called from gtk signal handler, which
      * locks gdk. We need to unlock it until rendering thread has finished */
-    gdk_threads_leave(); 
+    gdk_threads_leave();
     DUNLOCKED(gdk);
 
     /* cancel rendering thread */
@@ -2874,126 +2874,126 @@ pdf_viewer_cancel_if_render() {
 /* check the point that user is clicking whether or not is a hyperlink */
 gboolean pdf_clicking_hyperlink(int x, int y)
 {
-	Links *links;
-	double xx, yy;
-	double ux, uy;
-	
-	xx = yy = 0;
-	ux = uy = 0;
-		
-	xx = double(x);
-	yy = double(y);
+    Links *links;
+    double xx, yy;
+    double ux, uy;
 
-	/* convert the device coordinate to the user coordinate */
-	priv->output_dev->cvtDevToUser(xx, yy, &ux, &uy);
-	links = priv->pdf_doc->myGetLinks(priv->current_page);
-	
-	if(links->onLink(ux, uy))
-	{
-		doAction(links->find(ux, uy));
-		return gTrue;
+    xx = yy = 0;
+    ux = uy = 0;
 
-	}
-	return gFalse;
+    xx = double(x);
+    yy = double(y);
+
+    /* convert the device coordinate to the user coordinate */
+    priv->output_dev->cvtDevToUser(xx, yy, &ux, &uy);
+    links = priv->pdf_doc->myGetLinks(priv->current_page);
+
+    if(links->onLink(ux, uy))
+    {
+        doAction(links->find(ux, uy));
+        return gTrue;
+
+    }
+    return gFalse;
 }
 
 /* parse the action of the hyperlink that the user are clicking  */
 void doAction(LinkAction *action)
 {
-	LinkActionKind kind;
-	LinkDest *dest;
-	GString *namedDest;
-	int topPageA;
-	Ref pageRef;
-	
-	switch(kind = action->getKind())
-	{
-		case actionGoTo:
-			g_print("@@ actionGoTo\n");
-			dest = NULL;
-			namedDest = NULL;
-			
-			if ((dest = ((LinkGoTo *)action)->getDest()))
-			{
-				dest = dest->copy();
-			}
-			else if ((namedDest = ((LinkGoTo *)action)->getNamedDest())) 
-			{	
-				namedDest = namedDest->copy();
-			}
-			
-			if(namedDest)
-			{
-				dest = priv->pdf_doc->findDest(namedDest);
-				delete namedDest;
-			}
-			else
-				return;
+    LinkActionKind kind;
+    LinkDest *dest;
+    GString *namedDest;
+    int topPageA;
+    Ref pageRef;
 
-			if(dest)
-				displayDest(dest);
-			delete dest;
-			break;
-		case actionGoToR:
-			g_print("@@ actionGoToR\n");
-			break;
-		case actionLaunch:
-			g_print("@@ actionLaunch\n");
-			break;
-		case actionURI:
-			g_print("@@ actionURI\n");
-			break;
-		case actionNamed:
-			g_print("@@ actionNamed\n");
-			break;
-		case actionMovie:
-			g_print("@@ actionMovie\n");
-			break;
-		case actionUnknown:
-			g_print("@@ actionUnknown\n");
-			break;
-	}
+    switch(kind = action->getKind())
+    {
+    case actionGoTo:
+        g_print("@@ actionGoTo\n");
+        dest = NULL;
+        namedDest = NULL;
+
+        if ((dest = ((LinkGoTo *)action)->getDest()))
+        {
+            dest = dest->copy();
+        }
+        else if ((namedDest = ((LinkGoTo *)action)->getNamedDest()))
+        {
+            namedDest = namedDest->copy();
+        }
+
+        if(namedDest)
+        {
+            dest = priv->pdf_doc->findDest(namedDest);
+            delete namedDest;
+        }
+        else
+            return;
+
+        if(dest)
+            displayDest(dest);
+        delete dest;
+        break;
+    case actionGoToR:
+        g_print("@@ actionGoToR\n");
+        break;
+    case actionLaunch:
+        g_print("@@ actionLaunch\n");
+        break;
+    case actionURI:
+        g_print("@@ actionURI\n");
+        break;
+    case actionNamed:
+        g_print("@@ actionNamed\n");
+        break;
+    case actionMovie:
+        g_print("@@ actionMovie\n");
+        break;
+    case actionUnknown:
+        g_print("@@ actionUnknown\n");
+        break;
+    }
 }
 
 /*display the destination that the hyperlink link to*/
 void displayDest(LinkDest *dest)
 {
-	Ref pageRef;
-	int topPageA;
-	int dx, dy, scrollXA, scrollYA;
+    Ref pageRef;
+    int topPageA;
+    int dx, dy, scrollXA, scrollYA;
 
-	if(dest->isPageRef())
-	{
-		pageRef = dest->getPageRef();
-		topPageA = priv->pdf_doc->findPage(pageRef.num, pageRef.gen);
-	}
-	else
-		topPageA = dest->getPageNum();
-	if(topPageA <= 0 || topPageA > priv->pdf_doc->getNumPages())
-	{
-		topPageA = 1;
-	}
-	scrollXA = priv->scroll_x;
-	scrollYA = priv->scroll_y;
-	
-	switch(dest->getKind())
-	{
-		case destXYZ:
-			priv->output_dev->cvtUserToDev(dest->getLeft(), dest->getTop(), &dx, &dy);
-			break;
-		default:
-			break;
-	}
-	priv->x = priv->y = 0;
+    if(dest->isPageRef())
+    {
+        pageRef = dest->getPageRef();
+        topPageA = priv->pdf_doc->findPage(pageRef.num, pageRef.gen);
+    }
+    else
+        topPageA = dest->getPageNum();
+    if(topPageA <= 0 || topPageA > priv->pdf_doc->getNumPages())
+    {
+        topPageA = 1;
+    }
+    scrollXA = priv->scroll_x;
+    scrollYA = priv->scroll_y;
 
-	priv->current_page = topPageA;
-	gtk_range_set_value(GTK_RANGE(priv->app_ui_data->vscroll), dy);
-	
-	PDF_FLAGS_UNSET(priv->app_ui_data->flags, PDF_FLAGS_PAGE_ERROR);
-	gtk_image_set_from_pixmap(GTK_IMAGE(priv->app_ui_data->page_image),
-			NULL, NULL);
-	priv->app_ui_data->opening_banner = ui_show_progress_banner(GTK_WINDOW(priv->app_ui_data->app_view),
-			_("pdfv_ib_opening"));
-	render_page();
+    switch(dest->getKind())
+    {
+    case destXYZ:
+        priv->output_dev->cvtUserToDev(dest->getLeft(), dest->getTop(), &dx, &dy);
+        break;
+    default:
+        break;
+    }
+    priv->x = priv->y = 0;
+
+    priv->current_page = topPageA;
+    gtk_range_set_value(GTK_RANGE(priv->app_ui_data->vscroll), dy);
+
+    PDF_FLAGS_UNSET(priv->app_ui_data->flags, PDF_FLAGS_PAGE_ERROR);
+    gtk_image_set_from_pixmap(GTK_IMAGE(priv->app_ui_data->page_image),
+                              NULL, NULL);
+    priv->app_ui_data->opening_banner = ui_show_progress_banner(GTK_WINDOW(priv->app_ui_data->app_view),
+                                        _("pdfv_ib_opening"));
+    render_page();
 }
 /* EOF */
