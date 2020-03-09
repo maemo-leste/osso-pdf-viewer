@@ -1,7 +1,7 @@
 Source: osso-pdf-viewer
 Section: misc
 Priority: optional
-Maintainer: Amish Maske <amish.maske@nokia.com>
+Maintainer: Merlijn Wajer <merlijn@wizzup.org>
 Build-Depends: conbtdialogs-dev, debhelper (>= 4.0.0), libhildon1-dev,  libhildonfm2-dev (>= 2.16.2), libgtk2.0-dev, libgnomevfs2-dev, libglib2.0-dev, libdbus-1-dev, libdbus-glib-1-dev, libosso-dev, libhildonmime-dev, libcomapp-dev, maemo-launcher-dev
 Standards-Version: 3.6.0
 
