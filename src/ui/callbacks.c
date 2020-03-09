@@ -1106,6 +1106,7 @@ on_number_editor_error(HildonNumberEditor * hildonnumbereditor,
     return TRUE;
 }
 
+#if 0
 /**
 	Handles on_file_changed event
 
@@ -1168,6 +1169,7 @@ on_file_changed(GnomeVFSMonitorHandle * handle,
             break;
     }
 }
+#endif
 
 gboolean take_screen_shot(gpointer widget)
 { 

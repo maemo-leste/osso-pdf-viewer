@@ -25,7 +25,6 @@
 #include <libintl.h>
 #include <locale.h>
 #include <gtk/gtk.h>
-#include <libgnomevfs/gnome-vfs.h>
 #include <libosso.h>
 #include <signal.h>
 #include <stdlib.h>
@@ -116,15 +115,6 @@ main(int argc, char *argv[])
 
     init_comapp_system(app_data);
 
-    /* Initialize GnomeVFS */
-    result = gnome_vfs_init();
-
-    if (!result)
-    {
-        OSSO_LOG_CRIT("Failed initializing GnomeVFS");
-        return OSSO_ERROR;
-    }
-
     /* Initialize GConf and read application configuration */
     if (!init_settings(app_data))
     {
@@ -189,11 +179,6 @@ main(int argc, char *argv[])
 		g_debug( "Deinit mime..." );
         free_mime_filters();
         free_application_mime_types();
-
-		g_debug( "Deinit gnomevfs..." );
-        if (gnome_vfs_initialized()) {
-            gnome_vfs_shutdown();
-        }
     }
     
     /* Exit successfully, regardless of any errors */

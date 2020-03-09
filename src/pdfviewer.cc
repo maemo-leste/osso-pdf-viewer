@@ -34,8 +34,7 @@
 #include <glib/gthread.h>
 #include <glib/gstdio.h>
 #include <gtk/gtk.h>
-#include <libgnomevfs/gnome-vfs.h>
-#include <libgnomevfs/gnome-vfs-utils.h>
+#include <gio/gio.h>
 #include <hildon/hildon-note.h>
 #include "gtk-switch.h"
 #include "SplashPattern.h"
@@ -96,10 +95,11 @@ struct _PDFViewerPrivate {
     gboolean abort_cancel;
     gchar *save_dst;
 
-    GnomeVFSHandle *vfs_handle;
-    GnomeVFSURI *vfs_URI;
-    GnomeVFSURI *vfs_URI_gateway;
-    GnomeVFSHandle *read_handle, *write_handle;
+    GFileInputStream *file_handle;
+    char *file_URI;
+    char *file_URI_gateway;
+    GFileInputStream *read_handle;
+    GFileOutputStream *write_handle;
     gchar *uri_from_gateway;
     gchar *password_from_gateway;
 };
@@ -158,7 +158,9 @@ static void resize_layout(void);
 static double get_custom_zoom_level(gboolean fit_width);
 static void on_outputdev_redraw(void *user_data);
 static GBool on_abort_check(void *user_data);
+#if 0
 static gint on_progress_info(GnomeVFSXferProgressInfo * info, gpointer data);
+#endif
 
 void doAction(LinkAction *action);
 void displayDest(LinkDest *dest);
@@ -176,8 +178,10 @@ static size_t custom_ceil(const void *array,
                           size_t width,
                           int (*compar) (const void *, const void *));
 
+#if 0
 static void volume_unmounted_cb(GnomeVFSVolumeMonitor * vfsvolumemonitor,
                                 GnomeVFSVolume * arg1, gpointer user_data);
+#endif
 
 
 static void empty_application_area(void);
@@ -883,6 +887,7 @@ on_abort_check(void *user_data)
 
 static GtkWidget *pb_banner = NULL;
 
+#if 0
 static gint
 on_progress_info(GnomeVFSXferProgressInfo * info, gpointer data)
 {
@@ -906,6 +911,7 @@ on_progress_info(GnomeVFSXferProgressInfo * info, gpointer data)
 
     return 1;
 }
+#endif
 
 /**
    Returns the nearest (from down) value to the given key
@@ -1011,6 +1017,7 @@ custom_ceil(const void *array,
 }
 
 
+#if 0
 static void
 volume_unmounted_cb(GnomeVFSVolumeMonitor * vfsvolumemonitor,
                     GnomeVFSVolume * volume, gpointer user_data)
@@ -1033,9 +1040,7 @@ volume_unmounted_cb(GnomeVFSVolumeMonitor * vfsvolumemonitor,
         case PDF_VIEWER_STATE_LOADED:
         case PDF_VIEWER_STATE_LOADING:
         case PDF_VIEWER_STATE_SAVING:
-            uri =
-                gnome_vfs_uri_to_string(pdf_viewer_get_uri(),
-                                        GNOME_VFS_URI_HIDE_NONE);
+            uri = uri_to_string(pdf_viewer_get_uri());
             break;
         default:
             uri = NULL;
@@ -1088,6 +1093,7 @@ volume_unmounted_cb(GnomeVFSVolumeMonitor * vfsvolumemonitor,
     if (volume_uri)
         g_free(volume_uri);
 }
+#endif
 
 /**
    Helper function.
@@ -1181,10 +1187,12 @@ init_thread_func(gpointer data)
     }
 
     /* Volume monitor (singleton object, no refcounting) */
+#if 0
     app_ui_data->app_data->volume_monitor = gnome_vfs_get_volume_monitor();
     g_signal_connect(G_OBJECT(app_ui_data->app_data->volume_monitor),
                      "volume_pre_unmount",
                      G_CALLBACK(volume_unmounted_cb), app_ui_data->app_data);
+#endif
     return NULL;
 }
 
@@ -1389,22 +1397,22 @@ pdf_viewer_deinit()
         priv->password = NULL;
     }
 
-    if (priv->vfs_handle)
+    if (priv->file_handle)
     {
-        gnome_vfs_close(priv->vfs_handle);
-        priv->vfs_handle = NULL;
+        g_object_unref(priv->file_handle);
+        priv->file_handle = NULL;
     }
 
-    if (priv->vfs_URI)
+    if (priv->file_URI)
     {
-        gnome_vfs_uri_unref(priv->vfs_URI);
-        priv->vfs_URI = NULL;
+        g_free(priv->file_URI);
+        priv->file_URI = NULL;
     }
 
-    if (priv->vfs_URI_gateway)
+    if (priv->file_URI_gateway)
     {
-        gnome_vfs_uri_unref(priv->vfs_URI_gateway);
-        priv->vfs_URI_gateway = NULL;
+        g_free(priv->file_URI_gateway);
+        priv->file_URI_gateway = NULL;
     }
 
     // xDestroyMutex(&priv->cancel_mutex);
@@ -1442,13 +1450,13 @@ pdf_viewer_empty_document()
     }
     
 	/* g_debug( "%s 3", __FUNCTION__ ); */
-    if (priv->vfs_URI) {
-        gnome_vfs_uri_unref(priv->vfs_URI);
-        priv->vfs_URI = 0;
+    if (priv->file_URI) {
+        g_free(priv->file_URI);
+        priv->file_URI = NULL;
     }
-    if (priv->vfs_URI_gateway) {
-        gnome_vfs_uri_unref(priv->vfs_URI_gateway);
-        priv->vfs_URI_gateway = 0;
+    if (priv->file_URI_gateway) {
+        g_free(priv->file_URI_gateway);
+        priv->file_URI_gateway = 0;
     }
 
 	/* g_debug( "%s 4", __FUNCTION__ ); */
@@ -1459,20 +1467,20 @@ pdf_viewer_empty_document()
 
     if (priv->write_handle)
     {
-        gnome_vfs_close(priv->write_handle);
+        g_object_unref(priv->write_handle);
         priv->write_handle= NULL;
     }
 
     if (priv->read_handle)
     {
-        gnome_vfs_close(priv->read_handle);
+        g_object_unref(priv->read_handle);
         priv->read_handle = NULL;
     }
 
-    if (priv->vfs_handle)
+    if (priv->file_handle)
     {
-        gnome_vfs_close(priv->vfs_handle);
-        priv->vfs_handle = NULL;
+        g_object_unref(priv->file_handle);
+        priv->file_handle = NULL;
     }
 
 	/* g_debug( "%s 5", __FUNCTION__ ); */
@@ -1487,6 +1495,7 @@ pdf_viewer_empty_document()
 static gboolean
 pdf_viewer_copy_from_gw(gpointer data)
 {
+#if 0
     static GnomeVFSFileSize bytes_read, bytes_written;
     static GnomeVFSResult vfs_result;
     gchar buffer[128 * 1024];
@@ -1576,6 +1585,7 @@ pdf_viewer_copy_from_gw(gpointer data)
     }
     // any problem???
     return FALSE;
+#endif
 }
 
 
@@ -1592,9 +1602,9 @@ pdf_viewer_open(const char *uri, const char *password)
     PDFDoc *new_doc;
     BaseStream *pdf_stream;
 
-    GnomeVFSHandle *vfs_handle = NULL;
-    GnomeVFSResult vfs_result;
-    gchar *uri_scheme = NULL;
+    GFile *gfile = NULL;
+    GFileInputStream *infile = NULL;
+    GError *error = NULL;
     int err;
     Object obj;
     AppData *app_data = NULL;
@@ -1642,38 +1652,49 @@ pdf_viewer_open(const char *uri, const char *password)
             g_debug( "%s, Make local copy out of remote file", __FUNCTION__ );
             priv->is_gateway = TRUE;
 
-            GnomeVFSResult vfs_result;
-            vfs_result =
-                gnome_vfs_open(&priv->read_handle, uri, GNOME_VFS_OPEN_READ);
-            if (vfs_result != GNOME_VFS_OK)
+            GFile *rfile = g_file_new_for_uri(uri);
+            error = NULL;
+
+            priv->read_handle = g_file_read(rfile, NULL, &error);
+            g_object_unref(rfile);
+
+            if (error != NULL)
             {
                 g_warning("open not ok");
+                fprintf(stderr, "pdf_viewer_open: error: g_file_read: %s\n", error->message);
+                g_error_free(error);
+
                 if (priv->read_handle)
                 {
-                    gnome_vfs_close(priv->read_handle);
+                    g_object_unref(priv->read_handle);
                     priv->read_handle = NULL;
                 }
+
                 pdf_viewer_empty_document();
                 return RESULT_INVALID_URI;
             }
-            vfs_result =
-                gnome_vfs_create(&priv->write_handle, GATEWAY_TMP_FILE,
-                                 GNOME_VFS_OPEN_WRITE, FALSE, 0777);
-            if (vfs_result != GNOME_VFS_OK)
+
+            GFile *wfile = g_file_new_for_path(GATEWAY_TMP_FILE);
+            priv->write_handle = g_file_append_to(wfile, G_FILE_CREATE_NONE, NULL, &error);
+
+            if (error != NULL)
             {
+                fprintf(stderr, "pdf_viewer_open: error: g_file_append_to: %s\n", error->message);
+                g_error_free(error);
                 if (priv->read_handle)
                 {
-                    gnome_vfs_close(priv->read_handle);
+                    g_object_unref(priv->read_handle);
                     priv->read_handle = NULL;
                 }
                 if (priv->write_handle)
                 {
-                    gnome_vfs_close(priv->write_handle);
+                    g_object_unref(priv->write_handle);
                     priv->write_handle = NULL;
                 }
                 g_warning("create not ok");
                 return RESULT_INSUFFICIENT_MEMORY;
             }
+
             priv->app_ui_data->copy_from_gw = TRUE;
 
             priv->uri_from_gateway = g_strdup(uri);
@@ -1723,46 +1744,41 @@ pdf_viewer_open(const char *uri, const char *password)
     /* setting application state */
     app_data->state = PDF_VIEWER_STATE_LOADING;
 
-    /* gnomeVFS support */
-    uri_scheme = gnome_vfs_get_uri_scheme(uri);
-    if (!uri_scheme) {
-        uri = gnome_vfs_get_uri_from_local_path(uri);
-    } else {
-        g_free(uri_scheme);
-    }
+    gfile = g_file_new_for_uri(uri);
+    infile = g_file_read(gfile, NULL, &error);
+    g_object_unref(gfile);
 
-    /* init the vfs_handle */
-    vfs_result = gnome_vfs_open(&vfs_handle, uri, GNOME_VFS_OPEN_READ);
+    if (error != NULL) {
+        fprintf(stderr, "pdf_viewer_open: error: g_file_read: %s\n", error->message);
+        g_error_free(error);
 
-    if (vfs_result != GNOME_VFS_OK)
-    {
         result = RESULT_INVALID_URI;
 
-	/* if non-pdf file is opened directly from the File Manager*/
+        /* if non-pdf file is opened directly from the File Manager*/
         if(!file_is_supported(uri))
-          	result =  RESULT_UNSUPPORTED_FORMAT;
+            result =  RESULT_UNSUPPORTED_FORMAT;
     
         /* couldn't load the document */
         pdf_viewer_empty_document();
-		if (freepriv) {
-	    g_free(priv->uri_from_gateway);
-	    g_free(priv->password_from_gateway);
-	}
+        if (freepriv) {
+            g_free(priv->uri_from_gateway);
+            g_free(priv->password_from_gateway);
+        }
 
         return result;
     }
 
     /* create stream of it */
     obj.initNull();
-    pdf_stream = new OssoStream(vfs_handle, 0, gFalse, 0, &obj);
+    pdf_stream = new OssoStream(infile, 0, gFalse, 0, &obj);
 
     /* the document loading has been cancelled */
     if (priv->cancelled)
     {
-        if (vfs_handle)
+        if (infile)
         {
-            gnome_vfs_close(vfs_handle);
-            vfs_handle = NULL;
+            g_object_unref(infile);
+            infile = NULL;
         }
 
         /* check the reason */
@@ -1778,10 +1794,11 @@ pdf_viewer_open(const char *uri, const char *password)
         /* couldn't load the document */
         pdf_viewer_empty_document();
 
-	if (freepriv) {
-	    g_free(priv->uri_from_gateway);
-	    g_free(priv->password_from_gateway);
-	}
+        if (freepriv) {
+            g_free(priv->uri_from_gateway);
+            g_free(priv->password_from_gateway);
+        }
+
         return result;
     }
 
@@ -1814,10 +1831,10 @@ pdf_viewer_open(const char *uri, const char *password)
         delete new_doc;
 
         /* close the file */
-        if (vfs_handle)
+        if (infile)
         {
-            gnome_vfs_close(vfs_handle);
-            vfs_handle = NULL;
+            g_object_unref(infile);
+            infile = NULL;
         }
         	
 
@@ -1856,13 +1873,13 @@ pdf_viewer_open(const char *uri, const char *password)
                
         // At least in case of corrupted file we should clear uris
         if( result == RESULT_CORRUPTED_FILE ) {
-	    	if (priv->vfs_URI) {
-    	    	gnome_vfs_uri_unref(priv->vfs_URI);
-    	    	priv->vfs_URI = NULL;
+	    	if (priv->file_URI) {
+    	    	g_free(priv->file_URI);
+    	    	priv->file_URI = NULL;
     	    }
-		    if (priv->vfs_URI_gateway) {
-    	    	gnome_vfs_uri_unref(priv->vfs_URI_gateway);
-    	    	priv->vfs_URI_gateway = NULL;
+		    if (priv->file_URI_gateway) {
+    	    	g_free(priv->file_URI_gateway);
+    	    	priv->file_URI_gateway = NULL;
     		}
     	}
     	
@@ -1877,7 +1894,7 @@ pdf_viewer_open(const char *uri, const char *password)
         priv->dpi = dpi_array[DOC_ZOOM_100];
         ui_set_current_zoom(priv->app_ui_data, pdf_viewer_get_zoom_percent());
         
-	return result;
+        return result;
     }
 
     cancel_if_render();
@@ -1887,29 +1904,29 @@ pdf_viewer_open(const char *uri, const char *password)
     {
         delete priv->pdf_doc;
     }
-    if (priv->vfs_handle)
+    if (priv->file_handle)
     {
-        gnome_vfs_close(priv->vfs_handle);
-        priv->vfs_handle = NULL;
+        g_object_unref(priv->file_handle);
+        priv->file_handle = NULL;
     }
-    if (priv->vfs_URI)
+    if (priv->file_URI)
     {
-        gnome_vfs_uri_unref(priv->vfs_URI);
+        g_object_unref(priv->file_URI);
     }
-    if (priv->vfs_URI_gateway)
+    if (priv->file_URI_gateway)
     {
-        gnome_vfs_uri_unref(priv->vfs_URI_gateway);
+        g_object_unref(priv->file_URI_gateway);
     }
 
-    priv->vfs_handle = vfs_handle;
-    priv->vfs_URI = gnome_vfs_uri_new(uri);
+    priv->file_handle = infile;
+    priv->file_URI = g_strdup(uri);
     if (uri_gateway != NULL)
     {
-        priv->vfs_URI_gateway = gnome_vfs_uri_new(uri_gateway);
+        priv->file_URI_gateway = g_strdup(uri_gateway);
     }
     else
     {
-        priv->vfs_URI_gateway = NULL;
+        priv->file_URI_gateway = NULL;
     }
 
     priv->pdf_doc = new_doc;
@@ -1943,19 +1960,19 @@ pdf_viewer_open(const char *uri, const char *password)
         priv->pdf_doc = NULL;
 
         /* close the file descriptor and clean uri */
-        if (priv->vfs_handle)
+        if (priv->file_handle)
         {
-            gnome_vfs_close(priv->vfs_handle);
-            priv->vfs_handle = NULL;
+            g_object_unref(priv->file_handle);
+            priv->file_handle = NULL;
         }
 
-        gnome_vfs_uri_unref(priv->vfs_URI);
-        priv->vfs_URI = NULL;
+        g_free(priv->file_URI);
+        priv->file_URI = NULL;
 
-        if (priv->vfs_URI_gateway)
+        if (priv->file_URI_gateway)
         {
-            gnome_vfs_uri_unref(priv->vfs_URI_gateway);
-            priv->vfs_URI_gateway = NULL;
+            g_free(priv->file_URI_gateway);
+            priv->file_URI_gateway = NULL;
         }
 
         app_data->state = PDF_VIEWER_STATE_EMPTY;
@@ -1986,20 +2003,20 @@ pdf_viewer_open(const char *uri, const char *password)
         priv->pdf_doc = NULL;
 
         /* close the file descriptor */
-        if (priv->vfs_handle)
+        if (priv->file_handle)
         {
-            gnome_vfs_close(priv->vfs_handle);
-            priv->vfs_handle = NULL;
+            g_object_unref(priv->file_handle);
+            priv->file_handle = NULL;
         }
 
         /* remove URI */
-        gnome_vfs_uri_unref(priv->vfs_URI);
-        priv->vfs_URI = NULL;
+        g_free(priv->file_URI);
+        priv->file_URI = NULL;
 
-        if (priv->vfs_URI_gateway)
+        if (priv->file_URI_gateway)
         {
-            gnome_vfs_uri_unref(priv->vfs_URI_gateway);
-            priv->vfs_URI_gateway = NULL;
+            g_object_unref(priv->file_URI_gateway);
+            priv->file_URI_gateway = NULL;
         }
 
         /* change state */
@@ -2347,16 +2364,16 @@ pdf_viewer_toggle_images()
 
 	@return document uri
 */
-GnomeVFSURI *
+char *
 pdf_viewer_get_uri()
 {
     if (priv->is_gateway == TRUE)
     {
-        return priv->vfs_URI_gateway;
+        return priv->file_URI_gateway;
     }
     else
     {
-        return priv->vfs_URI;
+        return priv->file_URI;
     }
 }
 
@@ -2606,8 +2623,7 @@ pdf_viewer_get_state(AppState * app_state, gchar ** uri_str, gchar ** passwd)
     g_assert(app_state != NULL);
 
     *uri_str = (priv->pdf_doc != NULL) ?
-        gnome_vfs_uri_to_string(pdf_viewer_get_uri(),
-                                GNOME_VFS_URI_HIDE_NONE) : NULL;
+        pdf_viewer_get_uri() : NULL;
 
     *passwd = (priv->password != NULL) ?
         g_strdup(priv->password->getCString()) : NULL;
@@ -2630,6 +2646,7 @@ pdf_viewer_get_state(AppState * app_state, gchar ** uri_str, gchar ** passwd)
 PDFViewerResult
 pdf_viewer_save(const char *dst)
 {
+#if 0
     GnomeVFSURI *src_uri = NULL;
     GnomeVFSURI *dst_uri = NULL;
     GnomeVFSURI *dst_parent = NULL;
@@ -2812,6 +2829,7 @@ pdf_viewer_save(const char *dst)
     priv->app_ui_data->app_data->state = PDF_VIEWER_STATE_LOADED;
 
     return res;
+#endif
 }
 
 void

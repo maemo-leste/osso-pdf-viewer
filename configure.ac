@@ -61,8 +61,7 @@ AC_ARG_ENABLE([maemo-launcher],
 PKG_CHECK_MODULES(GDEPS, [
 	gtk+-2.0 >= 2.2  
 	glib-2.0 >= 2.2 
-	gnome-vfs-2.0 >= 2.2 
-	gnome-vfs-module-2.0 >= 2.2 
+	gio-2.0,
 	gconf-2.0 >= 2.6.4 
 	comapp >= 0.1.1,
 	x11]

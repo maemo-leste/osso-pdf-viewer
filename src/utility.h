@@ -27,7 +27,7 @@
 
 #include <libosso.h>
 #include <gtk/gtk.h>
-#include <libgnomevfs/gnome-vfs.h>
+#include <gio/gio.h>
 
 #define OSSO_LOG_CRIT(...) g_critical(__VA_ARGS__)
 #define OSSO_LOG_ERR(...) g_error(__VA_ARGS__)
@@ -55,6 +55,8 @@ extern "C" {
     gboolean file_is_supported(const gchar * uri);
 
     gchar *get_basename_for_display(const gchar * uri);
+
+    gchar* uri_to_string(gchar *);
 
 #ifdef __cplusplus
 }
