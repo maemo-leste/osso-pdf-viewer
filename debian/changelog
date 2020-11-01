@@ -1,3 +1,9 @@
+osso-pdf-viewer (1.10.1) unstable; urgency=low
+
+  * Make sure libtool does not interfere with maemo-launcher linker flags
+
+ -- Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>  Sun, 01 Nov 2020 16:27:27 +0200
+
 osso-pdf-viewer (1.10.0) unstable; urgency=low
 
   * Port essential components to GIO
