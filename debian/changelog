@@ -1,3 +1,11 @@
+osso-pdf-viewer (1.10.2) unstable; urgency=low
+
+  * Modernise debian build system
+  * Add freetype library
+  * Modernise autotools
+
+ -- Merlijn Wajer <merlijn@wizzup.org>  Sun, 01 Dec 2024 12:54:18 +0100
+
 osso-pdf-viewer (1.10.1) unstable; urgency=low
 
   * Make sure libtool does not interfere with maemo-launcher linker flags
