@@ -10,11 +10,3 @@ Architecture: any
 Depends: osso-pdf-viewer-l10n-mr0 | osso-pdf-viewer-l10n-mr, ${shlibs:Depends}, ${misc:Depends}, ${launcher:Depends}
 Description: OSSO PDF Viewer
  PDF Viewer application.
-
-
-Package: osso-pdf-viewer-dbg
-Architecture: any
-Section: devel
-Depends: osso-pdf-viewer (= ${source:Version})
-Description: OSSO PDF Viewer debug package
- PDF Viewer application debug package.

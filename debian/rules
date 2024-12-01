@@ -1,135 +1,37 @@
 #!/usr/bin/make -f
-# -*- makefile -*-
-# Sample debian/rules that uses debhelper.
-# GNU copyright 1997 to 1999 by Joey Hess.
+%:
+	dh $@
 
-# Uncomment this to turn on verbose mode.
-#export DH_VERBOSE=1
-
-DEBDIR = ..
-
-# These are used for cross-compiling and for saving the configure script
-# from having to guess our platform (since we know it already)
-DEB_HOST_GNU_TYPE   ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
-DEB_BUILD_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
-
-
-CFLAGS = -Wall -g -D__FREMANTLE_SW__
-PACKAGENAME = osso-pdf-viewer
+ifeq (,$(findstring nolauncher,$(DEB_BUILD_OPTIONS)))
+    OPTS += "--enable-maemo-launcher=yes"
+    USE_MAEMO_LAUNCHER = true
+endif
 
 ifneq (,$(findstring logdebug,$(DEB_BUILD_OPTIONS)))
-	CFLAGS += -DDEBUG -DOSSOLOG_COMPILE -DOSSOLOG_STDOUT -g
+	DEB_CFLAGS_MAINT_APPEND += -DDEBUG -DOSSOLOG_COMPILE -DOSSOLOG_STDOUT -g
 else
-	CFLAGS += -DG_DEBUG_DISABLE=1
+	DEB_CFLAGS_MAINT_APPEND += -DG_DEBUG_DISABLE=1
 endif
 
 ifneq (,$(findstring noopt,$(DEB_BUILD_OPTIONS)))
-	CFLAGS += -g -O0
+	DEB_CFLAGS_MAINT_APPEND += -g -O0
 else
-	CFLAGS += -O2
+	DEB_CFLAGS_MAINT_APPEND += -O2
 endif
 
-ifeq (,$(findstring nolauncher,$(DEB_BUILD_OPTIONS)))
-    ENABLE_LAUNCHER += --enable-maemo-launcher
-    USE_MAEMO_LAUNCHER = true
-    LAUNCHER_DEPENDS = -Vlauncher:Depends="maemo-launcher"
-endif
+DEB_CPPFLAGS_MAINT_APPEND += -DG_DISABLE_CHECKS
+DEB_CFLAGS_MAINT_APPEND   += -Winline
 
-# Prefer hardware floating point if enabled
-ifneq (,$(findstring vfp,$(DEB_BUILD_OPTIONS)))
-	CFLAGS += -mfpu=vfp -mfloat-abi=softfp
-else
-# Use soft-float and thumb mode if it enabled.
-ifneq (,$(findstring thumb,$(DEB_BUILD_OPTIONS)))
-	CFLAGS += -mthumb
-endif
-endif
+export DEB_CPPFLAGS_MAINT_APPEND DEB_CFLAGS_MAINT_APPEND
 
-CPPFLAGS += $(CFLAGS)
-CXXFLAGS += $(CPPFLAGS)
+#override_dh_autoreconf:
+#	dh_autoreconf --as-needed
 
-#ifeq (,$(findstring nostrip,$(DEB_BUILD_OPTIONS)))
-#	INSTALL_PROGRAM += -s
-#endif
+override_dh_auto_configure:
+	dh_auto_configure -- $(CONFFLAGS)
 
-
-config.status: configure
-	dh_testdir
-	# Add here commands to configure the package.
-	CFLAGS="$(CFLAGS)" CPPFLAGS="$(CPPFLAGS)" CXXFLAGS="$(CXXFLAGS)" ./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) --prefix=/usr --mandir=\$${prefix}/share/man --infodir=\$${prefix}/share/info $(ENABLE_LAUNCHER)
-
-configure: configure-stamp
-configure-stamp:
-	dh_testdir
-	./autogen.sh
-	touch configure-stamp
-
-build: build-stamp
-
-build-stamp:  config.status
-	dh_testdir
-
-	# Add here commands to compile the package.
-	$(MAKE)
-	#/usr/bin/docbook-to-man debian/osso-pdf-viewer.sgml > osso-pdf-viewer.1
-
-	touch build-stamp
-
-clean:
-	dh_testdir
-	dh_testroot
-	rm -f build-stamp 
-
-	# Add here commands to clean up after the build process.
-	-$(MAKE) distclean
-ifneq "$(wildcard /usr/share/misc/config.sub)" ""
-	cp -f /usr/share/misc/config.sub config.sub
-endif
-ifneq "$(wildcard /usr/share/misc/config.guess)" ""
-	cp -f /usr/share/misc/config.guess config.guess
-endif
-
-
-	dh_clean 
-
-install: build
-	dh_testdir
-	dh_testroot
-	dh_clean -k 
-	dh_installdirs
-
-	# Add here commands to install the package into debian/osso-pdf-viewer.
-	$(MAKE) install DESTDIR=$(CURDIR)/debian/tmp
-
-	# mime type
-	mkdir -p $(CURDIR)/debian/tmp/usr/share/mime/packages
-	cp $(CURDIR)/data/osso-pdf-viewer.xml $(CURDIR)/debian/tmp/usr/share/mime/packages
-
-
-# Build architecture-independent files here.
-binary-indep: build install
-# We have nothing to do by default.
-
-# Build architecture-dependent files here.
-binary-arch: build install
-	dh_testdir
-	dh_testroot
-	dh_installchangelogs
-	dh_installdocs
-	dh_installexamples
-	dh_install --sourcedir=debian/tmp -v
-	dh_link
+override_dh_install:
+	dh_install
 	if test "x$(USE_MAEMO_LAUNCHER)" = "xtrue"; then \
 		dh_maemolauncher /usr/bin/osso_pdfviewer; \
 	fi
-	#dh_strip --dbg-package=osso-pdf-viewer
-	dh_compress
-	dh_fixperms
-	dh_installdeb
-	dh_shlibdeps
-	dh_gencontrol -- $(LAUNCHER_DEPENDS)
-	dh_md5sums
-	dh_builddeb --destdir=$(DEBDIR)
-
-binary: binary-indep binary-arch
-.PHONY: build clean binary-indep binary-arch binary install
