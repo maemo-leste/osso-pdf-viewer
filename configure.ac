@@ -126,23 +126,7 @@ AC_SUBST(AR)
 AC_SUBST(UP_DIR)
 
 dnl #### check for freetype2
-FREETYPE_LIBS= 
-FREETYPE_CFLAGS=
-
-PKG_CHECK_MODULES(FREETYPE, freetype2,
-		  [freetype_pkgconfig=yes], [freetype_pkgconfig=no])
-
-if test "x$freetype_pkgconfig" = "xyes"; then
-	AC_DEFINE(HAVE_FREETYPE_H, [1], [Have FreeType2 include files])
-else
-	AC_PATH_PROG(FREETYPE_CONFIG, freetype-config, no)
-	if test "x$FREETYPE_CONFIG" != "xno" ; then
-        	FREETYPE_CFLAGS=`$FREETYPE_CONFIG --cflags`
-		FREETYPE_LIBS=`$FREETYPE_CONFIG --libs`
-	        AC_DEFINE(HAVE_FREETYPE_H, 1, [Have FreeType2 include files])
-	fi
-fi
-
+PKG_CHECK_MODULES(FREETYPE, freetype2)
 AC_SUBST(FREETYPE_CFLAGS)
 AC_SUBST(FREETYPE_LIBS)
 

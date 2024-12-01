@@ -8,6 +8,7 @@ endif
 INCLUDES = $(CPPFLAGS)				\
 	$(MAEMO_LAUNCHER_CFLAGS)	\
 	$(HILDON_CFLAGS)		\
+	$(FREETYPE_CFLAGS)		\
 	$(GDEPS_CFLAGS) 		\
 	-I./../xpdf			\
 	-I./../splash			\
@@ -98,6 +99,7 @@ osso_pdfviewer_LDADD = 				\
 	$(MAEMO_LAUNCHER_LIBS) 			\
 	$(HILDON_LIBS)				\
 	$(GDEPS_LIBS) 				\
+	$(FREETYPE_LIBS) 			\
 	$(XPDF_OBJS)				\
 	-L../goo -lGoo 				\
 	-L../splash -lsplash			\
