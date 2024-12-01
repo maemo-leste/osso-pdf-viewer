@@ -3,7 +3,7 @@
 # Mandatory, inits autoconf
 # NOTE Update version number to reflect debian/changelog (DON*T USE -x; unnecessary)
 #
-AC_INIT(osso-pdf-viewer, 1.2.26)
+AC_INIT([osso-pdf-viewer],[1.2.26])
 
 # Tests that source dir exists
 AC_CONFIG_SRCDIR([src/main.c])
@@ -19,8 +19,7 @@ AC_PROG_CC
 AC_PROG_CXX
 AC_PROG_CPP
 AC_PROG_INSTALL
-AC_PROG_LIBTOOL
-AC_HEADER_STDC
+LT_INIT
 
 dnl Enable these unconditionally.
 AC_DEFINE([A4_PAPER], [1], [Default to A4 paper.])
