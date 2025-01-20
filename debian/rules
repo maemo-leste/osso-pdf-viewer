@@ -3,7 +3,7 @@
 	dh $@
 
 ifeq (,$(findstring nolauncher,$(DEB_BUILD_OPTIONS)))
-    OPTS += "--enable-maemo-launcher=yes"
+    CONFFLAGS += "--enable-maemo-launcher=yes"
     USE_MAEMO_LAUNCHER = true
 endif
 
