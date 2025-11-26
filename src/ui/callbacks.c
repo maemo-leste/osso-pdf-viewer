@@ -1224,10 +1224,10 @@ configure_event_cb(GtkWidget * widget, GdkEvent * event, gpointer user_data)
 	if (configure_event->height > configure_event->width) {
 		/* Portrait mode */
 		app_ui_data->isPortrait = TRUE;
-		gtk_tool_item_set_expand(app_ui_data->current_page_item, FALSE);
+		gtk_tool_item_set_expand(GTK_TOOL_ITEM(app_ui_data->current_page_item), FALSE);
 
 		if (app_ui_data->current_zoom_item != NULL)
-			gtk_container_remove(app_ui_data->toolbar,
+			gtk_container_remove(GTK_CONTAINER(app_ui_data->toolbar),
 					     app_ui_data->current_zoom_item);
 
 		toolbar_widget =
@@ -1235,7 +1235,7 @@ configure_event_cb(GtkWidget * widget, GdkEvent * event, gpointer user_data)
 					      "/ToolBar/"
 					      "pdfv_me_menu_screen_zoom_out");
 		if (toolbar_widget != NULL)
-			gtk_container_remove(app_ui_data->toolbar,
+			gtk_container_remove(GTK_CONTAINER(app_ui_data->toolbar),
 					     toolbar_widget);
 
 		toolbar_widget =
@@ -1243,16 +1243,16 @@ configure_event_cb(GtkWidget * widget, GdkEvent * event, gpointer user_data)
 					      "/ToolBar/"
 					      "pdfv_me_menu_screen_zoom_in");
 		if (toolbar_widget != NULL)
-			gtk_container_remove(app_ui_data->toolbar,
+			gtk_container_remove(GTK_CONTAINER(app_ui_data->toolbar),
 					     toolbar_widget);
 	} else {
 		/* Landscape mode */
 		app_ui_data->isPortrait = FALSE;
-		gtk_tool_item_set_expand(app_ui_data->current_page_item, TRUE);
+		gtk_tool_item_set_expand(GTK_TOOL_ITEM(app_ui_data->current_page_item), TRUE);
 
 		if (gtk_toolbar_get_item_index
 		    (app_ui_data->toolbar,
-		     app_ui_data->current_zoom_item) !=
+		     GTK_TOOL_ITEM(app_ui_data->current_zoom_item)) !=
 		    TOOLBAR_POS_CURRENT_ZOOM_WIDGET) {
 			toolbar_widget =
 			    gtk_ui_manager_get_widget(app_ui_data->ui_manager,
@@ -1261,15 +1261,14 @@ configure_event_cb(GtkWidget * widget, GdkEvent * event, gpointer user_data)
 			if (toolbar_widget != NULL)
 				gtk_toolbar_insert(GTK_TOOLBAR
 						   (app_ui_data->toolbar),
-						   toolbar_widget,
+						   GTK_TOOL_ITEM(toolbar_widget),
 						   (TOOLBAR_POS_CURRENT_ZOOM_WIDGET
 						    - 1));
 
 			if (app_ui_data->current_zoom_item != NULL)
 				gtk_toolbar_insert(GTK_TOOLBAR
 						   (app_ui_data->toolbar),
-						   app_ui_data->
-						   current_zoom_item,
+						   GTK_TOOL_ITEM(app_ui_data->current_zoom_item),
 						   TOOLBAR_POS_CURRENT_ZOOM_WIDGET);
 
 			toolbar_widget =
@@ -1279,7 +1278,7 @@ configure_event_cb(GtkWidget * widget, GdkEvent * event, gpointer user_data)
 			if (toolbar_widget != NULL)
 				gtk_toolbar_insert(GTK_TOOLBAR
 						   (app_ui_data->toolbar),
-						   toolbar_widget,
+						   GTK_TOOL_ITEM(toolbar_widget),
 						   (TOOLBAR_POS_CURRENT_ZOOM_WIDGET
 						    + 1));
 		}

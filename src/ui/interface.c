@@ -27,8 +27,10 @@
 
 #include <string.h>
 #include <stdio.h>
+#include <math.h>
 #include <stdlib.h>
 #include <gtk/gtk.h>
+#include <gdk/gdk.h>
 #include <gdk/gdkkeysyms.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gio/gio.h>
@@ -357,7 +359,7 @@ void ui_create_menu(AppUIData * app_ui_data)
 	button = hildon_check_button_new(buttonsize);
 	gtk_button_set_label(GTK_BUTTON(button),
 			     _("pdfv_me_menu_single_page_continuous"));
-	hildon_check_button_set_active(GTK_BUTTON(button),
+	hildon_check_button_set_active(HILDON_CHECK_BUTTON(button),
 				       get_display_single_page_continuous_mode
 				       ());
 	g_signal_connect_after(button, "toggled",
